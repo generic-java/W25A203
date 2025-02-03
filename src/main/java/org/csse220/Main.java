@@ -18,11 +18,12 @@ public class Main {
 
         EngineMain engine = new EngineMain(new Player(), window);
 
-        for (int i = 0; i < 0 * 300; i++) {
+        for (int i = 0; i < 300; i++) {
             engine.addDrawable(new Cuboid(new Point3d(1000 * (Math.random() - 0.5), 1000 * (Math.random() - 0.5), 0), 8, 5, 15, Color.GREEN));
         }
 
         engine.addDrawable(new Cuboid(new Point3d(0, 15, 0), 5, 5, 5, Color.BLUE));
+
 
         engine.start();
     }

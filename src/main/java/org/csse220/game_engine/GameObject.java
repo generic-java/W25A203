@@ -2,13 +2,14 @@ package org.csse220.game_engine;
 
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
+import org.csse220.game_engine.math_utils.Pose3d;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 public class GameObject {
     private final Collideable collideable;
     private Drawable drawable;
 
-    private Vector3d position = new Vector3d();
+    private Pose3d position = new Pose3d();
     private double yaw;
 
     public GameObject(Collideable collideable, Drawable drawable) {
@@ -23,7 +24,7 @@ public class GameObject {
         return drawable;
     }
 
-    public Vector3d getPose() {
+    public Pose3d getPose() {
         return position;
     }
 

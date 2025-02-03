@@ -1,6 +1,7 @@
 package org.csse220.game_engine.graphics;
 
 import org.csse220.game_engine.KillableThread;
+import org.csse220.game_engine.math_utils.Pose3d;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 import java.awt.*;
@@ -32,11 +33,12 @@ public class Renderer extends KillableThread {
     public void run() {
         while (isActive()) {
             Camera camera = Camera.getInstance();
-            Vector3d.updatePitchYaw(camera.pitch(), camera.yaw());
+            Pose3d camPose = camera.getPosition();
+            Vector3d.updatePitchYaw(camPose.pitch(), camPose.yaw());
             Screen.getInstance().fill(Color.WHITE);
             for (Drawable drawable : drawables) {
                 synchronized (drawable) {
-                    drawable.draw(camera.getPosition(), camera.pitch(), camera.yaw(), true);
+                    drawable.draw(camera.getPosition(), camPose.pitch(), camPose.yaw(), true);
                 }
             }
             ZBuffer.getInstance().wipe();

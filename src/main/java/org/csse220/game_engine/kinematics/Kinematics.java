@@ -1,10 +1,6 @@
 package org.csse220.game_engine.kinematics;
 
-import org.csse220.GamePlayer;
-import org.csse220.game_engine.ElapsedTime;
-import org.csse220.game_engine.GameKeyListener;
-import org.csse220.game_engine.GameObject;
-import org.csse220.game_engine.KillableThread;
+import org.csse220.game_engine.*;
 import org.csse220.game_engine.graphics.Camera;
 import org.csse220.game_engine.math_utils.Vector2d;
 import org.csse220.game_engine.math_utils.Vector3d;
@@ -40,13 +36,13 @@ public class Kinematics extends KillableThread {
     public void run() {
         movePlayer(timer.getAndReset());
         Camera.getInstance().setPosition(player.getPose());
-//        while (isActive()) {
-//            for (Collideable collideable : collideables) {
-//                if (collideable != player.getCollideable()) {
-//                    collide(player, collideable);
-//                }
-//            }
-//        }
+        while (isActive()) {
+            for (Collideable collideable : collideables) {
+                if (collideable != player.getCollideable()) {
+                    collide(player, collideable);
+                }
+            }
+        }
     }
 
     private void movePlayer(double dt) {

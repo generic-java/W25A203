@@ -1,5 +1,6 @@
 package org.csse220.game_engine.graphics;
 
+import org.csse220.game_engine.math_utils.Vector2d;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 import java.awt.*;
@@ -93,10 +94,10 @@ public class Face implements Drawable {
                 );
                 break;
             case 1:
-                newZ1 = Utils.interpolate(behind[0].relativeY(), behind[0].relativeZ(), front[0].relativeY(), front[0].relativeZ(), CLIP_DISTANCE);
-                newX1 = Utils.interpolate(behind[0].relativeY(), behind[0].relativeX(), front[0].relativeY(), front[0].relativeX(), CLIP_DISTANCE);
-                newZ2 = Utils.interpolate(behind[0].relativeY(), behind[0].relativeZ(), front[1].relativeY(), front[1].relativeZ(), CLIP_DISTANCE);
-                newX2 = Utils.interpolate(behind[0].relativeY(), behind[0].relativeX(), front[1].relativeY(), front[1].relativeX(), CLIP_DISTANCE);
+                newZ1 = Vector2d.interpolate(behind[0].relativeY(), behind[0].relativeZ(), front[0].relativeY(), front[0].relativeZ(), CLIP_DISTANCE);
+                newX1 = Vector2d.interpolate(behind[0].relativeY(), behind[0].relativeX(), front[0].relativeY(), front[0].relativeX(), CLIP_DISTANCE);
+                newZ2 = Vector2d.interpolate(behind[0].relativeY(), behind[0].relativeZ(), front[1].relativeY(), front[1].relativeZ(), CLIP_DISTANCE);
+                newX2 = Vector2d.interpolate(behind[0].relativeY(), behind[0].relativeX(), front[1].relativeY(), front[1].relativeX(), CLIP_DISTANCE);
                 Point3d firstInterpolated = new Point3d(newX1, CLIP_DISTANCE, newZ1);
                 Point3d secondInterpolated = new Point3d(newX2, CLIP_DISTANCE, newZ2);
 
@@ -115,10 +116,10 @@ public class Face implements Drawable {
                 }
                 break;
             case 2:
-                newZ1 = Utils.interpolate(front[0].relativeY(), front[0].relativeZ(), behind[0].relativeY(), behind[0].relativeZ(), CLIP_DISTANCE);
-                newX1 = Utils.interpolate(front[0].relativeY(), front[0].relativeX(), behind[0].relativeY(), behind[0].relativeX(), CLIP_DISTANCE);
-                newZ2 = Utils.interpolate(front[0].relativeY(), front[0].relativeZ(), behind[1].relativeY(), behind[1].relativeZ(), CLIP_DISTANCE);
-                newX2 = Utils.interpolate(front[0].relativeY(), front[0].relativeX(), behind[1].relativeY(), behind[1].relativeX(), CLIP_DISTANCE);
+                newZ1 = Vector2d.interpolate(front[0].relativeY(), front[0].relativeZ(), behind[0].relativeY(), behind[0].relativeZ(), CLIP_DISTANCE);
+                newX1 = Vector2d.interpolate(front[0].relativeY(), front[0].relativeX(), behind[0].relativeY(), behind[0].relativeX(), CLIP_DISTANCE);
+                newZ2 = Vector2d.interpolate(front[0].relativeY(), front[0].relativeZ(), behind[1].relativeY(), behind[1].relativeZ(), CLIP_DISTANCE);
+                newX2 = Vector2d.interpolate(front[0].relativeY(), front[0].relativeX(), behind[1].relativeY(), behind[1].relativeX(), CLIP_DISTANCE);
                 firstTriangle = new ProjectedTriangle(front[0].project(), Point3d.project(newX1, CLIP_DISTANCE, newZ1), Point3d.project(newX2, CLIP_DISTANCE, newZ2), depthCalculator);
                 break;
             case 3:

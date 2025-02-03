@@ -1,13 +1,9 @@
-package org.csse220;
+package org.csse220.game_engine;
 
-import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
-import org.csse220.game_engine.math_utils.Vector3d;
 
 public abstract class GamePlayer extends GameObject {
-    private Vector3d position;
-    private double yaw;
     private double xVel;
     private double yVel;
     private double zVel;

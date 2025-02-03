@@ -1,39 +1,19 @@
 package org.csse220.game_engine.graphics;
 
-import org.csse220.game_engine.math_utils.Vector3d;
+import org.csse220.game_engine.math_utils.Pose3d;
+import org.csse220.game_engine.math_utils.PoseSupplier;
 
-public class Camera {
+public class Camera implements PoseSupplier {
     private static Camera instance = null;
 
-    private double x;
-    private double y;
-    private double z;
-
-    private double pitch;
-    private double yaw;
+    private Pose3d position;
 
     private Camera() {
-
+        position = new Pose3d();
     }
 
-    public double x() {
-        return x;
-    }
-
-    public double y() {
-        return y;
-    }
-
-    public double z() {
-        return z;
-    }
-
-    public double pitch() {
-        return pitch;
-    }
-
-    public double yaw() {
-        return yaw;
+    public Pose3d getPosition() {
+        return position;
     }
 
     public static Camera getInstance() {
@@ -43,13 +23,12 @@ public class Camera {
         return instance;
     }
 
-    public Vector3d getPosition() {
-        return new Vector3d(x, y, z);
+    public void setPosition(Pose3d pose) {
+        this.position = pose;
     }
 
-    public void setPosition(Vector3d position) {
-        x = position.x();
-        y = position.y();
-        z = position.z();
+    @Override
+    public Pose3d getPose() {
+        return position;
     }
 }

@@ -1,5 +1,6 @@
 package org.csse220;
 
+import org.csse220.game_engine.GamePlayer;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Point3d;
 import org.csse220.game_engine.kinematics.EmptyHitbox;

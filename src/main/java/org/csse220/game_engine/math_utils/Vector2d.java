@@ -39,6 +39,13 @@ public class Vector2d {
         this(0, 0);
     }
 
+    public static double interpolate(double x1, double y1, double x2, double y2, double x) {
+        if (x2 == x1) {
+            throw new ArithmeticException("Error: division by zero in interpolation function");
+        }
+        return y1 + (x - x1) / (x2 - x1) * (y2 - y1);
+    }
+
     private double calculateMagnitude(double x, double y) {
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }

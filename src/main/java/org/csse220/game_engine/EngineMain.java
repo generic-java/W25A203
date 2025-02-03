@@ -1,6 +1,5 @@
 package org.csse220.game_engine;
 
-import org.csse220.GamePlayer;
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.graphics.Renderer;
 import org.csse220.game_engine.graphics.Screen;
@@ -39,6 +38,10 @@ public class EngineMain {
     private void kill() {
         renderer.kill();
         kinematics.kill();
+    }
+
+    public void loadLevel() {
+        // TODO: finish this method
     }
 
     public void addGameObject(GameObject object) {
