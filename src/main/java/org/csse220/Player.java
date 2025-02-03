@@ -13,4 +13,8 @@ public class Player extends GamePlayer {
         super(EmptyHitbox.getInstance(), new Cuboid(new Point3d(0, 0, 0), 5, 5, 5, Color.ORANGE));
     }
 
+    public void onCollide() {
+
+    }
+
 }

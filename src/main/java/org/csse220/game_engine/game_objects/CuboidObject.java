@@ -8,4 +8,8 @@ public class CuboidObject extends GameObject {
     public CuboidObject(Cuboid cuboid) {
         super(EmptyHitbox.getInstance(), cuboid);
     }
+
+    public void onCollide() {
+
+    }
 }

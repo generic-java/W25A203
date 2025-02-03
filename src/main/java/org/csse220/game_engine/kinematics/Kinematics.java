@@ -11,7 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Kinematics extends KillableThread {
     private final static double GRAVITY_ACCEL = 5;
-    private final static double MOVE_VEL = 5;
+    private final static double MOVE_VEL = 0.025;
+    private final static double TURN_VEL = 0.003;
 
     private final ElapsedTime timer;
     private final GamePlayer player;
@@ -34,27 +35,33 @@ public class Kinematics extends KillableThread {
 
     @Override
     public void run() {
-        movePlayer(timer.getAndReset());
-        Camera.getInstance().setPosition(player.getPose());
         while (isActive()) {
-            for (Collideable collideable : collideables) {
-                if (collideable != player.getCollideable()) {
-                    collide(player, collideable);
-                }
-            }
+            movePlayer(timer.getAndReset());
+            Camera.getInstance().setXYZ(player.getPose());
+//            for (Collideable collideable : collideables) {
+//                if (collideable != player.getCollideable()) {
+//                    collide(player, collideable);
+//                }
+//            }
         }
     }
 
     private void movePlayer(double dt) {
         Vector2d velocityVector = new Vector2d();
+        Camera camera = Camera.getInstance();
+        if (gameKeyListener.isKeyPressed(KeyEvent.VK_UP)) {
+            camera.setPitch(camera.getPose().pitch() + TURN_VEL * dt);
+        } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
+            camera.setPitch(camera.getPose().pitch() - TURN_VEL * dt);
+        }
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_RIGHT)) {
-
+            camera.setYaw(camera.getPose().yaw() - TURN_VEL * dt);
         } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_LEFT)) {
-
+            camera.setYaw(camera.getPose().yaw() + TURN_VEL * dt);
         }
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_D)) {
             velocityVector = velocityVector.translate(1, 0);
-        } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_D)) {
+        } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_A)) {
             velocityVector = velocityVector.translate(-1, 0);
         }
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_W)) {
@@ -62,10 +69,10 @@ public class Kinematics extends KillableThread {
         } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_S)) {
             velocityVector = velocityVector.translate(0, -1);
         }
-        velocityVector = velocityVector.normalize().multiply(MOVE_VEL).rotate(player.yaw());
+        velocityVector = velocityVector.normalize().multiply(MOVE_VEL).rotate(camera.getPose().yaw());
         player.setXVel(velocityVector.x);
         player.setYVel(velocityVector.y);
-        //player.move(dt);
+        player.move(dt);
     }
 
     private void collide(GameObject player, Collideable collideable, Vector3d moveDirection, int yawDirection) {

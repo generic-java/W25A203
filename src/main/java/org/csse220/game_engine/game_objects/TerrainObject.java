@@ -7,4 +7,8 @@ public class TerrainObject extends GameObject {
     public TerrainObject(Cuboid cuboid) {
         super(cuboid.toHitbox(), cuboid);
     }
+
+    public void onCollide() {
+
+    }
 }

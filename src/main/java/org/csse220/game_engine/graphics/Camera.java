@@ -23,8 +23,20 @@ public class Camera implements PoseSupplier {
         return instance;
     }
 
+    public void setXYZ(Pose3d pose) {
+        position = new Pose3d(pose.x(), pose.y(), pose.z(), position.pitch(), position.roll(), position.yaw());
+    }
+
     public void setPosition(Pose3d pose) {
         this.position = pose;
+    }
+
+    public void setPitch(double pitch) {
+        position = new Pose3d(position.x(), position.y(), position.z(), pitch, position.roll(), position.yaw());
+    }
+
+    public void setYaw(double yaw) {
+        position = new Pose3d(position.x(), position.y(), position.z(), position.pitch(), position.roll(), yaw);
     }
 
     @Override

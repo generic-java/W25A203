@@ -112,6 +112,22 @@ public class Vector3d {
         return new Vector3d(this.x + x, this.y + y, this.z + z);
     }
 
+    public Vector3d translateX(double x) {
+        return translate(x, 0, 0);
+    }
+
+    public Vector3d translateY(double y) {
+        return translate(0, y, 0);
+    }
+
+    public Vector3d translateZ(double x) {
+        return translate(x, 0, 0);
+    }
+
+    public Vector3d scale(double scalar) {
+        return new Vector3d(x * scalar, y * scalar, z * scalar);
+    }
+
     @Override
     public String toString() {
         return String.format("x: %s\ny: %s\nz: %s", x, y, z);

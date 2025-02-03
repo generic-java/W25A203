@@ -5,7 +5,7 @@ import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.math_utils.Pose3d;
 import org.csse220.game_engine.math_utils.Vector3d;
 
-public class GameObject {
+public abstract class GameObject {
     private final Collideable collideable;
     private Drawable drawable;
 
@@ -53,4 +53,6 @@ public class GameObject {
     public void incrementYaw(double increment) {
         yaw += increment;
     }
+
+    abstract public void onCollide();
 }

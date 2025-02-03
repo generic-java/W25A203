@@ -85,7 +85,7 @@ public class Vector2d {
     }
 
     public Vector2d normalize() {
-        return multiply(1 / magnitude);
+        return magnitude == 0 ? this : multiply(1 / magnitude);
     }
 
     @Override

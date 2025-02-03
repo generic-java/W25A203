@@ -28,8 +28,28 @@ public class Pose3d extends Vector3d {
         return yaw;
     }
 
+    public Pose3d translate(Vector3d vector) {
+        return translate(vector.x(), vector.y(), vector.z());
+    }
+
+    @Override
     public Pose3d translate(double x, double y, double z) {
         Vector3d vector = super.translate(x, y, z);
         return new Pose3d(vector.x(), vector.y(), vector.z(), pitch, roll, yaw);
+    }
+
+    @Override
+    public Pose3d translateX(double x) {
+        return translate(x, 0, 0);
+    }
+
+    @Override
+    public Pose3d translateY(double y) {
+        return translate(0, y, 0);
+    }
+
+    @Override
+    public Pose3d translateZ(double z) {
+        return translate(0, 0, z);
     }
 }
