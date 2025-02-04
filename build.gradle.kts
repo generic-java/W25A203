@@ -12,7 +12,7 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("jakarta.json:jakarta.json-api:2.1.3")
+    implementation("org.glassfish:javax.json:1.1.4")
 }
 
 tasks.test {

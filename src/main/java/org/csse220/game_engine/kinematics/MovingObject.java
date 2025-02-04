@@ -13,7 +13,7 @@ public class MovingObject extends GameObject {
     }
 
     public void setVelocity(Vector3d velocity) {
-
+        
     }
 
     public void move(double dt) {
