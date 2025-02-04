@@ -2,18 +2,17 @@ package org.csse220.game_engine;
 
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
-import org.csse220.game_engine.math_utils.Pose3d;
 import org.csse220.game_engine.math_utils.Vector3d;
 
-public abstract class GameObject {
+public abstract class GameObject extends GameElement implements Drawable {
     private final Collideable collideable;
-    private Drawable drawable;
+    private final Drawable drawable;
 
-    private Pose3d position = new Pose3d();
     private double yaw;
 
     public GameObject(Collideable collideable, Drawable drawable) {
         this.collideable = collideable;
+        this.drawable = drawable;
     }
 
     public final Collideable getCollideable() {
@@ -22,28 +21,6 @@ public abstract class GameObject {
 
     public final Drawable getDrawable() {
         return drawable;
-    }
-
-    public Pose3d getPose() {
-        return position;
-    }
-
-    public void incrementX(double increment) {
-        position = position.translate(increment, 0, 0);
-    }
-
-    public void incrementY(double increment) {
-        position = position.translate(0, increment, 0);
-    }
-
-    public void incrementZ(double increment) {
-        position = position.translate(0, 0, increment);
-    }
-
-    public void incrementPosition(Vector3d increment) {
-        incrementX(increment.x());
-        incrementY(increment.y());
-        incrementZ(increment.z());
     }
 
     public double yaw() {
@@ -55,4 +32,9 @@ public abstract class GameObject {
     }
 
     abstract public void onCollide();
+
+    @Override
+    public void draw(Vector3d camPose, double pitch, double yaw, boolean shade) {
+        drawable.draw(camPose, pitch, yaw, shade);
+    }
 }

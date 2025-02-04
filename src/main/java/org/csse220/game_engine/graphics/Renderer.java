@@ -5,14 +5,14 @@ import org.csse220.game_engine.math_utils.Pose3d;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Renderer extends KillableThread {
     private final Set<Drawable> drawables;
 
     public Renderer() {
-        this.drawables = new HashSet<>();
+        this.drawables = ConcurrentHashMap.newKeySet();
     }
 
     public void addDrawable(Drawable drawable) {

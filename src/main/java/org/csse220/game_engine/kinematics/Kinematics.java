@@ -10,16 +10,17 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Kinematics extends KillableThread {
-    private final static double GRAVITY_ACCEL = 5;
     private final static double MOVE_VEL = 0.025;
     private final static double TURN_VEL = 0.003;
 
+    private final Set<GameElement> gameElements;
     private final ElapsedTime timer;
-    private final GamePlayer player;
+    private final GameObject player;
     private final Set<Collideable> collideables;
     private final GameKeyListener gameKeyListener;
 
-    public Kinematics(GamePlayer player, GameKeyListener gameKeyListener) {
+    public Kinematics(GameObject player, GameKeyListener gameKeyListener) {
+        gameElements = ConcurrentHashMap.newKeySet();
         timer = new ElapsedTime();
         this.player = player;
         collideables = ConcurrentHashMap.newKeySet();
@@ -36,13 +37,17 @@ public class Kinematics extends KillableThread {
     @Override
     public void run() {
         while (isActive()) {
-            movePlayer(timer.getAndReset());
-            Camera.getInstance().setXYZ(player.getPose());
-//            for (Collideable collideable : collideables) {
-//                if (collideable != player.getCollideable()) {
-//                    collide(player, collideable);
-//                }
-//            }
+            double dt = timer.getAndReset();
+            for (GameElement gameElement : gameElements) {
+                gameElement.move(dt);
+            }
+            movePlayer(dt);
+            for (Collideable collideable : collideables) {
+                if (collideable != player.getCollideable()) {
+                    //collide(player, collideable);
+                }
+            }
+            Camera.getInstance().setXYZ(player.getPose()); // Set camera pose after everything else is done
         }
     }
 
@@ -89,6 +94,17 @@ public class Kinematics extends KillableThread {
 
     public boolean keyPressed(int keycode) {
         return gameKeyListener.isKeyPressed(keycode);
+    }
+
+    public void addGameElement(GameElement element) {
+        gameElements.add(element);
+        if (element instanceof GameObject) {
+
+        }
+    }
+
+    public void removeGameElement(GameElement element) {
+        gameElements.remove(element);
     }
 
     public void addCollideable(Collideable collideable) {
