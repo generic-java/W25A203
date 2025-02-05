@@ -5,6 +5,7 @@ import org.csse220.game_engine.graphics.Renderer;
 import org.csse220.game_engine.graphics.Screen;
 import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.kinematics.Kinematics;
+import org.csse220.levels.Level;
 
 import javax.swing.*;
 
@@ -37,7 +38,7 @@ public class Engine {
         kinematics.kill();
     }
 
-    public void loadLevel() {
+    public void loadLevel(Level level) {
         // TODO: finish this method
     }
 

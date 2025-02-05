@@ -1,56 +1,47 @@
 package org.csse220.game_engine.kinematics;
 
+import org.csse220.game_engine.math_utils.Pose3d;
+
 import java.util.HashSet;
 import java.util.Set;
 
 public class Hitbox extends Collideable {
-    private double x;
-    private double y;
-    private double z;
     private final double width;
     private final double height;
     private final double depth;
     private double rot;
-    private final Point2d center;
-    private final Point2d topLeft;
-    private final Point2d topRight;
-    private final Point2d bottomRight;
-    private final Point2d bottomLeft;
-    private final Set<Hitbox> hitboxes = new HashSet<>();
+    private Point2d center;
+    private Point2d topLeft;
+    private Point2d topRight;
+    private Point2d bottomRight;
+    private Point2d bottomLeft;
+    private final Set<Hitbox> thisHitbox = new HashSet<>();
 
-    public Hitbox(double x, double y, double z, double width, double height, double depth) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public Hitbox(Pose3d pose, double width, double height, double depth) {
+        super(pose);
         this.width = width;
         this.height = height;
         this.depth = depth;
-        center = new Point2d(x, y);
-        topLeft = new Point2d(x - width / 2, y + depth / 2);
-        topRight = new Point2d(x + width / 2, y + depth / 2);
-        bottomRight = new Point2d(x + width / 2, y - depth / 2);
-        bottomLeft = new Point2d(x - width / 2, y - depth / 2);
-        hitboxes.add(this);
+        updateVertexPositions();
+        thisHitbox.add(this);
     }
 
     public Point2d xyCenter() {
-        return new Point2d(x, y);
+        return new Point2d(pose.x(), pose.y());
     }
 
-    public double x() {
-        return x;
+    private void updateVertexPositions() {
+        center = new Point2d(pose.x(), pose.y());
+        topLeft = new Point2d(pose.x() - width / 2, pose.y() + depth / 2);
+        topRight = new Point2d(pose.x() + width / 2, pose.y() + depth / 2);
+        bottomRight = new Point2d(pose.x() + width / 2, pose.y() - depth / 2);
+        bottomLeft = new Point2d(pose.x() - width / 2, pose.y() - depth / 2);
     }
 
-    public double y() {
-        return y;
-    }
-
-    public double z() {
-        return z;
-    }
-
-    public double rot() {
-        return rot;
+    @Override
+    public void setPose(Pose3d pose) {
+        super.setPose(pose);
+        updateVertexPositions();
     }
 
     public double width() {
@@ -65,17 +56,6 @@ public class Hitbox extends Collideable {
         return depth;
     }
 
-    void setX(double x) {
-        this.x = x;
-    }
-
-    void setY(double y) {
-        this.y = y;
-    }
-
-    void setZ(double z) {
-        this.z = z;
-    }
 
     private LineSegment[] getLineSegments() {
         return new LineSegment[]{
@@ -91,12 +71,7 @@ public class Hitbox extends Collideable {
         this.rot = rot;
     }
 
-    @Override
-    public Set<Hitbox> getHitboxes() {
-        return hitboxes;
-    }
-
-    public boolean intersectsWith(Hitbox other) {
+    public boolean intersects(Hitbox other) {
         boolean twoDimensionalIntersection = false;
         for (LineSegment segment : getLineSegments()) {
             for (LineSegment otherSegment : other.getLineSegments()) {
@@ -117,8 +92,8 @@ public class Hitbox extends Collideable {
      */
     private boolean oneInside(Hitbox other, boolean checkOther) {
         Point2d otherCenter = other.xyCenter().rotateAbout(xyCenter(), -rot);
-        return otherCenter.x() > x - width / 2 && otherCenter.x() < x + width / 2
-                && otherCenter.y() > y - width / 2 && otherCenter.y() < y + width / 2
+        return otherCenter.x() > pose.x() - width / 2 && otherCenter.x() < pose.x() + width / 2
+                && otherCenter.y() > pose.y() - width / 2 && otherCenter.y() < pose.y() + width / 2
                 && other.oneInside(this, false);
     }
 
@@ -127,6 +102,16 @@ public class Hitbox extends Collideable {
     }
 
     boolean zIntersection(Hitbox other) {
-        return z + height / 2 > other.z() - other.height() / 2 && z - height / 2 < other.z() + other.height() / 2;
+        return pose.z() + height / 2 > other.getPose().z() - other.height() / 2 && pose.z() - height / 2 < other.getPose().z() + other.height() / 2;
+    }
+
+    @Override
+    public Set<Hitbox> getHitboxes() {
+        return thisHitbox;
+    }
+
+    @Override
+    public boolean onCollide(Pose3d collisionDirection) {
+        return false;
     }
 }
