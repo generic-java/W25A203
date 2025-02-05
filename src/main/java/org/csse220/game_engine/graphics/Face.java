@@ -1,14 +1,13 @@
 package org.csse220.game_engine.graphics;
 
+import org.csse220.game_engine.GameElement;
 import org.csse220.game_engine.math_utils.Vector2d;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 import java.awt.*;
-import java.util.ArrayList;
 
-public class Face implements Drawable {
+public class Face extends GameElement implements Drawable {
 
-    private static final ArrayList<Face> registry = new ArrayList<>();
     public static final Vector3d LIGHT_SOURCE = new Vector3d(0.3, 0, 1);
     public static final double Y_CLIP_DISTANCE_BRIGHTNESS = 0.4;
     public static final double BRIGHTNESS_REDUCTION_FACTOR = (1 - Y_CLIP_DISTANCE_BRIGHTNESS) / Math.PI;
@@ -19,7 +18,7 @@ public class Face implements Drawable {
     private final Color color;
     private final Color shadedColor;
 
-    public Face(Point3d point1, Point3d point2, Point3d point3, Color color, boolean register) {
+    public Face(Point3d point1, Point3d point2, Point3d point3, Color color) {
         vertices = new Point3d[]{point1, point2, point3};
         this.color = color;
         double angle = normalVector().angleBetween(LIGHT_SOURCE);
@@ -30,12 +29,6 @@ public class Face implements Drawable {
         shadedColor = new Color((int) (color.getRed() * multiplier), (int) (color.getGreen() * multiplier), (int) (color.getBlue() * multiplier));
 
 
-        if (register)
-            registry.add(this);
-    }
-
-    public Face(Point3d point1, Point3d point2, Point3d point3, Color color) {
-        this(point1, point2, point3, color, true);
     }
 
     private DepthCalculator generateDepthCalculator(Vector3d camPos) {

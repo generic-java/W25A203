@@ -1,7 +1,7 @@
 package org.csse220;
 
 
-import org.csse220.game_engine.EngineMain;
+import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Point3d;
 
@@ -16,16 +16,17 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(800, 600);
 
-        EngineMain engine = new EngineMain(new Player(), window);
+        Engine engine = Engine.getInstance();
+
+        engine.init(new Player(), window);
 
         for (int i = 0; i < 300; i++) {
-            engine.addDrawable(new Cuboid(new Point3d(1000 * (Math.random() - 0.5), 1000 * (Math.random() - 0.5), 0), 8, 5, 15, Color.GREEN));
+            engine.addGameElement(new Cuboid(new Point3d(1000 * (Math.random() - 0.5), 1000 * (Math.random() - 0.5), 0), 8, 5, 15, Color.GREEN));
         }
 
-        engine.addDrawable(new Cuboid(new Point3d(0, 15, 0), 5, 5, 5, Color.BLUE));
+        engine.addGameElement(new Cuboid(new Point3d(0, 15, 0), 5, 5, 5, Color.BLUE));
 
 
-        engine.start();
     }
 
     public static void main(String[] args) {

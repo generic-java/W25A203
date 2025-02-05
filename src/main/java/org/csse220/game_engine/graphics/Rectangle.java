@@ -1,10 +1,11 @@
 package org.csse220.game_engine.graphics;
 
+import org.csse220.game_engine.GameElement;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 import java.awt.*;
 
-public class Rectangle implements Drawable {
+public class Rectangle extends GameElement implements Drawable {
 
     private final Face top;
     private final Face bottom;

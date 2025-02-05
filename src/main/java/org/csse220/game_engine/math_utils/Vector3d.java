@@ -120,8 +120,8 @@ public class Vector3d {
         return translate(0, y, 0);
     }
 
-    public Vector3d translateZ(double x) {
-        return translate(x, 0, 0);
+    public Vector3d translateZ(double z) {
+        return translate(0, 0, z);
     }
 
     public Vector3d scale(double scalar) {

@@ -1,11 +1,12 @@
 package org.csse220.game_engine.graphics;
 
+import org.csse220.game_engine.GameElement;
 import org.csse220.game_engine.kinematics.Hitbox;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 import java.awt.*;
 
-public class Cuboid implements Drawable {
+public class Cuboid extends GameElement implements Drawable {
     private final Point3d center;
     private final double width;
     private final double height;

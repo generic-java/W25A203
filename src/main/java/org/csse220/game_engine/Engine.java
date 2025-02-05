@@ -8,29 +8,26 @@ import org.csse220.game_engine.kinematics.Kinematics;
 
 import javax.swing.*;
 
-public class EngineMain {
-    private static boolean instanceMade = false;
+public class Engine {
+    private static Engine instance = null;
 
-    private final JFrame window;
-    private final Renderer renderer;
-    private final Kinematics kinematics;
+    private Renderer renderer;
+    private Kinematics kinematics;
 
-    public EngineMain(GamePlayer player, JFrame window) {
-        if (instanceMade)
-            throw new RuntimeException("Only one instance of GameEngine can be created.");
-        instanceMade = true;
+    private Engine() {
+
+    }
+
+    public void init(GameObject player, JFrame window) {
         GameKeyListener keyListener = new GameKeyListener();
 
         renderer = new Renderer();
         kinematics = new Kinematics(player, keyListener);
 
-        this.window = window;
         window.add(Screen.getInstance());
         window.addKeyListener(keyListener);
-    }
-
-    public void start() {
         window.setVisible(true);
+
         renderer.start();
         kinematics.start();
     }
@@ -62,6 +59,20 @@ public class EngineMain {
         kinematics.removeCollideable(collideable);
     }
 
+    public void addGameElement(GameElement element) {
+        kinematics.addGameElement(element);
+        if (element instanceof Drawable) {
+            addDrawable((Drawable) element);
+        }
+    }
+
+    public void removeGameElement(GameElement element) {
+        kinematics.removeGameElement(element);
+        if (element instanceof Drawable) {
+            removeDrawable((Drawable) element);
+        }
+    }
+
     public void addDrawable(Drawable drawable) {
         renderer.addDrawable(drawable);
     }
@@ -72,5 +83,12 @@ public class EngineMain {
 
     public boolean keyPressed(int keycode) {
         return kinematics.keyPressed(keycode);
+    }
+
+    public static Engine getInstance() {
+        if (instance == null) {
+            instance = new Engine();
+        }
+        return instance;
     }
 }
