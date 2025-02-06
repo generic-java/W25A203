@@ -15,10 +15,13 @@ public class Level {
     private String type;
     private int index;
     private String levelName;
+    private int numObjects;
 
-    private Level(String levelName, int numEnemies){
+    private Level(String levelName, int numEnemies, int numObjects){
         this.levelName = levelName;
         this.numEnemies = numEnemies;
+        this.numObjects = numObjects;
+
     }
 
     public static Level loadLevel(String filename) throws FileNotFoundException {
@@ -35,7 +38,13 @@ public class Level {
         String tempName = jsonObject.getString("name");
         int tempNumEnemies = jsonObject.getInt("numEnemies");
 
-        return new Level(tempName,tempNumEnemies);
+        int tempNumObjects = jsonObject.getInt("numObjects");
+
+        return new Level(tempName,tempNumEnemies,tempNumObjects);
+    }
+
+    public int getNumObjects() {
+        return numObjects;
     }
 
 }

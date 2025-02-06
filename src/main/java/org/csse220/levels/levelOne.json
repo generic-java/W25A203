@@ -1,5 +1,6 @@
 {
   "numEnemies": 12,
-  "name": "Level1"
+  "name": "Level1",
+  "numObjects": 20
   
 }
