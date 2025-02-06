@@ -29,10 +29,11 @@ public class Kinematics extends KillableThread {
     };
 
     public Kinematics(GameObject player, GameKeyListener gameKeyListener) {
+        collideables = ConcurrentHashMap.newKeySet();
         gameElements = ConcurrentHashMap.newKeySet();
         timer = new ElapsedTime();
         this.player = player;
-        collideables = ConcurrentHashMap.newKeySet();
+        addGameElement(player);
         this.gameKeyListener = gameKeyListener;
     }
 
@@ -51,6 +52,8 @@ public class Kinematics extends KillableThread {
             for (Pose3d elementMoveStep : elementMoveSteps) {
                 for (GameElement gameElement : gameElements) {
                     gameElement.move(elementMoveStep, dt);
+                    if (gameElement == player) {
+                    }
                 }
                 for (Collideable collideable : collideables) {
                     for (Collideable toCheck : collideables) {
@@ -62,7 +65,7 @@ public class Kinematics extends KillableThread {
             }
 
 
-            Camera.getInstance().setXYZ(player.getPose()); // Set camera pose after everything else is done
+            Camera.getInstance().setXYZ(Camera.getInstance().getPose().translate(player.getPose().translate(Camera.getInstance().getPose().scale(-1)).scale(0.0002))); // Set camera pose after everything else is done
         }
     }
 

@@ -12,7 +12,7 @@ public class Player extends GameObject {
 
     public Player() {
         super(new Hitbox(new Pose3d(), 0, 0, 0), new Cuboid(new Point3d(0, 0, 0), 5, 5, 5, Color.ORANGE));
-        setGravity(0.0003);
+        setGravity(0 * 0.0003);
     }
 
     public void onCollide() {
