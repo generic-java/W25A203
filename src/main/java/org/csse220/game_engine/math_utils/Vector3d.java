@@ -128,6 +128,10 @@ public class Vector3d {
         return new Vector3d(x * scalar, y * scalar, z * scalar);
     }
 
+    public Pose3d toPose3d() {
+        return new Pose3d(x, y, z, 0, 0, 0);
+    }
+
     @Override
     public String toString() {
         return String.format("x: %s\ny: %s\nz: %s", x, y, z);

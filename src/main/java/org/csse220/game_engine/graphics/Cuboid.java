@@ -73,6 +73,6 @@ public class Cuboid extends GameElement implements Drawable {
 
     public Hitbox toHitbox() {
         Vector3d absolutePose = center.getAbsolutePos();
-        return new Hitbox(absolutePose.x(), absolutePose.y(), absolutePose.z(), width, height, depth);
+        return new Hitbox(absolutePose.toPose3d(), width, height, depth);
     }
 }

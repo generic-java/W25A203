@@ -52,4 +52,16 @@ public class Pose3d extends Vector3d {
     public Pose3d translateZ(double z) {
         return translate(0, 0, z);
     }
+
+    public Pose3d relativeTo(Pose3d pose) {
+        return new Pose3d(x() - pose.x(), y() - pose.y(), z() - pose.z(), pitch() - pose.pitch(), roll() - pose.roll(), yaw() - pose.yaw());
+    }
+
+    public Pose3d addTo(Pose3d pose) {
+        return new Pose3d(x() + pose.x(), y() + pose.y(), z() + pose.z(), pitch() + pose.pitch(), roll() + pose.roll(), yaw() + pose.yaw());
+    }
+
+    public Pose3d scale(double scalar) {
+        return new Pose3d(x() * scalar, y() * scalar, z() * scalar, pitch() * scalar, roll() * scalar, yaw() * scalar);
+    }
 }
