@@ -7,18 +7,39 @@ import org.csse220.game_engine.kinematics.Kinematics;
 import org.csse220.levels.Level;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Engine {
     private static Engine instance = null;
 
     private Renderer renderer;
     private Kinematics kinematics;
+    private final ArrayList<Level> levels;
+    private int levelNumber = -1;
+    private GameObject player = null;
 
     private Engine() {
+        levels = new ArrayList<>();
+    }
 
+    public void addLevel(Level level) {
+        levels.add(level);
+    }
+
+    public void setLevel(int levelNumber) {
+        if (this.levelNumber != levelNumber && levelNumber < levels.size()) {
+            this.levelNumber = levelNumber;
+            kinematics.clearAllGameObjects();
+            renderer.clearAllDrawables();
+            renderer.addDrawable(player.getDrawable());
+            for (GameObject gameObject : levels.get(levelNumber).getGameObjects()) {
+                addGameObject(gameObject);
+            }
+        }
     }
 
     public void init(GameObject player, JFrame window) {
+        this.player = player;
         GameKeyListener keyListener = new GameKeyListener();
 
         renderer = new Renderer();
@@ -38,7 +59,7 @@ public class Engine {
         kinematics.kill();
     }
 
-    public void loadLevel(Level level) {
+    public void setLevel(Level level) {
         // TODO: finish this method
     }
 

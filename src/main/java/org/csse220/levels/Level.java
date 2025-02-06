@@ -1,36 +1,78 @@
 package org.csse220.levels;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.StringReader;
-import java.util.Scanner;
+import org.csse220.game_engine.GameObject;
+import org.csse220.game_engine.graphics.Cuboid;
+import org.csse220.game_engine.graphics.Point3d;
+import org.csse220.game_engine.math_utils.GamePose;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.json.JsonValue;
+import java.awt.*;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.nio.file.FileSystems;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Level {
-    private int numObjects;
+    private final int numObjects;
+    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
 
-    private Level(int numObjects){
-
+    private Level(int numObjects) {
         this.numObjects = numObjects;
-
+        for (int i = 0; i < numObjects; i++) {
+            gameObjects.add(new GameObject(new GamePose(), null, new Cuboid(new Point3d(100 * (Math.random() - 0.5), 100 * (Math.random() - 0.5), 0), 5, 5, 5, Math.random() > 0.5 ? Color.GREEN : Color.ORANGE)));
+        }
     }
 
-    public static Level loadLevel(String filename) throws FileNotFoundException,MissingDataException {
+    public ArrayList<GameObject> getGameObjects() {
+        return gameObjects;
+    }
 
-        Scanner sc = new Scanner(filename);
-        String jsonString = "";
-        while(sc.hasNextLine()){
-            jsonString += sc.nextLine();
+    public static ArrayList<Level> loadAll() {
+
+        System.out.println("Please enter the name of the level file you would like to load.  Afterwards, enter another name or press / to quit the level loader.  Suggested level names are 'level_1.json' and 'level_2.json'.  'level_3.json' is a demonstration of how the program handles reading a file with invalid data.\n");
+
+        ArrayList<Level> levels = new ArrayList<>();
+
+        String levelName;
+        while (!(levelName = getLevelName()).equals("/")) {
+            try {
+                levels.add(loadLevel(levelName));
+            } catch (MissingDataException e) {
+                System.out.println("Level file isn't valid.  Please enter another file name.");
+                return loadAll();
+            } catch (IOException e) {
+                System.out.println("Level file does not exist.  Please enter another file name.");
+                return loadAll();
+            }
         }
-        JsonReader reader = Json.createReader(new StringReader(jsonString));
+
+        return levels;
+    }
+
+    private static String getLevelName() {
+        System.out.println("Enter the file name of the level:\n");
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
+    public static Level loadLevel(String filename) throws IOException, MissingDataException {
+
+        Scanner sc = new Scanner(new FileReader(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/main/java/org/csse220/levels/" + filename));
+
+
+        StringBuilder jsonString = new StringBuilder();
+        while (sc.hasNextLine()) {
+            jsonString.append(sc.nextLine());
+        }
+        JsonReader reader = Json.createReader(new StringReader(jsonString.toString()));
 
         JsonObject jsonObject = reader.readObject();
-        if(!jsonObject.containsKey("numObjects")){
+        if (!jsonObject.containsKey("numObjects")) {
             throw new MissingDataException();
         }
         int tempNumObjects = jsonObject.getInt("numObjects");
@@ -44,10 +86,10 @@ public class Level {
 
     @Override
     public String toString() {
-        return "Level[numObjects:" + numObjects+"]";
+        return "Level[numObjects:" + numObjects + "]";
     }
 
-    static class MissingDataException extends Exception {
+    public static class MissingDataException extends Exception {
         MissingDataException() {
             super("MISSING DATA!");
         }
