@@ -4,7 +4,7 @@ import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.math_utils.GamePose;
 
-public class GameObject extends GameElement {
+public class GameObject extends MovingObject {
     private final Collideable collideable;
     private final Drawable drawable;
     private final GamePose relativeCollideablePose;

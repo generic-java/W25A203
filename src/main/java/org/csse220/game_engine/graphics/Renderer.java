@@ -33,12 +33,12 @@ public class Renderer extends KillableThread {
     public void run() {
         while (isActive()) {
             Camera camera = Camera.getInstance();
-            CameraPose camPose = camera.getPosition();
+            CameraPose camPose = camera.getPose();
             Vector3d.updatePitchYaw(camPose.pitch(), camPose.yaw());
             Screen.getInstance().fill(Color.WHITE);
             for (Drawable drawable : drawables) {
                 synchronized (drawable) {
-                    drawable.draw(camera.getPosition(), camPose.pitch(), camPose.yaw(), true);
+                    drawable.draw(camera.getPose(), camPose.pitch(), camPose.yaw(), true);
                 }
             }
             ZBuffer.getInstance().wipe();

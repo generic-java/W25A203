@@ -2,14 +2,14 @@ package org.csse220.game_engine.graphics;
 
 import org.csse220.game_engine.math_utils.GamePose;
 
-public class Placeable {
+public class PlaceableObject {
     protected GamePose pose;
 
-    public Placeable(GamePose pose) {
+    public PlaceableObject(GamePose pose) {
         this.pose = pose;
     }
 
-    public Placeable() {
+    public PlaceableObject() {
         this(new GamePose());
     }
 

@@ -4,7 +4,7 @@ import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 
-public abstract class Drawable extends Placeable {
+public abstract class Drawable extends PlaceableObject {
     public Drawable(GamePose pose) {
         super(pose);
     }

@@ -1,46 +1,30 @@
 package org.csse220.game_engine;
 
-import org.csse220.game_engine.graphics.Placeable;
+import org.csse220.game_engine.graphics.PlaceableObject;
 import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.game_engine.math_utils.Vector3d;
 
-public abstract class GameElement extends Placeable {
+public abstract class MovingObject extends PlaceableObject {
 
-    private final GamePose startPose;
-    protected GamePose pose;
     private GamePose vel;
     private double gravity;
 
-    public GameElement(GamePose pose, double gravity) {
+    public MovingObject(GamePose pose, double gravity) {
         super(pose);
-        startPose = pose;
-        this.pose = pose;
         vel = new GamePose();
         this.gravity = gravity;
     }
 
-    public GameElement(GamePose pose) {
+    public MovingObject(GamePose pose) {
         this(pose, 0);
     }
 
-    public GameElement() {
+    public MovingObject() {
         this(new GamePose());
-    }
-
-    public GamePose getStartPose() {
-        return startPose;
-    }
-
-    public GamePose positionTravelled() {
-        return pose.relativeTo(startPose);
     }
 
     public void setGravity(double gravity) {
         this.gravity = gravity;
-    }
-
-    public void setPose(GamePose pose) {
-        this.pose = pose;
     }
 
     /**
@@ -57,7 +41,7 @@ public abstract class GameElement extends Placeable {
                 vel.z() * moveDirection.z(),
                 vel.yaw() * moveDirection.yaw()
         ).scale(dt);
-        pose = pose.addTo(translation);
+        pose = translation.addTo(pose);
     }
 
     public void setVel(GamePose vel) {
