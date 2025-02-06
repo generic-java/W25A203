@@ -2,7 +2,7 @@ package org.csse220.game_engine.graphics;
 
 import org.csse220.game_engine.math_utils.Vector3d;
 
-public class Point3d {
+public class Point3d extends Vector3d {
     private static double FOV;
     private static double FOV_CONSTANT;
 
@@ -19,16 +19,11 @@ public class Point3d {
         return FOV;
     }
 
-    private final Vector3d absolutePos;
     private Vector3d currentRelativePos;
 
-    public Point3d(Vector3d absolutePos) {
-        this.absolutePos = absolutePos;
-        currentRelativePos = absolutePos;
-    }
-
     public Point3d(double x, double y, double z) {
-        this(new Vector3d(x, y, z));
+        super(x, y, z);
+        currentRelativePos = this;
     }
 
     public double relativeX() {
@@ -44,7 +39,7 @@ public class Point3d {
     }
 
     public void calculateRelativePosition(Vector3d camPos) {
-        Vector3d rotatedPos = absolutePos.rotatePitchYaw(Camera.getInstance().getPosition());
+        Vector3d rotatedPos = rotatePitchYaw(Camera.getInstance().getPosition());
         currentRelativePos = new Vector3d(rotatedPos.x() - camPos.x(), rotatedPos.y() - camPos.y(), rotatedPos.z() - camPos.z());
     }
 
@@ -64,10 +59,6 @@ public class Point3d {
     }
 
     public Point3d translate(double x, double y, double z) {
-        return new Point3d(new Vector3d(absolutePos.x() + x, absolutePos.y() + y, absolutePos.z() + z));
-    }
-
-    public Vector3d getAbsolutePos() {
-        return absolutePos;
+        return new Point3d(x() + x, y() + y, z() + z);
     }
 }

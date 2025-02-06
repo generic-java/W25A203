@@ -1,8 +1,12 @@
 package org.csse220.game_engine.kinematics;
 
-import org.csse220.game_engine.*;
+import org.csse220.game_engine.ElapsedTime;
+import org.csse220.game_engine.GameKeyListener;
+import org.csse220.game_engine.GameObject;
+import org.csse220.game_engine.KillableThread;
 import org.csse220.game_engine.graphics.Camera;
-import org.csse220.game_engine.math_utils.Pose3d;
+import org.csse220.game_engine.math_utils.CameraPose;
+import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.game_engine.math_utils.Vector2d;
 import org.csse220.game_engine.math_utils.Vector3d;
 
@@ -13,27 +17,25 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Kinematics extends KillableThread {
     private final static double MOVE_VEL = 0.025;
     private final static double TURN_VEL = 0.003;
+    private final GamePose CAMERA_OFFSET = new GamePose(0, -15, 0, 0);
 
-    private final Set<GameElement> gameElements;
+    private final Set<GameObject> gameObjects;
     private final ElapsedTime timer;
     private final GameObject player;
     private final Set<Collideable> collideables;
     private final GameKeyListener gameKeyListener;
-    private final Pose3d[] elementMoveSteps = {
-            new Pose3d(1, 0, 0, 0, 0, 0),
-            new Pose3d(0, 1, 0, 0, 0, 0),
-            new Pose3d(0, 0, 1, 0, 0, 0),
-            new Pose3d(0, 0, 0, 1, 0, 0),
-            new Pose3d(0, 0, 0, 0, 1, 0),
-            new Pose3d(0, 0, 0, 0, 0, 1),
+    private final GamePose[] elementMoveSteps = {
+            new GamePose(1, 0, 0, 0),
+            new GamePose(0, 1, 0, 0),
+            new GamePose(0, 0, 1, 0),
+            new GamePose(0, 0, 0, 1),
     };
 
     public Kinematics(GameObject player, GameKeyListener gameKeyListener) {
         collideables = ConcurrentHashMap.newKeySet();
-        gameElements = ConcurrentHashMap.newKeySet();
+        gameObjects = ConcurrentHashMap.newKeySet();
         timer = new ElapsedTime();
         this.player = player;
-        addGameElement(player);
         this.gameKeyListener = gameKeyListener;
     }
 
@@ -49,24 +51,29 @@ public class Kinematics extends KillableThread {
         while (isActive()) {
             double dt = timer.getAndReset();
             setPlayerVelocity(dt);
-            for (Pose3d elementMoveStep : elementMoveSteps) {
-                for (GameElement gameElement : gameElements) {
-                    gameElement.move(elementMoveStep, dt);
-                    if (gameElement == player) {
+            for (GamePose elementMoveStep : elementMoveSteps) {
+                for (GameObject gameObject : gameObjects) {
+                    gameObject.move(elementMoveStep, dt);
+                    if (gameObject == player) {
                     }
                 }
                 for (Collideable collideable : collideables) {
                     for (Collideable toCheck : collideables) {
                         if (collideable != toCheck && collideable.hasCollided(toCheck)) {
-                            while (collideable.onCollide(elementMoveStep) && collideable.hasCollided(toCheck)) ;
+                            //while (collideable.onCollide(elementMoveStep) && collideable.hasCollided(toCheck)) ;
                         }
                     }
                 }
             }
-
-
-            Camera.getInstance().setXYZ(Camera.getInstance().getPose().translate(player.getPose().translate(Camera.getInstance().getPose().scale(-1)).scale(0.0002))); // Set camera pose after everything else is done
+            updateCameraPosition();
         }
+    }
+
+    private void updateCameraPosition() {
+        Camera camera = Camera.getInstance();
+        GamePose targetPose = player.getPose().addTo(CAMERA_OFFSET);
+        camera.setPosition(new CameraPose(15, -15, 0, 0, 0));
+        //camera.setPosition(targetPose);
     }
 
     private void setPlayerVelocity(double dt) {
@@ -113,25 +120,11 @@ public class Kinematics extends KillableThread {
         return gameKeyListener.isKeyPressed(keycode);
     }
 
-    public void addGameElement(GameElement element) {
-        gameElements.add(element);
-        if (element instanceof GameObject) {
-            collideables.add(((GameObject) element).getCollideable());
-        }
+    public void addGameObject(GameObject gameObject) {
+        gameObjects.add(gameObject);
     }
 
-    public void removeGameElement(GameElement element) {
-        gameElements.remove(element);
-        if (element instanceof GameObject) {
-            collideables.remove(((GameObject) element).getCollideable());
-        }
-    }
-
-    public void addCollideable(Collideable collideable) {
-        collideables.add(collideable);
-    }
-
-    public void removeCollideable(Collideable collideable) {
-        collideables.remove(collideable);
+    public void removeGameObject(GameObject gameObject) {
+        gameObjects.remove(gameObject);
     }
 }
