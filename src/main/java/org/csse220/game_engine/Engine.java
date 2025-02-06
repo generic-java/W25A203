@@ -3,7 +3,6 @@ package org.csse220.game_engine;
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.graphics.Renderer;
 import org.csse220.game_engine.graphics.Screen;
-import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.kinematics.Kinematics;
 import org.csse220.levels.Level;
 
@@ -23,6 +22,7 @@ public class Engine {
         GameKeyListener keyListener = new GameKeyListener();
 
         renderer = new Renderer();
+        renderer.addDrawable(player.getDrawable());
         kinematics = new Kinematics(player, keyListener);
 
         window.add(Screen.getInstance());
@@ -42,37 +42,22 @@ public class Engine {
         // TODO: finish this method
     }
 
-    public void addGameObject(GameObject object) {
-        renderer.addDrawable(object.getDrawable());
-        kinematics.addCollideable(object.getCollideable());
-    }
-
-    public void removeGameObject(GameObject object) {
-        renderer.removeDrawable(object.getDrawable());
-        kinematics.removeCollideable(object.getCollideable());
-    }
-
-    public void addCollideable(Collideable collideable) {
-        kinematics.addCollideable(collideable);
-    }
-
-    public void removeCollideable(Collideable collideable) {
-        kinematics.removeCollideable(collideable);
-    }
-
-    public void addGameElement(GameElement element) {
-        kinematics.addGameElement(element);
-        if (element instanceof Drawable) {
-            addDrawable((Drawable) element);
+    public void addGameObject(GameObject gameObject) {
+        kinematics.addGameObject(gameObject);
+        if (gameObject.hasDrawable()) {
+            renderer.addDrawable(gameObject.getDrawable());
         }
     }
 
-    public void removeGameElement(GameElement element) {
-        kinematics.removeGameElement(element);
-        if (element instanceof Drawable) {
-            removeDrawable((Drawable) element);
-        }
-    }
+//    public void removeGameObject(GameObject gameObject) {
+//        gameObjects.remove(gameObject);
+//        if (gameObject.hasCollideable()) {
+//
+//        }
+//        if (gameObject.hasDrawable()) {
+//
+//        }
+//    }
 
     public void addDrawable(Drawable drawable) {
         renderer.addDrawable(drawable);
@@ -92,4 +77,6 @@ public class Engine {
         }
         return instance;
     }
+
+
 }

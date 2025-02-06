@@ -2,33 +2,43 @@ package org.csse220.game_engine;
 
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
-import org.csse220.game_engine.kinematics.Hitbox;
-import org.csse220.game_engine.math_utils.Pose3d;
-import org.csse220.game_engine.math_utils.Vector3d;
+import org.csse220.game_engine.math_utils.GamePose;
 
-import java.util.Set;
-
-public abstract class GameObject extends Collideable implements Drawable {
+public class GameObject extends GameElement {
     private final Collideable collideable;
     private final Drawable drawable;
+    private final GamePose relativeCollideablePose;
+    private final GamePose relativeDrawablePose;
     private double yaw;
 
-    public GameObject(Collideable collideable, Drawable drawable, Pose3d initialPose) {
+    public GameObject(GamePose pose, Collideable collideable, Drawable drawable) {
         this.collideable = collideable;
         this.drawable = drawable;
-        setPose(initialPose);
+        if (hasCollideable())
+            relativeCollideablePose = collideable.getPose().relativeTo(pose);
+        else
+            relativeCollideablePose = new GamePose();
+        if (hasDrawable())
+            relativeDrawablePose = drawable.getPose().relativeTo(pose);
+        else
+            relativeDrawablePose = new GamePose();
     }
 
-    public GameObject(Collideable collideable, Drawable drawable) {
-        this(collideable, drawable, new Pose3d());
+    public final boolean hasCollideable() {
+        return collideable != null;
     }
 
-    public final Collideable getCollideable() {
-        return collideable;
+    public final boolean hasDrawable() {
+        return drawable != null;
     }
 
-    public final Drawable getDrawable() {
-        return drawable;
+    @Override
+    public void move(GamePose moveDirection, double dt) {
+        super.move(moveDirection, dt);
+        if (hasCollideable())
+            collideable.setPose(relativeCollideablePose.addTo(pose));
+        if (hasDrawable())
+            drawable.setPose(relativeDrawablePose.addTo(pose));
     }
 
     public double yaw() {
@@ -39,15 +49,13 @@ public abstract class GameObject extends Collideable implements Drawable {
         yaw += increment;
     }
 
-    abstract public void onCollide();
-
-    @Override
-    public Set<Hitbox> getHitboxes() {
-        return collideable.getHitboxes();
+    public Collideable getCollideable() {
+        return collideable;
     }
 
-    @Override
-    public void draw(Vector3d camPose, double pitch, double yaw, boolean shade) {
-        drawable.draw(camPose, pitch, yaw, shade);
+    public Drawable getDrawable() {
+        return drawable;
     }
+
+    //protected abstract boolean onCollide();
 }

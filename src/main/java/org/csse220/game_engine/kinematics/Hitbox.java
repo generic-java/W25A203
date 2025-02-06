@@ -1,6 +1,6 @@
 package org.csse220.game_engine.kinematics;
 
-import org.csse220.game_engine.math_utils.Pose3d;
+import org.csse220.game_engine.math_utils.GamePose;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +17,7 @@ public class Hitbox extends Collideable {
     private Point2d bottomLeft;
     private final Set<Hitbox> thisHitbox = new HashSet<>();
 
-    public Hitbox(Pose3d pose, double width, double height, double depth) {
+    public Hitbox(GamePose pose, double width, double height, double depth) {
         super(pose);
         this.width = width;
         this.height = height;
@@ -39,7 +39,7 @@ public class Hitbox extends Collideable {
     }
 
     @Override
-    public void setPose(Pose3d pose) {
+    public void setPose(GamePose pose) {
         super.setPose(pose);
         updateVertexPositions();
     }
@@ -108,10 +108,5 @@ public class Hitbox extends Collideable {
     @Override
     public Set<Hitbox> getHitboxes() {
         return thisHitbox;
-    }
-
-    @Override
-    public boolean onCollide(Pose3d collisionDirection) {
-        return false;
     }
 }

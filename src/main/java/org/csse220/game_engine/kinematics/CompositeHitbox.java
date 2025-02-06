@@ -1,15 +1,15 @@
 package org.csse220.game_engine.kinematics;
 
-import org.csse220.game_engine.math_utils.Pose3d;
+import org.csse220.game_engine.math_utils.GamePose;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class CompositeHitbox extends Collideable {
-    private final Map<Hitbox, Pose3d> hitboxes = new HashMap<>();
+    private final Map<Hitbox, GamePose> hitboxes = new HashMap<>();
 
-    public CompositeHitbox(Pose3d pose, Hitbox... hitboxes) {
+    public CompositeHitbox(GamePose pose, Hitbox... hitboxes) {
         super(pose);
         for (Hitbox hitbox : hitboxes) {
             this.hitboxes.put(hitbox, hitbox.getPose().relativeTo(pose));
@@ -17,7 +17,7 @@ public class CompositeHitbox extends Collideable {
     }
 
     @Override
-    public void setPose(Pose3d pose) {
+    public void setPose(GamePose pose) {
         super.setPose(pose);
         for (Hitbox hitbox : hitboxes.keySet()) {
             hitbox.setPose(pose.addTo(hitboxes.get(hitbox))); // Add the relative pose of the hitbox to the overall pose
@@ -29,8 +29,8 @@ public class CompositeHitbox extends Collideable {
         return hitboxes.keySet();
     }
 
-    @Override
-    public boolean onCollide(Pose3d collisionDirection) {
-        return false;
-    }
+//    @Override
+//    public boolean onCollide(GamePose collisionDirection) {
+//        return false;
+//    }
 }

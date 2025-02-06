@@ -1,12 +1,13 @@
 package org.csse220.game_engine.graphics;
 
-import org.csse220.game_engine.GameElement;
+import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.game_engine.math_utils.Vector2d;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 import java.awt.*;
 
-public class Face extends GameElement implements Drawable {
+
+public class Face extends Drawable {
 
     public static final Vector3d LIGHT_SOURCE = new Vector3d(0.3, 0, 1);
     public static final double Y_CLIP_DISTANCE_BRIGHTNESS = 0.4;
@@ -17,8 +18,10 @@ public class Face extends GameElement implements Drawable {
     private final Point3d[] vertices;
     private final Color color;
     private final Color shadedColor;
+    private final GamePose pose;
 
-    public Face(Point3d point1, Point3d point2, Point3d point3, Color color) {
+    public Face(GamePose pose, Point3d point1, Point3d point2, Point3d point3, Color color) {
+        super(pose);
         vertices = new Point3d[]{point1, point2, point3};
         this.color = color;
         double angle = normalVector().angleBetween(LIGHT_SOURCE);
@@ -27,8 +30,11 @@ public class Face extends GameElement implements Drawable {
         }
         double multiplier = 1 - BRIGHTNESS_REDUCTION_FACTOR * angle;
         shadedColor = new Color((int) (color.getRed() * multiplier), (int) (color.getGreen() * multiplier), (int) (color.getBlue() * multiplier));
+        this.pose = pose;
+    }
 
-
+    public Face(Point3d point1, Point3d point2, Point3d point3, Color color) {
+        this(new GamePose(), point1, point2, point3, color);
     }
 
     private DepthCalculator generateDepthCalculator(Vector3d camPos) {
@@ -129,6 +135,11 @@ public class Face extends GameElement implements Drawable {
         }
     }
 
+    @Override
+    public void setPose(GamePose pose) {
+
+    }
+
     private void display(ProjectedTriangle projection, boolean shade) {
         if (shade) {
             projection.fill(shadedColor);
@@ -138,8 +149,8 @@ public class Face extends GameElement implements Drawable {
     }
 
     private Vector3d normalVector() {
-        Vector3d vector1 = vertices[1].getAbsolutePos().relativeTo(vertices[0].getAbsolutePos());
-        Vector3d vector2 = vertices[2].getAbsolutePos().relativeTo(vertices[0].getAbsolutePos());
+        Vector3d vector1 = vertices[1].relativeTo(vertices[0]);
+        Vector3d vector2 = vertices[2].relativeTo(vertices[0]);
         return vector1.cross(vector2);
     }
 }

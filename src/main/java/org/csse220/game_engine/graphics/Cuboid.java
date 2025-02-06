@@ -1,19 +1,20 @@
 package org.csse220.game_engine.graphics;
 
-import org.csse220.game_engine.GameElement;
 import org.csse220.game_engine.kinematics.Hitbox;
+import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.game_engine.math_utils.Vector3d;
 
 import java.awt.*;
 
-public class Cuboid extends GameElement implements Drawable {
+public class Cuboid extends Drawable {
     private final Point3d center;
     private final double width;
     private final double height;
     private final double depth;
     Rectangle[] rectangles = new Rectangle[6];
 
-    public Cuboid(Point3d center, double width, double height, double depth, Color color) {
+    public Cuboid(GamePose pose, Point3d center, double width, double height, double depth, Color color) {
+        super(pose);
         this.center = center;
         this.width = width;
         this.height = height;
@@ -65,6 +66,10 @@ public class Cuboid extends GameElement implements Drawable {
         );
     }
 
+    public Cuboid(Point3d center, double width, double height, double depth, Color color) {
+        this(new GamePose(), center, width, height, depth, color);
+    }
+
     public void draw(Vector3d camPose, double pitch, double yaw, boolean shade) {
         for (Rectangle rectangle : rectangles) {
             rectangle.draw(camPose, pitch, yaw, shade);
@@ -72,7 +77,6 @@ public class Cuboid extends GameElement implements Drawable {
     }
 
     public Hitbox toHitbox() {
-        Vector3d absolutePose = center.getAbsolutePos();
-        return new Hitbox(absolutePose.toPose3d(), width, height, depth);
+        return new Hitbox(center.toGamePose(), width, height, depth);
     }
 }
