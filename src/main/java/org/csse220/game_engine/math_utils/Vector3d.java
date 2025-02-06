@@ -1,6 +1,6 @@
 package org.csse220.game_engine.math_utils;
 
-public class Vector3d {
+public class Vector3d extends Vector2d {
     private static double cosPitch;
     private static double sinPitch;
     private static double cosYaw;
@@ -13,9 +13,7 @@ public class Vector3d {
         sinYaw = Math.sin(-camYaw);
     }
 
-    private final double x;
-    private final double y;
-    private final double z;
+    public final double z;
     private double magnitude = Double.NaN;
 
     /**
@@ -34,8 +32,7 @@ public class Vector3d {
     public static final Vector3d ORIGIN = new Vector3d();
 
     public Vector3d(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.z = z;
     }
 

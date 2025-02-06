@@ -18,7 +18,6 @@ public class Face extends Drawable {
     private final Point3d[] vertices;
     private final Color color;
     private final Color shadedColor;
-    private final GamePose pose;
 
     public Face(GamePose pose, Point3d point1, Point3d point2, Point3d point3, Color color) {
         super(pose);
