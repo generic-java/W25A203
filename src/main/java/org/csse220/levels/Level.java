@@ -1,5 +1,6 @@
 package org.csse220.levels;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
@@ -11,20 +12,15 @@ import javax.json.JsonValue;
 
 
 public class Level {
-    private int numEnemies;
-    private String type;
-    private int index;
-    private String levelName;
     private int numObjects;
 
-    private Level(String levelName, int numEnemies, int numObjects){
-        this.levelName = levelName;
-        this.numEnemies = numEnemies;
+    private Level(int numObjects){
+
         this.numObjects = numObjects;
 
     }
 
-    public static Level loadLevel(String filename) throws FileNotFoundException {
+    public static Level loadLevel(String filename) throws FileNotFoundException,MissingDataException {
 
         Scanner sc = new Scanner(filename);
         String jsonString = "";
@@ -34,17 +30,27 @@ public class Level {
         JsonReader reader = Json.createReader(new StringReader(jsonString));
 
         JsonObject jsonObject = reader.readObject();
-
-        String tempName = jsonObject.getString("name");
-        int tempNumEnemies = jsonObject.getInt("numEnemies");
-
+        if(!jsonObject.containsKey("numObjects")){
+            throw new MissingDataException();
+        }
         int tempNumObjects = jsonObject.getInt("numObjects");
 
-        return new Level(tempName,tempNumEnemies,tempNumObjects);
+        return new Level(tempNumObjects);
     }
 
     public int getNumObjects() {
         return numObjects;
+    }
+
+    @Override
+    public String toString() {
+        return "Level[numObjects:" + numObjects+"]";
+    }
+
+    static class MissingDataException extends Exception {
+        MissingDataException() {
+            super("MISSING DATA!");
+        }
     }
 
 }
