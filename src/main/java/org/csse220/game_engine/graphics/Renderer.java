@@ -23,6 +23,10 @@ public class Renderer extends KillableThread {
         drawables.remove(drawable);
     }
 
+    public void clearAllDrawables() {
+        drawables.clear();
+    }
+
     @Override
     public void start() {
         super.start();

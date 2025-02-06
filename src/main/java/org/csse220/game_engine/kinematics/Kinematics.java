@@ -1,9 +1,6 @@
 package org.csse220.game_engine.kinematics;
 
-import org.csse220.game_engine.ElapsedTime;
-import org.csse220.game_engine.GameKeyListener;
-import org.csse220.game_engine.GameObject;
-import org.csse220.game_engine.KillableThread;
+import org.csse220.game_engine.*;
 import org.csse220.game_engine.graphics.Camera;
 import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.game_engine.math_utils.Vector2d;
@@ -105,6 +102,11 @@ public class Kinematics extends KillableThread {
         } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_S)) {
             velocityVector = velocityVector.translate(0, -1);
         }
+        if (gameKeyListener.isKeyPressed(KeyEvent.VK_U)) {
+            Engine.getInstance().setLevel(0);
+        } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_I)) {
+            Engine.getInstance().setLevel(1);
+        }
         velocityVector = velocityVector.normalize().multiply(MOVE_VEL).rotate(camera.getPose().yaw());
         player.setXVel(velocityVector.x);
         player.setYVel(velocityVector.y);
@@ -122,5 +124,9 @@ public class Kinematics extends KillableThread {
 
     public void removeGameObject(GameObject gameObject) {
         gameObjects.remove(gameObject);
+    }
+
+    public void clearAllGameObjects() {
+        gameObjects.removeIf((gameObject) -> gameObject != player);
     }
 }
