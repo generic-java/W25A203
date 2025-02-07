@@ -107,6 +107,9 @@ public class Kinematics extends KillableThread {
         } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_I)) {
             Engine.getInstance().setLevel(1);
         }
+        if(gameKeyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
+            zVel += MOVE_VEL;
+        }
         velocityVector = velocityVector.normalize().multiply(MOVE_VEL).rotate(camera.getPose().yaw());
         player.setXVel(velocityVector.x);
         player.setYVel(velocityVector.y);
