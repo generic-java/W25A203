@@ -34,7 +34,7 @@ public class Level {
 
     public static ArrayList<Level> loadAll() {
 
-        System.out.println("Please enter the name of the level file you would like to load.  Afterwards, enter another name or press / to quit the level loader.  Suggested level names are 'level_1.json' and 'level_2.json'.  'level_3.json' is a demonstration of how the program handles reading a file with invalid data.\n");
+        System.out.println("Please enter the name of the level file you would like to load.  Afterwards, enter another name or press / to quit the level loader.  Suggested level names are 'level_1.json' and 'level_2.json'.  'level_3.json' is a demonstration of how the program handles reading a file with invalid data.  Press the U and I keys to switch levels.\n");
 
         ArrayList<Level> levels = new ArrayList<>();
 
@@ -94,5 +94,4 @@ public class Level {
             super("MISSING DATA!");
         }
     }
-
 }
