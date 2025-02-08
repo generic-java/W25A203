@@ -9,13 +9,11 @@ public class Rectangle extends Drawable {
 
     private final Face top;
     private final Face bottom;
-    private final Color color;
 
     public Rectangle(GamePose pose, Point3d topLeft, Point3d topRight, Point3d bottomRight, Point3d bottomLeft, Color color) {
-        super(pose);
-        top = new Face(topLeft, topRight, bottomLeft, color);
-        bottom = new Face(bottomLeft, bottomRight, topRight, color);
-        this.color = color;
+        super(pose, color);
+        top = new Face(pose, topLeft, topRight, bottomLeft, color);
+        bottom = new Face(pose, bottomLeft, bottomRight, topRight, color);
     }
 
     public Rectangle(Point3d topLeft, Point3d topRight, Point3d bottomRight, Point3d bottomLeft, Color color) {
@@ -29,7 +27,9 @@ public class Rectangle extends Drawable {
 
     @Override
     public void setPose(GamePose pose) {
-
+        super.setPose(pose);
+        top.setPose(pose);
+        bottom.setPose(pose);
     }
 
     public Color getColor() {

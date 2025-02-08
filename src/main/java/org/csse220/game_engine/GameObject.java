@@ -33,6 +33,15 @@ public class GameObject extends MovingObject {
     }
 
     @Override
+    public void setPose(GamePose pose) {
+        super.setPose(pose);
+        if (hasCollideable())
+            collideable.setPose(relativeCollideablePose.addTo(pose));
+        if (hasDrawable())
+            drawable.setPose(relativeDrawablePose.addTo(pose));
+    }
+
+    @Override
     public void move(GamePose moveDirection, double dt) {
         super.move(moveDirection, dt);
         if (hasCollideable())
@@ -55,6 +64,10 @@ public class GameObject extends MovingObject {
 
     public Drawable getDrawable() {
         return drawable;
+    }
+
+    public void onCollide(GameObject other, GamePose moveDirection) {
+        
     }
 
     //protected abstract boolean onCollide();

@@ -14,7 +14,7 @@ public class Cuboid extends Drawable {
     Rectangle[] rectangles = new Rectangle[6];
 
     public Cuboid(GamePose pose, Point3d center, double width, double height, double depth, Color color) {
-        super(pose);
+        super(pose, color);
         this.center = center;
         this.width = width;
         this.height = height;
@@ -23,6 +23,7 @@ public class Cuboid extends Drawable {
         double halfHeight = height / 2;
         double halfDepth = depth / 2;
         rectangles[0] = new Rectangle(
+                pose,
                 center.translate(-halfWidth, halfDepth, halfHeight),
                 center.translate(halfWidth, halfDepth, halfHeight),
                 center.translate(halfWidth, -halfDepth, halfHeight),
@@ -30,6 +31,7 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[1] = new Rectangle(
+                pose,
                 center.translate(-halfWidth, halfDepth, -halfHeight),
                 center.translate(halfWidth, halfDepth, -halfHeight),
                 center.translate(halfWidth, -halfDepth, -halfHeight),
@@ -37,6 +39,7 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[2] = new Rectangle(
+                pose,
                 center.translate(-halfWidth, halfDepth, -halfHeight),
                 center.translate(-halfWidth, halfDepth, halfHeight),
                 center.translate(-halfWidth, -halfDepth, halfHeight),
@@ -44,6 +47,7 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[3] = new Rectangle(
+                pose,
                 center.translate(halfWidth, halfDepth, -halfHeight),
                 center.translate(halfWidth, halfDepth, halfHeight),
                 center.translate(halfWidth, -halfDepth, halfHeight),
@@ -51,6 +55,7 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[4] = new Rectangle(
+                pose,
                 center.translate(-halfWidth, halfDepth, -halfHeight),
                 center.translate(halfWidth, halfDepth, -halfHeight),
                 center.translate(halfWidth, halfDepth, halfHeight),
@@ -58,6 +63,7 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[5] = new Rectangle(
+                pose,
                 center.translate(-halfWidth, -halfDepth, -halfHeight),
                 center.translate(halfWidth, -halfDepth, -halfHeight),
                 center.translate(halfWidth, -halfDepth, halfHeight),
@@ -73,6 +79,14 @@ public class Cuboid extends Drawable {
     public void draw(Vector3d camPose, double pitch, double yaw, boolean shade) {
         for (Rectangle rectangle : rectangles) {
             rectangle.draw(camPose, pitch, yaw, shade);
+        }
+    }
+
+    @Override
+    public void setPose(GamePose pose) {
+        super.setPose(pose);
+        for (Rectangle rectangle : rectangles) {
+            rectangle.setPose(pose);
         }
     }
 

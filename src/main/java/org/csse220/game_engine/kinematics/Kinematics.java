@@ -12,18 +12,22 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Kinematics extends KillableThread {
     private final static double MOVE_VEL = 0.025;
     private final static double TURN_VEL = 0.003;
-    private final GamePose CAMERA_OFFSET = new GamePose(0, -15, 0, 0);
+    private final GamePose CAMERA_OFFSET = new GamePose(0, -15, 15, 0);
+    private static final GamePose MOVE_X = new GamePose(1, 0, 0, 0);
+    private static final GamePose MOVE_Y = new GamePose(0, 1, 0, 0);
+    private static final GamePose MOVE_Z = new GamePose(0, 0, 1, 0);
+    private static final GamePose MOVE_YAW = new GamePose(0, 0, 0, 1);
 
     private final Set<GameObject> gameObjects;
     private final ElapsedTime timer;
     private final GameObject player;
-    private final Set<Collideable> collideables;
+    private final Set<GameObject> collideables;
     private final GameKeyListener gameKeyListener;
     private final GamePose[] elementMoveSteps = {
-            new GamePose(1, 0, 0, 0),
-            new GamePose(0, 1, 0, 0),
-            new GamePose(0, 0, 1, 0),
-            new GamePose(0, 0, 0, 1),
+            MOVE_X,
+            MOVE_Y,
+            MOVE_Z,
+            MOVE_YAW,
     };
 
     public Kinematics(GameObject player, GameKeyListener gameKeyListener) {
@@ -31,7 +35,7 @@ public class Kinematics extends KillableThread {
         gameObjects = ConcurrentHashMap.newKeySet();
         timer = new ElapsedTime();
         this.player = player;
-        gameObjects.add(player);
+        addGameObject(player);
         this.gameKeyListener = gameKeyListener;
     }
 
@@ -50,14 +54,11 @@ public class Kinematics extends KillableThread {
             for (GamePose elementMoveStep : elementMoveSteps) {
                 for (GameObject gameObject : gameObjects) {
                     gameObject.move(elementMoveStep, dt);
-                    if (gameObject == player) {
-
-                    }
                 }
-                for (Collideable collideable : collideables) {
-                    for (Collideable toCheck : collideables) {
-                        if (collideable != toCheck && collideable.hasCollided(toCheck)) {
-                            //while (collideable.onCollide(elementMoveStep) && collideable.hasCollided(toCheck)) ;
+                for (GameObject gameObject : collideables) {
+                    for (GameObject toCheck : collideables) {
+                        if (gameObject != toCheck && gameObject.getCollideable().hasCollided(toCheck.getCollideable())) {
+                            gameObject.onCollide(toCheck, elementMoveStep);
                         }
                     }
                 }
@@ -68,7 +69,8 @@ public class Kinematics extends KillableThread {
 
     private void updateCameraPosition() {
         Camera camera = Camera.getInstance();
-        GamePose targetPose = player.getPose().addTo(CAMERA_OFFSET);
+        GamePose targetPose = player.getPose().addTo(CAMERA_OFFSET.rotateYaw(player.getPose().yaw()));
+        //camera.setPose(camera.getPose().translate(targetPose.relativeTo(camera.getPose()).scale(0.00006)));
         camera.setPose(targetPose);
     }
 
@@ -107,7 +109,7 @@ public class Kinematics extends KillableThread {
         } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_I)) {
             Engine.getInstance().setLevel(1);
         }
-        if(gameKeyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
+        if (gameKeyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
             zVel += MOVE_VEL;
         }
         velocityVector = velocityVector.normalize().multiply(MOVE_VEL).rotate(camera.getPose().yaw());
@@ -123,6 +125,9 @@ public class Kinematics extends KillableThread {
 
     public void addGameObject(GameObject gameObject) {
         gameObjects.add(gameObject);
+        if (gameObject.hasCollideable()) {
+            collideables.add(gameObject);
+        }
     }
 
     public void removeGameObject(GameObject gameObject) {

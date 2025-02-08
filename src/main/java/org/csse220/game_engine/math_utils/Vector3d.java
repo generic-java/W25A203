@@ -73,9 +73,13 @@ public class Vector3d extends Vector2d {
         return rotatePitchYaw(ORIGIN);
     }
 
-    public Vector3d rotateYawAbout(Vector3d center, double yaw) {
+    public Vector3d rotateYaw(Vector3d center, double yaw) {
         Vector2d rotatedVector = new Vector2d(x, y).translate(-center.x(), -center.y()).rotate(yaw).translate(center.x(), center.y());
         return new Vector3d(rotatedVector.x, rotatedVector.y, z);
+    }
+
+    public Vector3d rotateYaw(double yaw) {
+        return rotateYaw(ORIGIN, yaw);
     }
 
     public double distanceTo(Vector3d point) {

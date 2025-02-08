@@ -12,6 +12,10 @@ public class GamePose extends Vector3d {
         this(0, 0, 0, 0);
     }
 
+    public GamePose(Vector3d vector, double yaw) {
+        this(vector.x(), vector.y(), vector.z(), yaw);
+    }
+
     public double yaw() {
         return yaw;
     }
@@ -51,5 +55,14 @@ public class GamePose extends Vector3d {
 
     public GamePose scale(double scalar) {
         return new GamePose(x() * scalar, y() * scalar, z() * scalar, yaw() * scalar);
+    }
+
+    @Override
+    public GamePose rotateYaw(double yaw) {
+        return new GamePose(super.rotateYaw(yaw), this.yaw);
+    }
+
+    public double dot(GamePose other) {
+        return super.dot(other) + yaw() * other.yaw;
     }
 }

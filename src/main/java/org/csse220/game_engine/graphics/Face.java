@@ -15,21 +15,24 @@ public class Face extends Drawable {
     private static final boolean CLIP_Y = true;
     private static final double CLIP_DISTANCE = 0.1;
 
+    private final Vector3d[] relativeVertices;
     private final Point3d[] vertices;
-    private final Color color;
-    private final Color shadedColor;
+    private Color shadedColor;
 
     public Face(GamePose pose, Point3d point1, Point3d point2, Point3d point3, Color color) {
-        super(pose);
+        super(pose, color);
         vertices = new Point3d[]{point1, point2, point3};
-        this.color = color;
+        relativeVertices = new Vector3d[]{point1.relativeTo(pose), point2.relativeTo(pose), point3.relativeTo(pose)};
+        shadedColor = calculateShadedColor();
+    }
+
+    private Color calculateShadedColor() {
         double angle = normalVector().angleBetween(LIGHT_SOURCE);
         if (angle > Math.PI / 2) {
             angle = Math.PI - angle;
         }
         double multiplier = 1 - BRIGHTNESS_REDUCTION_FACTOR * angle;
-        shadedColor = new Color((int) (color.getRed() * multiplier), (int) (color.getGreen() * multiplier), (int) (color.getBlue() * multiplier));
-        this.pose = pose;
+        return new Color((int) (color.getRed() * multiplier), (int) (color.getGreen() * multiplier), (int) (color.getBlue() * multiplier));
     }
 
     public Face(Point3d point1, Point3d point2, Point3d point3, Color color) {
@@ -38,7 +41,7 @@ public class Face extends Drawable {
 
     private DepthCalculator generateDepthCalculator(Vector3d camPos) {
         for (Point3d vertex : vertices) {
-            vertex.calculateRelativePosition(camPos);
+            vertex.calculateRelativePosition();
         }
 
         double c1 = -vertices[0].relativeX() * vertices[1].relativeY() * vertices[2].relativeZ() + vertices[0].relativeX() * vertices[2].relativeY() * vertices[1].relativeZ() + vertices[1].relativeX() * vertices[0].relativeY() * vertices[2].relativeZ() - vertices[1].relativeX() * vertices[2].relativeY() * vertices[0].relativeZ() - vertices[2].relativeX() * vertices[0].relativeY() * vertices[1].relativeZ() + vertices[2].relativeX() * vertices[1].relativeY() * vertices[0].relativeZ();
@@ -58,7 +61,7 @@ public class Face extends Drawable {
         Point3d[] behind = new Point3d[2];
         Point3d[] front = new Point3d[2];
         for (Point3d vertex : vertices) {
-            vertex.calculateRelativePosition(camPos);
+            vertex.calculateRelativePosition();
             if (vertex.relativeY() <= CLIP_DISTANCE) {
                 if (behindCamera == 0) {
                     behind[0] = vertex;
@@ -136,7 +139,11 @@ public class Face extends Drawable {
 
     @Override
     public void setPose(GamePose pose) {
-
+        super.setPose(pose);
+        for (int i = 0; i < vertices.length; i++) {
+            vertices[i] = new Point3d(relativeVertices[i].rotateYaw(pose.yaw()).translate(pose));
+        }
+        shadedColor = calculateShadedColor();
     }
 
     private void display(ProjectedTriangle projection, boolean shade) {
@@ -148,8 +155,12 @@ public class Face extends Drawable {
     }
 
     private Vector3d normalVector() {
-        Vector3d vector1 = vertices[1].relativeTo(vertices[0]);
-        Vector3d vector2 = vertices[2].relativeTo(vertices[0]);
+        Vector3d vector1 = relativeVertices[1].relativeTo(relativeVertices[0]);
+        Vector3d vector2 = relativeVertices[2].relativeTo(relativeVertices[0]);
         return vector1.cross(vector2);
+    }
+
+    public Color getColor() {
+        return color;
     }
 }
