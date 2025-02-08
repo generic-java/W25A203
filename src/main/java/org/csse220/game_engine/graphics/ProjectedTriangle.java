@@ -1,18 +1,23 @@
 package org.csse220.game_engine.graphics;
 
+import org.csse220.game_engine.kinematics.LineSegment;
+
 import java.awt.*;
 
 public class ProjectedTriangle {
     private static final double MAX_DISTANCE = 500;
 
+    private final double angle;
     private final ProjectedPoint[] vertices;
     private double c1;
     private double c2;
     private double c3;
     private double c4;
     private final DepthCalculator depthCalculator;
+    private static final double DEPTH_ALLOWANCE = -0.5;
 
-    public ProjectedTriangle(ProjectedPoint point1, ProjectedPoint point2, ProjectedPoint point3, DepthCalculator depthCalculator) {
+    public ProjectedTriangle(double angle, ProjectedPoint point1, ProjectedPoint point2, ProjectedPoint point3, DepthCalculator depthCalculator) {
+        this.angle = angle;
         vertices = new ProjectedPoint[]{point1, point2, point3}; // sorts in increasing order by x value
         for (int i = 0; i < vertices.length; i++) {
             if (vertices[0].x() > vertices[1].x()) {
@@ -26,6 +31,10 @@ public class ProjectedTriangle {
             }
         }
         this.depthCalculator = depthCalculator;
+    }
+
+    public ProjectedTriangle(ProjectedPoint point1, ProjectedPoint point2, ProjectedPoint point3, DepthCalculator depthCalculator) {
+        this(0, point1, point2, point3, depthCalculator);
     }
 
     private static void swap(ProjectedPoint[] array, int index1, int index2) {
@@ -79,10 +88,13 @@ public class ProjectedTriangle {
         }
     }
 
-    private static void paintIfVisible(int x, int y, double depth, Color color) {
-        if (depth < ZBuffer.getInstance().get(x, y) && depth > 0 && Double.isFinite(depth) && depth < MAX_DISTANCE) {
+    private void paintIfVisible(int x, int y, double depth, Color color) {
+        double[] zBufferInformation = ZBuffer.getInstance().get(x, y);
+        double depthDifference = zBufferInformation[0] - depth;
+        double angleDifference = zBufferInformation[1] - angle;
+        if ((depthDifference > 0 || (depthDifference > DEPTH_ALLOWANCE && angleDifference > 0)) && depth > 0 && Double.isFinite(depth) && depth < MAX_DISTANCE) {
             Screen.getInstance().paintPixel(x, y, color);
-            ZBuffer.getInstance().set(x, y, depth);
+            ZBuffer.getInstance().set(x, y, depth, angle);
         }
     }
 
@@ -122,5 +134,26 @@ public class ProjectedTriangle {
 
     public ProjectedPoint[] getVertices() {
         return vertices;
+    }
+
+    private LineSegment[] getLineSegments() {
+        return new LineSegment[]{
+                new LineSegment(vertices[0].toPoint2d(), vertices[1].toPoint2d()),
+                new LineSegment(vertices[1].toPoint2d(), vertices[2].toPoint2d()),
+                new LineSegment(vertices[2].toPoint2d(), vertices[0].toPoint2d())
+        };
+    }
+
+
+    public double intersectionsWith(ProjectedTriangle other) {
+        int intersections = 0;
+        for (LineSegment lineSegment : getLineSegments()) {
+            for (LineSegment toCheck : other.getLineSegments()) {
+                if (lineSegment.intersectsWith(toCheck)) {
+                    intersections++;
+                }
+            }
+        }
+        return intersections;
     }
 }

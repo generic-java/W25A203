@@ -18,5 +18,5 @@ public abstract class Drawable extends PlaceableObject {
         return color;
     }
 
-    abstract void draw(Vector3d camPose, double pitch, double yaw, boolean shade);
+    public abstract void draw(Vector3d camPose, double pitch, double yaw, boolean shade);
 }

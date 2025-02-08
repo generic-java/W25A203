@@ -2,10 +2,17 @@ package org.csse220.game_engine.kinematics;
 
 import org.csse220.game_engine.*;
 import org.csse220.game_engine.graphics.Camera;
+import org.csse220.game_engine.graphics.Drawable;
+import org.csse220.game_engine.graphics.Screen;
+import org.csse220.game_engine.graphics.ZBuffer;
+import org.csse220.game_engine.math_utils.CameraPose;
 import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.game_engine.math_utils.Vector2d;
+import org.csse220.game_engine.math_utils.Vector3d;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,6 +29,7 @@ public class Kinematics extends KillableThread {
     private final ElapsedTime timer;
     private final GameObject player;
     private final Set<GameObject> collideables;
+    private final Set<Drawable> drawables;
     private final GameKeyListener gameKeyListener;
     private final GamePose[] elementMoveSteps = {
             MOVE_X,
@@ -32,6 +40,7 @@ public class Kinematics extends KillableThread {
 
     public Kinematics(GameObject player, GameKeyListener gameKeyListener) {
         collideables = ConcurrentHashMap.newKeySet();
+        drawables = new HashSet<>();
         gameObjects = ConcurrentHashMap.newKeySet();
         timer = new ElapsedTime();
         this.player = player;
@@ -64,6 +73,15 @@ public class Kinematics extends KillableThread {
                 }
             }
             updateCameraPosition();
+            Camera camera = Camera.getInstance();
+            CameraPose camPose = camera.getPose();
+            Vector3d.updatePitchYaw(camPose.pitch(), camPose.yaw());
+            Screen.getInstance().fill(Color.WHITE);
+            for (Drawable drawable : drawables) {
+                drawable.draw(camera.getPose(), camPose.pitch(), camPose.yaw(), true);
+            }
+            ZBuffer.getInstance().wipe();
+            Screen.getInstance().refresh();
         }
     }
 
@@ -127,6 +145,9 @@ public class Kinematics extends KillableThread {
         gameObjects.add(gameObject);
         if (gameObject.hasCollideable()) {
             collideables.add(gameObject);
+        }
+        if (gameObject.hasDrawable()) {
+            drawables.add(gameObject.getDrawable());
         }
     }
 

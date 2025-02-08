@@ -11,7 +11,7 @@ import java.awt.*;
 public class Player extends SolidGameObject {
 
     public Player() {
-        super(new GamePose(), new Hitbox(new GamePose(), 5, 5, 5), new Cuboid(new Point3d(0, 0, 0), 5, 5, 5, Color.ORANGE));
-        setGravity(0 * 0.03);
+        super(new GamePose(0, 0, 75, 0), new Hitbox(new GamePose(), 5, 5, 5), new Cuboid(new Point3d(0, 0, 0), 5, 5, 5, Color.ORANGE));
+        setGravity(0 * 0.01);
     }
 }

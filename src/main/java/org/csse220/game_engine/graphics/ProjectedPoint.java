@@ -1,5 +1,7 @@
 package org.csse220.game_engine.graphics;
 
+import org.csse220.game_engine.kinematics.Point2d;
+
 import java.awt.*;
 
 public class ProjectedPoint {
@@ -28,6 +30,10 @@ public class ProjectedPoint {
 
     public int y() {
         return screenY;
+    }
+
+    public Point2d toPoint2d() {
+        return new Point2d(screenX, screenY);
     }
 
     @Override

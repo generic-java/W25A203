@@ -12,6 +12,7 @@ public class GameObject extends MovingObject {
     private double yaw;
 
     public GameObject(GamePose pose, Collideable collideable, Drawable drawable) {
+        super(pose);
         this.collideable = collideable;
         this.drawable = drawable;
         if (hasCollideable())
@@ -67,7 +68,7 @@ public class GameObject extends MovingObject {
     }
 
     public void onCollide(GameObject other, GamePose moveDirection) {
-        
+
     }
 
     //protected abstract boolean onCollide();
