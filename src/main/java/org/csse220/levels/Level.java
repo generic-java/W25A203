@@ -5,9 +5,7 @@ import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Point3d;
 import org.csse220.game_engine.math_utils.GamePose;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import javax.json.*;
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
@@ -72,10 +70,20 @@ public class Level {
         JsonReader reader = Json.createReader(new StringReader(jsonString.toString()));
 
         JsonObject jsonObject = reader.readObject();
-        if (!jsonObject.containsKey("numObjects")) {
+        if (!jsonObject.containsKey("numObjects") || !jsonObject.containsKey("enemies") || !jsonObject.containsKey("Name")) {
             throw new MissingDataException();
         }
+
         int tempNumObjects = jsonObject.getInt("numObjects");
+        String tempName = jsonObject.getString("Name");
+        JsonArray enemies = jsonObject.getJsonArray("enemies");
+        for(JsonValue enemy : enemies){
+            JsonObject tempEnemy = (JsonObject)enemy;
+            double posx = tempEnemy.getJsonNumber("PoseX").doubleValue();
+            double posy = tempEnemy.getJsonNumber("PoseY").doubleValue();
+            double posz = tempEnemy.getJsonNumber("PoseZ").doubleValue();
+            String type = tempEnemy.getString("Type");
+        }
 
         return new Level(tempNumObjects);
     }
