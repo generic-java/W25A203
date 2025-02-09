@@ -2,9 +2,8 @@ package org.csse220.game_engine.graphics;
 
 import org.csse220.game_engine.math_utils.CameraPose;
 import org.csse220.game_engine.math_utils.GamePose;
-import org.csse220.game_engine.math_utils.PoseSupplier;
 
-public class Camera implements PoseSupplier {
+public class Camera {
     private static Camera instance = null;
 
     private CameraPose pose;
@@ -40,7 +39,6 @@ public class Camera implements PoseSupplier {
         pose = new CameraPose(pose.x(), pose.y(), pose.z(), pose.pitch(), yaw);
     }
 
-    @Override
     public CameraPose getPose() {
         return pose;
     }

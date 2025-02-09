@@ -15,7 +15,7 @@ public abstract class Collideable extends PlaceableObject {
         super(new GamePose());
     }
 
-    final boolean hasCollided(Collideable other) {
+    public final boolean hasCollided(Collideable other) {
         for (Hitbox firstHitbox : getHitboxes()) {
             for (Hitbox secondHitbox : other.getHitboxes()) {
                 if (firstHitbox.intersects(secondHitbox)) {

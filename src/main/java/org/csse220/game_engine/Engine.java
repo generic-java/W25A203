@@ -1,7 +1,6 @@
 package org.csse220.game_engine;
 
 import org.csse220.game_engine.graphics.Drawable;
-import org.csse220.game_engine.graphics.Renderer;
 import org.csse220.game_engine.graphics.Screen;
 import org.csse220.game_engine.kinematics.Kinematics;
 import org.csse220.levels.Level;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 public class Engine {
     private static Engine instance = null;
 
-    private Renderer renderer;
     private Kinematics kinematics;
     private final ArrayList<Level> levels;
     private int levelNumber = -1;
@@ -30,32 +28,27 @@ public class Engine {
         if (this.levelNumber != levelNumber && levelNumber < levels.size()) {
             this.levelNumber = levelNumber;
             kinematics.clearAllGameObjects();
-            renderer.clearAllDrawables();
-            renderer.addDrawable(player.getDrawable());
             for (GameObject gameObject : levels.get(levelNumber).getGameObjects()) {
                 addGameObject(gameObject);
             }
         }
     }
 
-    public void init(GameObject player, JFrame window) {
+    public void init(SolidGameObject player, JFrame window) {
         this.player = player;
         GameKeyListener keyListener = new GameKeyListener();
 
-        renderer = new Renderer();
-        renderer.addDrawable(player.getDrawable());
         kinematics = new Kinematics(player, keyListener);
 
         window.add(Screen.getInstance());
         window.addKeyListener(keyListener);
         window.setVisible(true);
 
-        renderer.start();
+        //renderer.start();
         kinematics.start();
     }
 
     private void kill() {
-        renderer.kill();
         kinematics.kill();
     }
 
@@ -65,9 +58,6 @@ public class Engine {
 
     public void addGameObject(GameObject gameObject) {
         kinematics.addGameObject(gameObject);
-        if (gameObject.hasDrawable()) {
-            renderer.addDrawable(gameObject.getDrawable());
-        }
     }
 
 //    public void removeGameObject(GameObject gameObject) {
@@ -81,11 +71,10 @@ public class Engine {
 //    }
 
     public void addDrawable(Drawable drawable) {
-        renderer.addDrawable(drawable);
+
     }
 
     public void removeDrawable(Drawable drawable) {
-        renderer.removeDrawable(drawable);
     }
 
     public boolean keyPressed(int keycode) {

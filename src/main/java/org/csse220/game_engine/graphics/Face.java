@@ -15,21 +15,24 @@ public class Face extends Drawable {
     private static final boolean CLIP_Y = true;
     private static final double CLIP_DISTANCE = 0.1;
 
+    private final Vector3d[] relativeVertices;
     private final Point3d[] vertices;
-    private final Color color;
-    private final Color shadedColor;
+    private Color shadedColor;
 
     public Face(GamePose pose, Point3d point1, Point3d point2, Point3d point3, Color color) {
-        super(pose);
+        super(pose, color);
         vertices = new Point3d[]{point1, point2, point3};
-        this.color = color;
+        relativeVertices = new Vector3d[]{point1.relativeTo(pose), point2.relativeTo(pose), point3.relativeTo(pose)};
+        shadedColor = calculateShadedColor();
+    }
+
+    private Color calculateShadedColor() {
         double angle = normalVector().angleBetween(LIGHT_SOURCE);
         if (angle > Math.PI / 2) {
             angle = Math.PI - angle;
         }
         double multiplier = 1 - BRIGHTNESS_REDUCTION_FACTOR * angle;
-        shadedColor = new Color((int) (color.getRed() * multiplier), (int) (color.getGreen() * multiplier), (int) (color.getBlue() * multiplier));
-        this.pose = pose;
+        return new Color((int) (color.getRed() * multiplier), (int) (color.getGreen() * multiplier), (int) (color.getBlue() * multiplier));
     }
 
     public Face(Point3d point1, Point3d point2, Point3d point3, Color color) {
@@ -38,7 +41,7 @@ public class Face extends Drawable {
 
     private DepthCalculator generateDepthCalculator(Vector3d camPos) {
         for (Point3d vertex : vertices) {
-            vertex.calculateRelativePosition(camPos);
+            vertex.calculateRelativePosition();
         }
 
         double c1 = -vertices[0].relativeX() * vertices[1].relativeY() * vertices[2].relativeZ() + vertices[0].relativeX() * vertices[2].relativeY() * vertices[1].relativeZ() + vertices[1].relativeX() * vertices[0].relativeY() * vertices[2].relativeZ() - vertices[1].relativeX() * vertices[2].relativeY() * vertices[0].relativeZ() - vertices[2].relativeX() * vertices[0].relativeY() * vertices[1].relativeZ() + vertices[2].relativeX() * vertices[1].relativeY() * vertices[0].relativeZ();
@@ -54,11 +57,10 @@ public class Face extends Drawable {
         int behindCamera = 0;
         int frontCamera = 0;
         ProjectedTriangle firstTriangle = null;
-        ProjectedTriangle secondTriangle = null;
         Point3d[] behind = new Point3d[2];
         Point3d[] front = new Point3d[2];
         for (Point3d vertex : vertices) {
-            vertex.calculateRelativePosition(camPos);
+            vertex.calculateRelativePosition();
             if (vertex.relativeY() <= CLIP_DISTANCE) {
                 if (behindCamera == 0) {
                     behind[0] = vertex;
@@ -85,6 +87,7 @@ public class Face extends Drawable {
         switch (behindCamera) {
             case 0:
                 firstTriangle = new ProjectedTriangle(
+                        angleToEye(),
                         vertices[0].project(),
                         vertices[1].project(),
                         vertices[2].project(),
@@ -96,22 +99,20 @@ public class Face extends Drawable {
                 newX1 = Vector2d.interpolate(behind[0].relativeY(), behind[0].relativeX(), front[0].relativeY(), front[0].relativeX(), CLIP_DISTANCE);
                 newZ2 = Vector2d.interpolate(behind[0].relativeY(), behind[0].relativeZ(), front[1].relativeY(), front[1].relativeZ(), CLIP_DISTANCE);
                 newX2 = Vector2d.interpolate(behind[0].relativeY(), behind[0].relativeX(), front[1].relativeY(), front[1].relativeX(), CLIP_DISTANCE);
-                Point3d firstInterpolated = new Point3d(newX1, CLIP_DISTANCE, newZ1);
-                Point3d secondInterpolated = new Point3d(newX2, CLIP_DISTANCE, newZ2);
 
                 ProjectedPoint firstFront = front[0].project();
                 ProjectedPoint secondFront = front[1].project();
 
-                ProjectedPoint firstBehind = firstInterpolated.project();
-                ProjectedPoint secondBehind = secondInterpolated.project();
+                ProjectedPoint firstBehind = Point3d.project(newX1, CLIP_DISTANCE, newZ1);
+                ProjectedPoint secondBehind = Point3d.project(newX2, CLIP_DISTANCE, newZ2);
 
                 firstTriangle = new ProjectedTriangle(firstBehind, secondBehind, firstFront, depthCalculator);
 
-                if (firstFront.x() > secondFront.x()) { // If firstFront is the rightmost front point, choose the leftmost behind point
-                    secondTriangle = new ProjectedTriangle(firstFront, secondFront, firstBehind.x() < secondBehind.x() ? firstBehind : secondBehind, depthCalculator);
-                } else { // If firstFront is leftmost, choose rightmost
-                    secondTriangle = new ProjectedTriangle(firstFront, secondFront, firstBehind.x() > secondBehind.x() ? firstBehind : secondBehind, depthCalculator);
-                }
+                ProjectedTriangle firstCandidate = new ProjectedTriangle(firstFront, secondFront, firstBehind, depthCalculator);
+                ProjectedTriangle secondCandidate = new ProjectedTriangle(firstFront, secondFront, secondBehind, depthCalculator);
+
+                display(firstCandidate, shade);
+                display(secondCandidate, shade);
                 break;
             case 2:
                 newZ1 = Vector2d.interpolate(front[0].relativeY(), front[0].relativeZ(), behind[0].relativeY(), behind[0].relativeZ(), CLIP_DISTANCE);
@@ -123,20 +124,16 @@ public class Face extends Drawable {
             case 3:
                 return;
         }
-        if (secondTriangle != null) {
-            //secondTriangle.fill(Color.orange);
-            display(secondTriangle, shade);
-        }
-        if (behindCamera == 2 && false) {
-            firstTriangle.fill(Color.gray);
-        } else {
-            display(firstTriangle, shade);
-        }
+        display(firstTriangle, shade);
     }
 
     @Override
     public void setPose(GamePose pose) {
-
+        super.setPose(pose);
+        for (int i = 0; i < vertices.length; i++) {
+            vertices[i] = new Point3d(relativeVertices[i].rotateYaw(pose.yaw()).translate(pose));
+        }
+        shadedColor = calculateShadedColor();
     }
 
     private void display(ProjectedTriangle projection, boolean shade) {
@@ -148,8 +145,16 @@ public class Face extends Drawable {
     }
 
     private Vector3d normalVector() {
-        Vector3d vector1 = vertices[1].relativeTo(vertices[0]);
-        Vector3d vector2 = vertices[2].relativeTo(vertices[0]);
+        Vector3d vector1 = relativeVertices[1].relativeTo(relativeVertices[0]);
+        Vector3d vector2 = relativeVertices[2].relativeTo(relativeVertices[0]);
         return vector1.cross(vector2);
+    }
+
+    private double angleToEye() {
+        double angle = normalVector().angleBetween(new Vector3d(0, -1, 1));
+        if (angle > Math.PI / 2) {
+            angle = Math.PI - angle;
+        }
+        return angle;
     }
 }

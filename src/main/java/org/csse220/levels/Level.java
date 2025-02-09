@@ -1,6 +1,7 @@
 package org.csse220.levels;
 
 import org.csse220.game_engine.GameObject;
+import org.csse220.game_engine.game_objects.CuboidTerrain;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Point3d;
 import org.csse220.game_engine.math_utils.GamePose;
@@ -22,7 +23,8 @@ public class Level {
     private Level(int numObjects) {
         this.numObjects = numObjects;
         for (int i = 0; i < numObjects; i++) {
-            gameObjects.add(new GameObject(new GamePose(), null, new Cuboid(new Point3d(100 * (Math.random() - 0.5), 100 * (Math.random() - 0.5), 0), 5, 5, 5, Math.random() > 0.5 ? Color.GREEN : Color.ORANGE)));
+            gameObjects.add(new CuboidTerrain(new GamePose(), new Cuboid(new Point3d(100 * (Math.random() - 0.5), 100 * (Math.random() - 0.5), 0), 5, 5, 5, Math.random() > 0.5 ? Color.GREEN : Color.ORANGE)));
+            //gameObjects.add(new GameObject(new GamePose(), null, new Cuboid(new Point3d(100 * (Math.random() - 0.5), 100 * (Math.random() - 0.5), 0), 5, 5, 5, Math.random() > 0.5 ? Color.GREEN : Color.ORANGE)));
         }
     }
 
@@ -32,7 +34,7 @@ public class Level {
 
     public static ArrayList<Level> loadAll() {
 
-        System.out.println("Please enter the name of the level file you would like to load.  Afterwards, enter another name or press / to quit the level loader.  Suggested level names are 'level_1.json' and 'level_2.json'.  'level_3.json' is a demonstration of how the program handles reading a file with invalid data.\n");
+        System.out.println("Please enter the name of the level file you would like to load.  Afterwards, enter another name or press / to quit the level loader.  Suggested level names are 'level_1.json' and 'level_2.json'.  'level_3.json' is a demonstration of how the program handles reading a file with invalid data.  Press the U and I keys to switch levels.\n");
 
         ArrayList<Level> levels = new ArrayList<>();
 
@@ -102,5 +104,4 @@ public class Level {
             super("MISSING DATA!");
         }
     }
-
 }

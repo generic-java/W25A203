@@ -2,16 +2,15 @@ package org.csse220.game_engine;
 
 import org.csse220.game_engine.graphics.PlaceableObject;
 import org.csse220.game_engine.math_utils.GamePose;
-import org.csse220.game_engine.math_utils.Vector3d;
 
 public abstract class MovingObject extends PlaceableObject {
 
-    private GamePose vel;
+    private GamePose velocity;
     private double gravity;
 
     public MovingObject(GamePose pose, double gravity) {
         super(pose);
-        vel = new GamePose();
+        velocity = new GamePose();
         this.gravity = gravity;
     }
 
@@ -33,38 +32,38 @@ public abstract class MovingObject extends PlaceableObject {
      */
     public void move(GamePose moveDirection, double dt) {
         if (moveDirection.z() > 0) {
-            vel = vel.translateZ(-gravity * dt);
+            velocity = velocity.translateZ(-gravity * dt);
         }
         GamePose translation = new GamePose(
-                vel.x() * moveDirection.x(),
-                vel.y() * moveDirection.y(),
-                vel.z() * moveDirection.z(),
-                vel.yaw() * moveDirection.yaw()
+                velocity.x() * moveDirection.x(),
+                velocity.y() * moveDirection.y(),
+                velocity.z() * moveDirection.z(),
+                velocity.yaw() * moveDirection.yaw()
         ).scale(dt);
         pose = translation.addTo(pose);
     }
 
-    public void setVel(GamePose vel) {
-        this.vel = vel;
+    public void setVelocity(GamePose velocity) {
+        this.velocity = velocity;
     }
 
     public void setXVel(double xVel) {
-        vel = new GamePose(xVel, vel.y(), vel.z(), vel.yaw());
+        velocity = new GamePose(xVel, velocity.y(), velocity.z(), velocity.yaw());
     }
 
     public void setYVel(double yVel) {
-        vel = new GamePose(vel.x(), yVel, vel.z(), vel.yaw());
+        velocity = new GamePose(velocity.x(), yVel, velocity.z(), velocity.yaw());
     }
 
     public void setZVel(double zVel) {
-        vel = new GamePose(vel.x(), vel.y(), zVel, vel.yaw());
+        velocity = new GamePose(velocity.x(), velocity.y(), zVel, velocity.yaw());
     }
 
     public void setYawVel(double yawVel) {
-        vel = new GamePose(vel.x(), vel.y(), vel.z(), yawVel);
+        velocity = new GamePose(velocity.x(), velocity.y(), velocity.z(), yawVel);
     }
 
-    public Vector3d getVel() {
-        return vel;
+    public GamePose velocity() {
+        return velocity;
     }
 }

@@ -12,6 +12,7 @@ public class GameObject extends MovingObject {
     private double yaw;
 
     public GameObject(GamePose pose, Collideable collideable, Drawable drawable) {
+        super(pose);
         this.collideable = collideable;
         this.drawable = drawable;
         if (hasCollideable())
@@ -30,6 +31,15 @@ public class GameObject extends MovingObject {
 
     public final boolean hasDrawable() {
         return drawable != null;
+    }
+
+    @Override
+    public void setPose(GamePose pose) {
+        super.setPose(pose);
+        if (hasCollideable())
+            collideable.setPose(relativeCollideablePose.addTo(pose));
+        if (hasDrawable())
+            drawable.setPose(relativeDrawablePose.addTo(pose));
     }
 
     @Override
@@ -55,6 +65,10 @@ public class GameObject extends MovingObject {
 
     public Drawable getDrawable() {
         return drawable;
+    }
+
+    public void onCollide(GameObject other, GamePose moveDirection) {
+
     }
 
     //protected abstract boolean onCollide();
