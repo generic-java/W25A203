@@ -5,6 +5,7 @@ import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.game_objects.CuboidTerrain;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Point3d;
+import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.levels.Level;
 
 import javax.swing.*;
@@ -21,9 +22,14 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(800, 600);
 
+        Player player = new Player();
         Engine engine = Engine.getInstance();
-        engine.init(new Player(), window);
-        engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 0, -15), 100, 10, 100, Color.BLUE)));
+        engine.init(player, window);
+        engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 0, -15), 100, 10, 100, Color.PINK)));
+
+        engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 120, 0), 100, 10, 100, Color.GREEN)));
+        player.setPose(new GamePose(0, 0, 0, 0));
+        player.setZVel(0);
 
 //
 //        for (Level level : levels) {

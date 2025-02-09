@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Kinematics extends KillableThread {
-    private final static double MOVE_VEL = 0.025;
+    private final static double MOVE_VEL = 0.055;
     private final static double TURN_VEL = 0.003;
     private final GamePose CAMERA_OFFSET = new GamePose(0, -15, 15, 0);
     private static final GamePose MOVE_X = new GamePose(1, 0, 0, 0);
@@ -27,7 +27,7 @@ public class Kinematics extends KillableThread {
 
     private final Set<GameObject> gameObjects;
     private final ElapsedTime timer;
-    private final GameObject player;
+    private final SolidGameObject player;
     private final Set<GameObject> collideables;
     private final Set<Drawable> drawables;
     private final GameKeyListener gameKeyListener;
@@ -38,7 +38,7 @@ public class Kinematics extends KillableThread {
             MOVE_YAW,
     };
 
-    public Kinematics(GameObject player, GameKeyListener gameKeyListener) {
+    public Kinematics(SolidGameObject player, GameKeyListener gameKeyListener) {
         collideables = ConcurrentHashMap.newKeySet();
         drawables = new HashSet<>();
         gameObjects = ConcurrentHashMap.newKeySet();
@@ -59,7 +59,6 @@ public class Kinematics extends KillableThread {
     public void run() {
         while (isActive()) {
             double dt = timer.getAndReset();
-            setPlayerVelocity(dt);
             for (GamePose elementMoveStep : elementMoveSteps) {
                 for (GameObject gameObject : gameObjects) {
                     gameObject.move(elementMoveStep, dt);
@@ -72,6 +71,8 @@ public class Kinematics extends KillableThread {
                     }
                 }
             }
+            setPlayerVelocity(dt);
+
             updateCameraPosition();
             Camera camera = Camera.getInstance();
             CameraPose camPose = camera.getPose();
@@ -86,15 +87,12 @@ public class Kinematics extends KillableThread {
     }
 
     private void updateCameraPosition() {
-        Camera camera = Camera.getInstance();
-        GamePose targetPose = player.getPose().addTo(CAMERA_OFFSET.rotateYaw(player.getPose().yaw()));
-        //camera.setPose(camera.getPose().translate(targetPose.relativeTo(camera.getPose()).scale(0.00006)));
-        camera.setPose(targetPose);
+        Camera.getInstance().setPose(player.getPose().addTo(CAMERA_OFFSET.rotateYaw(player.getPose().yaw())));
     }
 
     private void setPlayerVelocity(double dt) {
+        //System.out.println(player.velocity().z());
         Vector2d velocityVector = new Vector2d();
-        double zVel = 0;
         double yawVel = 0;
         Camera camera = Camera.getInstance();
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_UP)) {
@@ -106,11 +104,6 @@ public class Kinematics extends KillableThread {
             yawVel = -TURN_VEL;
         } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_LEFT)) {
             yawVel = TURN_VEL;
-        }
-        if (gameKeyListener.isKeyPressed(KeyEvent.VK_E)) {
-            zVel = MOVE_VEL;
-        } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_Q)) {
-            zVel = -MOVE_VEL;
         }
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_D)) {
             velocityVector = velocityVector.translate(1, 0);
@@ -128,12 +121,11 @@ public class Kinematics extends KillableThread {
             Engine.getInstance().setLevel(1);
         }
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
-            zVel += MOVE_VEL;
+            player.jump();
         }
         velocityVector = velocityVector.normalize().multiply(MOVE_VEL).rotate(camera.getPose().yaw());
         player.setXVel(velocityVector.x);
         player.setYVel(velocityVector.y);
-        player.setZVel(zVel);
         player.setYawVel(yawVel);
     }
 

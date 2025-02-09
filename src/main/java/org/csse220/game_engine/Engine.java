@@ -34,7 +34,7 @@ public class Engine {
         }
     }
 
-    public void init(GameObject player, JFrame window) {
+    public void init(SolidGameObject player, JFrame window) {
         this.player = player;
         GameKeyListener keyListener = new GameKeyListener();
 

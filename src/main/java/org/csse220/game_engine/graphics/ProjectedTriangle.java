@@ -1,7 +1,5 @@
 package org.csse220.game_engine.graphics;
 
-import org.csse220.game_engine.kinematics.LineSegment;
-
 import java.awt.*;
 
 public class ProjectedTriangle {
@@ -134,26 +132,5 @@ public class ProjectedTriangle {
 
     public ProjectedPoint[] getVertices() {
         return vertices;
-    }
-
-    private LineSegment[] getLineSegments() {
-        return new LineSegment[]{
-                new LineSegment(vertices[0].toPoint2d(), vertices[1].toPoint2d()),
-                new LineSegment(vertices[1].toPoint2d(), vertices[2].toPoint2d()),
-                new LineSegment(vertices[2].toPoint2d(), vertices[0].toPoint2d())
-        };
-    }
-
-
-    public double intersectionsWith(ProjectedTriangle other) {
-        int intersections = 0;
-        for (LineSegment lineSegment : getLineSegments()) {
-            for (LineSegment toCheck : other.getLineSegments()) {
-                if (lineSegment.intersectsWith(toCheck)) {
-                    intersections++;
-                }
-            }
-        }
-        return intersections;
     }
 }
