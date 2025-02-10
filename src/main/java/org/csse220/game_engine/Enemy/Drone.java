@@ -38,7 +38,7 @@ public class Drone extends GameObject {
     }
 
     @Override
-    public boolean onCollide(Pose3d collisionDirection) { // not sure what exactly this does.
+    public boolean onCollide(Pose3d collisionDirection) {
         return false;
     }
 }
