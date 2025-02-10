@@ -1,4 +1,41 @@
 {
   "name": "Level2",
-  "numObjects": 5
+  "numObjects": 5,
+  "portalPoseX": "1",
+  "portalPoseY": "2",
+  "portalPoseZ": "3",
+  "enemies": [
+    {
+      "type":"drone",
+      "poseX":"1",
+      "poseY":"2",
+      "poseZ":"3"
+    },
+    {
+      "type": "pathEnemy",
+      "startX": "1",
+      "startY": "2",
+      "startZ": "3",
+      "endX": "4",
+      "endY": "5",
+      "endZ": "6"
+    }],
+
+  "bonfireFuelPose": [
+    {
+      "poseX": "1",
+      "poseY": "2",
+      "poseZ": "3"
+    },
+    {
+      "poseX": "4",
+      "poseY": "5",
+      "poseZ": "6"
+    },
+    {
+      "poseX": "7",
+      "poseY": "8",
+      "poseZ": "9"
+    }
+  ]
 }

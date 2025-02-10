@@ -76,16 +76,62 @@ public class Level {
             throw new MissingDataException();
         }
 
+
         int tempNumObjects = jsonObject.getInt("numObjects");
         String tempName = jsonObject.getString("Name");
         JsonArray enemies = jsonObject.getJsonArray("enemies");
-        for(JsonValue enemy : enemies){
-            JsonObject tempEnemy = (JsonObject)enemy;
-            double posx = tempEnemy.getJsonNumber("PoseX").doubleValue();
-            double posy = tempEnemy.getJsonNumber("PoseY").doubleValue();
-            double posz = tempEnemy.getJsonNumber("PoseZ").doubleValue();
-            String type = tempEnemy.getString("Type");
+        Enemy[] tempEnemies = new Enemy[enemies.size()];
+        for(int i = 0; i<enemies.size();  i++){
+            JsonObject currentJsonObj = enemies.getJsonObject(i);
+            String type = currentJsonObj.getString("type");
+            if(type.equals("drone")){
+
+                double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
+                double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
+                double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
+
+                //REPLACE WITH CONSTRUCTOR
+                tempEnemies[i] = new Enemy();
+            }
+            if(type.equals("pathEnemy")){
+
+                double startX = Double.parseDouble(currentJsonObj.getString("startX"));
+                double startY = Double.parseDouble(currentJsonObj.getString("startY"));
+                double startZ = Double.parseDouble(currentJsonObj.getString("startZ"));
+
+                double endX = Double.parseDouble(currentJsonObj.getString("endX"));
+                double endY = Double.parseDouble(currentJsonObj.getString("endY"));
+                double endZ = Double.parseDouble(currentJsonObj.getString("endZ"));
+
+                //REPLACE WITH CONSTRUCTOR
+                tempEnemies[i] = new Enemy();
+            }
+
         }
+
+        double portalX = Double.parseDouble(jsonObject.getString("portalPoseX"));
+        double portalY = Double.parseDouble(jsonObject.getString("portalPoseY"));
+        double portalZ = Double.parseDouble(jsonObject.getString("portalPoseZ"));
+
+        //REPLACE WITH CONSTRUCTOR AFTER IMPLEMENTATION
+        Portal p = new Portal();
+
+        /*
+
+        UNCOMMENT AFTER INPLEMENTING BONFIRE CLASS
+
+        JsonArray bonfireFuel = jsonObject.getJsonArray("bonfireFuelPose");
+        BonfireFuel[] fuel = new BonfireFuel[bonfireFuel.size()];
+        for(int i = 0; i < bonfireFuelPose.size(); i++ ){
+            JsonObject currentJsonObj = bonfireFuel.getJsonObject(i);
+            double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
+            double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
+            double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
+
+            //REPLACE WITH CONSTRUCTOR
+            fuel[i] = new BonfireFuel();
+        }
+        */
 
         return new Level(tempNumObjects);
     }
