@@ -1,6 +1,6 @@
 package org.csse220.game_engine.kinematics;
 
-import org.csse220.game_engine.math_utils.Pose3d;
+import org.csse220.game_engine.math_utils.GamePose;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +9,6 @@ public class Hitbox extends Collideable {
     private final double width;
     private final double height;
     private final double depth;
-    private double rot;
     private Point2d center;
     private Point2d topLeft;
     private Point2d topRight;
@@ -17,7 +16,7 @@ public class Hitbox extends Collideable {
     private Point2d bottomLeft;
     private final Set<Hitbox> thisHitbox = new HashSet<>();
 
-    public Hitbox(Pose3d pose, double width, double height, double depth) {
+    public Hitbox(GamePose pose, double width, double height, double depth) {
         super(pose);
         this.width = width;
         this.height = height;
@@ -39,7 +38,7 @@ public class Hitbox extends Collideable {
     }
 
     @Override
-    public void setPose(Pose3d pose) {
+    public void setPose(GamePose pose) {
         super.setPose(pose);
         updateVertexPositions();
     }
@@ -59,16 +58,12 @@ public class Hitbox extends Collideable {
 
     private LineSegment[] getLineSegments() {
         return new LineSegment[]{
-                new LineSegment(topLeft.rotateAbout(center, rot), topRight.rotateAbout(center, rot)),
-                new LineSegment(topRight.rotateAbout(center, rot), bottomRight.rotateAbout(center, rot)),
-                new LineSegment(bottomRight.rotateAbout(center, rot), bottomLeft.rotateAbout(center, rot)),
-                new LineSegment(bottomLeft.rotateAbout(center, rot), topLeft.rotateAbout(center, rot))
+                new LineSegment(topLeft.rotateAbout(center, pose.yaw()), topRight.rotateAbout(center, pose.yaw())),
+                new LineSegment(topRight.rotateAbout(center, pose.yaw()), bottomRight.rotateAbout(center, pose.yaw())),
+                new LineSegment(bottomRight.rotateAbout(center, pose.yaw()), bottomLeft.rotateAbout(center, pose.yaw())),
+                new LineSegment(bottomLeft.rotateAbout(center, pose.yaw()), topLeft.rotateAbout(center, pose.yaw()))
 
         };
-    }
-
-    void setRot(double rot) {
-        this.rot = rot;
     }
 
     public boolean intersects(Hitbox other) {
@@ -91,10 +86,14 @@ public class Hitbox extends Collideable {
      * @return Whether the projection of one hitbox onto the 2d plane is inside the projection of another
      */
     private boolean oneInside(Hitbox other, boolean checkOther) {
-        Point2d otherCenter = other.xyCenter().rotateAbout(xyCenter(), -rot);
+        Point2d otherCenter = other.xyCenter().rotateAbout(xyCenter(), -pose.yaw());
+        boolean isInside = false;
+        if (checkOther) {
+            isInside = other.oneInside(this, false);
+        }
         return otherCenter.x() > pose.x() - width / 2 && otherCenter.x() < pose.x() + width / 2
                 && otherCenter.y() > pose.y() - width / 2 && otherCenter.y() < pose.y() + width / 2
-                && other.oneInside(this, false);
+                || isInside;
     }
 
     private boolean oneInside(Hitbox other) {
@@ -102,16 +101,11 @@ public class Hitbox extends Collideable {
     }
 
     boolean zIntersection(Hitbox other) {
-        return pose.z() + height / 2 > other.getPose().z() - other.height() / 2 && pose.z() - height / 2 < other.getPose().z() + other.height() / 2;
+        return pose.z() + height / 2 >= other.getPose().z() - other.height() / 2 && pose.z() - height / 2 <= other.getPose().z() + other.height() / 2;
     }
 
     @Override
     public Set<Hitbox> getHitboxes() {
         return thisHitbox;
-    }
-
-    @Override
-    public boolean onCollide(Pose3d collisionDirection) {
-        return false;
     }
 }

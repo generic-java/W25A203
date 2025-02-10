@@ -1,6 +1,6 @@
 package org.csse220.game_engine.math_utils;
 
-public class Vector3d {
+public class Vector3d extends Vector2d {
     private static double cosPitch;
     private static double sinPitch;
     private static double cosYaw;
@@ -13,9 +13,7 @@ public class Vector3d {
         sinYaw = Math.sin(-camYaw);
     }
 
-    private final double x;
-    private final double y;
-    private final double z;
+    public final double z;
     private double magnitude = Double.NaN;
 
     /**
@@ -34,8 +32,7 @@ public class Vector3d {
     public static final Vector3d ORIGIN = new Vector3d();
 
     public Vector3d(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.z = z;
     }
 
@@ -55,19 +52,34 @@ public class Vector3d {
         return z;
     }
 
-    public Vector3d rotatePitchYaw(Vector3d point) {
-        double relX = x - point.x();
-        double relY = y - point.y();
-        double relZ = z - point.z();
+    /**
+     * Rotates in the yaw direction first, and then the pitch direction
+     *
+     * @param vector The Vector3d to rotate
+     * @return The new, rotated Vector3d
+     */
+    public Vector3d rotatePitchYaw(Vector3d vector) {
+        double relX = x - vector.x();
+        double relY = y - vector.y();
+        double relZ = z - vector.z();
         double finalX = relX * cosYaw - relY * sinYaw;
         double tempY = relX * sinYaw + relY * cosYaw;
         double finalY = tempY * cosPitch - relZ * sinPitch;
         double finalZ = tempY * sinPitch + relZ * cosPitch;
-        return new Vector3d(finalX + point.x(), finalY + point.y(), finalZ + point.z());
+        return new Vector3d(finalX + vector.x(), finalY + vector.y(), finalZ + vector.z());
     }
 
     public Vector3d rotatePitchYaw(double pitch, double yaw) {
         return rotatePitchYaw(ORIGIN);
+    }
+
+    public Vector3d rotateYaw(Vector3d center, double yaw) {
+        Vector2d rotatedVector = new Vector2d(x, y).translate(-center.x(), -center.y()).rotate(yaw).translate(center.x(), center.y());
+        return new Vector3d(rotatedVector.x, rotatedVector.y, z);
+    }
+
+    public Vector3d rotateYaw(double yaw) {
+        return rotateYaw(ORIGIN, yaw);
     }
 
     public double distanceTo(Vector3d point) {
@@ -108,6 +120,10 @@ public class Vector3d {
         return Math.acos(dot(vector) / (magnitude() * vector.magnitude()));
     }
 
+    public Vector3d translate(Vector3d translation) {
+        return translate(translation.x(), translation.y(), translation.z());
+    }
+
     public Vector3d translate(double x, double y, double z) {
         return new Vector3d(this.x + x, this.y + y, this.z + z);
     }
@@ -128,8 +144,8 @@ public class Vector3d {
         return new Vector3d(x * scalar, y * scalar, z * scalar);
     }
 
-    public Pose3d toPose3d() {
-        return new Pose3d(x, y, z, 0, 0, 0);
+    public GamePose toGamePose() {
+        return new GamePose(x, y, z, 0);
     }
 
     @Override

@@ -1,8 +1,10 @@
 package org.csse220.game_engine.graphics;
 
+import org.csse220.game_engine.math_utils.CameraPose;
+import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.game_engine.math_utils.Vector3d;
 
-public class Point3d {
+public class Point3d extends Vector3d {
     private static double FOV;
     private static double FOV_CONSTANT;
 
@@ -19,36 +21,38 @@ public class Point3d {
         return FOV;
     }
 
-    private final Vector3d absolutePos;
-    private Vector3d currentRelativePos;
-
-    public Point3d(Vector3d absolutePos) {
-        this.absolutePos = absolutePos;
-        currentRelativePos = absolutePos;
-    }
+    private Vector3d relativePose;
 
     public Point3d(double x, double y, double z) {
-        this(new Vector3d(x, y, z));
+        super(x, y, z);
+        calculateRelativePosition();
+    }
+
+    public Point3d(Vector3d vector) {
+        super(vector.x(), vector.y(), vector.z());
+        calculateRelativePosition();
     }
 
     public double relativeX() {
-        return currentRelativePos.x();
+        return relativePose.x();
     }
 
     public double relativeY() {
-        return currentRelativePos.y();
+        return relativePose.y();
     }
 
     public double relativeZ() {
-        return currentRelativePos.z();
+        return relativePose.z();
     }
 
-    public void calculateRelativePosition(Vector3d camPos) {
-        Vector3d rotatedPos = absolutePos.rotatePitchYaw(Camera.getInstance().getPosition());
-        currentRelativePos = new Vector3d(rotatedPos.x() - camPos.x(), rotatedPos.y() - camPos.y(), rotatedPos.z() - camPos.z());
+    public void calculateRelativePosition() {
+        CameraPose camPose = Camera.getInstance().getPose();
+        Vector3d rotatedPos = rotatePitchYaw(camPose);
+        relativePose = rotatedPos.relativeTo(camPose);
     }
 
     public ProjectedPoint project() {
+        calculateRelativePosition();
         return project(relativeX(), relativeY(), relativeZ());
     }
 
@@ -64,10 +68,18 @@ public class Point3d {
     }
 
     public Point3d translate(double x, double y, double z) {
-        return new Point3d(new Vector3d(absolutePos.x() + x, absolutePos.y() + y, absolutePos.z() + z));
+        return new Point3d(super.translate(x, y, z));
     }
 
-    public Vector3d getAbsolutePos() {
-        return absolutePos;
+    public Point3d translate(Vector3d translation) {
+        return new Point3d(super.translate(translation));
+    }
+
+    public Point3d relativeTo(Point3d other) {
+        return new Point3d(super.relativeTo(other));
+    }
+
+    public Point3d relativeTo(GamePose other) {
+        return new Point3d(super.relativeTo(other).rotateYaw(-other.yaw()));
     }
 }

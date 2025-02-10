@@ -1,19 +1,15 @@
 package org.csse220.game_engine.graphics;
 
-import org.csse220.game_engine.math_utils.Pose3d;
-import org.csse220.game_engine.math_utils.PoseSupplier;
+import org.csse220.game_engine.math_utils.CameraPose;
+import org.csse220.game_engine.math_utils.GamePose;
 
-public class Camera implements PoseSupplier {
+public class Camera {
     private static Camera instance = null;
 
-    private Pose3d position;
+    private CameraPose pose;
 
     private Camera() {
-        position = new Pose3d();
-    }
-
-    public Pose3d getPosition() {
-        return position;
+        pose = new CameraPose();
     }
 
     public static Camera getInstance() {
@@ -23,24 +19,27 @@ public class Camera implements PoseSupplier {
         return instance;
     }
 
-    public void setXYZ(Pose3d pose) {
-        position = new Pose3d(pose.x(), pose.y(), pose.z(), position.pitch(), position.roll(), position.yaw());
+    public void setXYZ(CameraPose pose) {
+        this.pose = new CameraPose(pose.x(), pose.y(), pose.z(), this.pose.pitch(), this.pose.yaw());
     }
 
-    public void setPosition(Pose3d pose) {
-        this.position = pose;
+    public void setPose(GamePose pose) {
+        this.pose = new CameraPose(pose.x(), pose.y(), pose.z(), this.pose.pitch(), pose.yaw());
+    }
+
+    public void setPosition(CameraPose pose) {
+        this.pose = pose;
     }
 
     public void setPitch(double pitch) {
-        position = new Pose3d(position.x(), position.y(), position.z(), pitch, position.roll(), position.yaw());
+        pose = new CameraPose(pose.x(), pose.y(), pose.z(), pitch, pose.yaw());
     }
 
     public void setYaw(double yaw) {
-        position = new Pose3d(position.x(), position.y(), position.z(), position.pitch(), position.roll(), yaw);
+        pose = new CameraPose(pose.x(), pose.y(), pose.z(), pose.pitch(), yaw);
     }
 
-    @Override
-    public Pose3d getPose() {
-        return position;
+    public CameraPose getPose() {
+        return pose;
     }
 }

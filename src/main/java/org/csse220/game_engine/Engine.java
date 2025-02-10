@@ -1,85 +1,80 @@
 package org.csse220.game_engine;
 
 import org.csse220.game_engine.graphics.Drawable;
-import org.csse220.game_engine.graphics.Renderer;
 import org.csse220.game_engine.graphics.Screen;
-import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.kinematics.Kinematics;
 import org.csse220.levels.Level;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Engine {
     private static Engine instance = null;
 
-    private Renderer renderer;
     private Kinematics kinematics;
+    private final ArrayList<Level> levels;
+    private int levelNumber = -1;
+    private GameObject player = null;
 
     private Engine() {
-
+        levels = new ArrayList<>();
     }
 
-    public void init(GameObject player, JFrame window) {
+    public void addLevel(Level level) {
+        levels.add(level);
+    }
+
+    public void setLevel(int levelNumber) {
+        if (this.levelNumber != levelNumber && levelNumber < levels.size()) {
+            this.levelNumber = levelNumber;
+            kinematics.clearAllGameObjects();
+            for (GameObject gameObject : levels.get(levelNumber).getGameObjects()) {
+                addGameObject(gameObject);
+            }
+        }
+    }
+
+    public void init(SolidGameObject player, JFrame window) {
+        this.player = player;
         GameKeyListener keyListener = new GameKeyListener();
 
-        renderer = new Renderer();
         kinematics = new Kinematics(player, keyListener);
 
         window.add(Screen.getInstance());
         window.addKeyListener(keyListener);
         window.setVisible(true);
 
-        renderer.start();
+        //renderer.start();
         kinematics.start();
     }
 
     private void kill() {
-        renderer.kill();
         kinematics.kill();
     }
 
-    public void loadLevel(Level level) {
+    public void setLevel(Level level) {
         // TODO: finish this method
     }
 
-    public void addGameObject(GameObject object) {
-        renderer.addDrawable(object.getDrawable());
-        kinematics.addCollideable(object.getCollideable());
+    public void addGameObject(GameObject gameObject) {
+        kinematics.addGameObject(gameObject);
     }
 
-    public void removeGameObject(GameObject object) {
-        renderer.removeDrawable(object.getDrawable());
-        kinematics.removeCollideable(object.getCollideable());
-    }
-
-    public void addCollideable(Collideable collideable) {
-        kinematics.addCollideable(collideable);
-    }
-
-    public void removeCollideable(Collideable collideable) {
-        kinematics.removeCollideable(collideable);
-    }
-
-    public void addGameElement(GameElement element) {
-        kinematics.addGameElement(element);
-        if (element instanceof Drawable) {
-            addDrawable((Drawable) element);
-        }
-    }
-
-    public void removeGameElement(GameElement element) {
-        kinematics.removeGameElement(element);
-        if (element instanceof Drawable) {
-            removeDrawable((Drawable) element);
-        }
-    }
+//    public void removeGameObject(GameObject gameObject) {
+//        gameObjects.remove(gameObject);
+//        if (gameObject.hasCollideable()) {
+//
+//        }
+//        if (gameObject.hasDrawable()) {
+//
+//        }
+//    }
 
     public void addDrawable(Drawable drawable) {
-        renderer.addDrawable(drawable);
+
     }
 
     public void removeDrawable(Drawable drawable) {
-        renderer.removeDrawable(drawable);
     }
 
     public boolean keyPressed(int keycode) {
@@ -92,4 +87,6 @@ public class Engine {
         }
         return instance;
     }
+
+
 }
