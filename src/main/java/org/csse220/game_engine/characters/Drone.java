@@ -10,7 +10,7 @@ import org.csse220.game_engine.math_utils.GamePose;
 import java.awt.*;
 
 public class Drone extends Enemy {
-    private static double MOVE_SPEED = -0.25;
+    private static final double MOVE_SPEED = 0.25;
     private boolean isActive;
 
     public Drone(GamePose pose) {
