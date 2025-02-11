@@ -1,5 +1,6 @@
 package org.csse220.game_engine.characters;
 
+import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Point3d;
@@ -9,12 +10,11 @@ import org.csse220.game_engine.math_utils.GamePose;
 import java.awt.*;
 
 public class Drone extends Enemy {
-    private static double MOVE_SPEED = 0.25;
-    private static final double kP = 0.5;
+    private static double MOVE_SPEED = -0.25;
     private boolean isActive;
 
     public Drone(GamePose pose) {
-        super(pose, new Hitbox(pose, 5, 5, 5), new Cuboid(pose, new Point3d(0, 0, 0), 5, 5, 5, Color.YELLOW));
+        super(pose, new Hitbox(pose, 5, 5, 5), new Cuboid(pose, new Point3d(0, 0, 0), 5, 5, 5, Color.GRAY));
         //this.velocity = new GamePose(-0.05, 0, 0, 0, 0, 0); // moves left
         this.isActive = true; // if the drone is on the screen or not (should implement collisions)
     }
@@ -28,9 +28,12 @@ public class Drone extends Enemy {
     @Override
     public void update() {
         if (isActive) {
+            GamePose playerPos = Engine.getInstance().getPlayerPosition();
+            GamePose proportionalDistance = playerPos.relativeTo(pose);
+            GamePose velocity = proportionalDistance.scale(MOVE_SPEED*0.5);
 
+            setPose(getPose().addTo(velocity));
         }
-
     }
 
     @Override
@@ -41,6 +44,7 @@ public class Drone extends Enemy {
     }
 
     public boolean isActive() {
+
         return isActive;
     }
 }
