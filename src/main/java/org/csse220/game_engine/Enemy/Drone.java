@@ -1,45 +1,40 @@
 package org.csse220.game_engine.Enemy;
 
 import org.csse220.game_engine.GameObject;
+import org.csse220.game_engine.SolidGameObject;
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
-import org.csse220.game_engine.math_utils.Pose3d;
-import java.util.Random;
+import org.csse220.game_engine.math_utils.GamePose;
 
-public class Drone extends GameObject {
-    private final Pose3d velocity;
+public class Drone extends SolidGameObject {
     private boolean isActive;
 
-    public Drone(Collideable collideable, Drawable drawable, double screenWidth, double screenHeight) {
-        super(collideable, drawable, RandomSpawn(screenWidth, screenHeight));
-        this.velocity = new Pose3d(-0.05, 0, 0, 0, 0, 0); // moves left
+    public Drone(GamePose pose, Collideable collideable, Drawable drawable) {
+        super(pose, collideable, drawable);
+        //this.velocity = new GamePose(-0.05, 0, 0, 0, 0, 0); // moves left
         this.isActive = true; // if the drone is on the screen or not (should implement collisions)
     }
 
-    private static Pose3d RandomSpawn(double screenWidth, double screenHeight) {
-        Random rand = new Random();
-        double randomY = rand.nextDouble() * screenHeight; // random y position
-        return new Pose3d(screenWidth, randomY, 0, 0, 0, 0); // enters the screen from the right edge
-    }
+//    private static GamePose RandomSpawn() {
+//        Random rand = new Random();
+//        double randomY = rand.nextDouble(); // random y position
+//        return new GamePose(, randomY, 50, 0, 0, 0); // enters the screen from the right edge
+//    }
 
-    public void update() {
+    @Override
+    protected void update() {
         if (!isActive) return;
-        setPose(getPose().addTo(velocity)); // Moves drone left
     }
 
     @Override
-    public void onCollide() {
+    public void onCollide(GameObject other, GamePose moveDirection) {
+        super.onCollide(other, moveDirection);
         isActive = false; // if drone is Hit disappear
 
     }
 
     public boolean isActive() {
         return isActive;
-    }
-
-    @Override
-    public boolean onCollide(Pose3d collisionDirection) {
-        return false;
     }
 }
 

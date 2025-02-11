@@ -26,8 +26,12 @@ public abstract class MovingObject extends PlaceableObject {
         this.gravity = gravity;
     }
 
+    protected void update() {
+
+    }
+
     /**
-     * The moveDirection instance provided tells the method how to move the GameElement.  If new Pose3d(k,0,0,0,0,0) is passed
+     * The moveDirection instance provided tells the method how to move the GameElement.  If new GamePose(k,0,0,0,0,0) is passed
      * to this method, it will move this object k * its current velocity in that direction.
      */
     public void move(GamePose moveDirection, double dt) {

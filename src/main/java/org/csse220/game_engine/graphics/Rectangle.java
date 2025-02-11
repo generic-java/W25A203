@@ -32,7 +32,7 @@ public class Rectangle extends Drawable {
         bottom.setPose(pose);
     }
 
-    public Color getColor() {
-        return color;
+    public Face[] getFaces() {
+        return new Face[]{top, bottom};
     }
 }

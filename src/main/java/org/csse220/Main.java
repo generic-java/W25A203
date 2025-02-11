@@ -1,10 +1,12 @@
 package org.csse220;
 
 
+import org.csse220.game_engine.Enemy.Drone;
 import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.game_objects.CuboidTerrain;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Point3d;
+import org.csse220.game_engine.kinematics.Hitbox;
 import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.levels.Level;
 
@@ -27,11 +29,13 @@ public class Main {
         engine.init(player, window);
         engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 0, -15), 100, 10, 100, Color.PINK)));
 
+
         engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 120, 0), 100, 10, 100, Color.GREEN)));
         player.setPose(new GamePose(0, 0, 0, 0));
         player.setZVel(0);
 
 //
+        engine.addGameObject(new Drone(new GamePose(), new Hitbox(new GamePose(15, 15, 15, 0), 5, 5, 5), new Cuboid(new Point3d(0, 0, 0), 5, 5, 5, Color.GRAY)));
 //        for (Level level : levels) {
 //            engine.addLevel(level);
 //        }
