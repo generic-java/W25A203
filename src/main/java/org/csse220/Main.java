@@ -86,7 +86,7 @@ public class Main {
 
 
 //
-        engine.addGameObject(new Drone(new GamePose(15, 15, -10, 0)));
+        engine.addGameObject(new Drone(new GamePose(15, 15, -50, 0)));
 //        for (Level level : levels) {
 //            engine.addLevel(level);
 //        }
