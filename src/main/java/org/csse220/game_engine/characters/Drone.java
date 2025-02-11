@@ -1,16 +1,20 @@
-package org.csse220.game_engine.Enemy;
+package org.csse220.game_engine.characters;
 
 import org.csse220.game_engine.GameObject;
-import org.csse220.game_engine.SolidGameObject;
-import org.csse220.game_engine.graphics.Drawable;
-import org.csse220.game_engine.kinematics.Collideable;
+import org.csse220.game_engine.graphics.Cuboid;
+import org.csse220.game_engine.graphics.Point3d;
+import org.csse220.game_engine.kinematics.Hitbox;
 import org.csse220.game_engine.math_utils.GamePose;
 
-public class Drone extends SolidGameObject {
+import java.awt.*;
+
+public class Drone extends Enemy {
+    private static double MOVE_SPEED = 0.25;
+    private static final double kP = 0.5;
     private boolean isActive;
 
-    public Drone(GamePose pose, Collideable collideable, Drawable drawable) {
-        super(pose, collideable, drawable);
+    public Drone(GamePose pose) {
+        super(pose, new Hitbox(pose, 5, 5, 5), new Cuboid(pose, new Point3d(0, 0, 0), 5, 5, 5, Color.YELLOW));
         //this.velocity = new GamePose(-0.05, 0, 0, 0, 0, 0); // moves left
         this.isActive = true; // if the drone is on the screen or not (should implement collisions)
     }
@@ -22,8 +26,11 @@ public class Drone extends SolidGameObject {
 //    }
 
     @Override
-    protected void update() {
-        if (!isActive) return;
+    public void update() {
+        if (isActive) {
+
+        }
+
     }
 
     @Override

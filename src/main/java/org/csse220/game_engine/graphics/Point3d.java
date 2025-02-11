@@ -45,6 +45,10 @@ public class Point3d extends Vector3d {
         return relativePose.z();
     }
 
+    public Vector3d relativePose() {
+        return relativePose;
+    }
+
     public void calculateRelativePosition() {
         CameraPose camPose = Camera.getInstance().getPose();
         Vector3d rotatedPos = rotatePitchYaw(camPose);

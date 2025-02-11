@@ -50,6 +50,10 @@ public class GamePose extends Vector3d {
         return new GamePose(x() - pose.x(), y() - pose.y(), z() - pose.z(), yaw() - pose.yaw());
     }
 
+    public GamePose normalize() {
+        return scale(1 / magnitude());
+    }
+
     public GamePose addTo(GamePose pose) {
         return new GamePose(x() + pose.x(), y() + pose.y(), z() + pose.z(), yaw() + pose.yaw());
     }
@@ -65,5 +69,35 @@ public class GamePose extends Vector3d {
 
     public double dot(GamePose other) {
         return super.dot(other) + yaw() * other.yaw;
+    }
+
+    public GamePose round(int precision) {
+        double factor = Math.pow(10, precision);
+        return new GamePose(Math.round(x * factor) / factor, Math.round(y * factor) / factor, Math.round(z * factor) / factor, Math.round(yaw * factor) / factor);
+    }
+
+    public boolean between(GamePose first, GamePose second) {
+        double firstX;
+        double firstY;
+
+        double secondX;
+        double secondY;
+
+        if (first.x() < second.x()) {
+            firstX = first.x();
+            secondX = second.x();
+        } else {
+            firstX = second.x();
+            secondX = first.x();
+        }
+        if (first.y() < second.y()) {
+            firstY = first.y();
+            secondY = second.y();
+        } else {
+            firstY = second.y();
+            secondY = first.y();
+        }
+
+        return x >= firstX && x <= secondX && y >= firstY && y <= secondY;
     }
 }

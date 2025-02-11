@@ -6,10 +6,10 @@
   "portalPoseZ": "3",
   "enemies": [
     {
-      "type":"drone",
-      "poseX":"1",
-      "poseY":"2",
-      "poseZ":"3"
+      "type": "drone",
+      "poseX": "1",
+      "poseY": "2",
+      "poseZ": "3"
     },
     {
       "type": "pathEnemy",
@@ -19,9 +19,9 @@
       "endX": "4",
       "endY": "5",
       "endZ": "6"
-    }],
-
-  "bonfireFuelPose": [
+    }
+  ],
+  "bonfireFuelPoses": [
     {
       "poseX": "1",
       "poseY": "2",

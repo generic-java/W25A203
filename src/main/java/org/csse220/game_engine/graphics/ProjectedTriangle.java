@@ -5,14 +5,13 @@ import java.awt.*;
 public class ProjectedTriangle {
     private static final double MAX_DISTANCE = 500;
 
-    private final double angle;
     private final ProjectedPoint[] vertices;
     private double c1;
     private double c2;
     private double c3;
     private double c4;
     private final DepthCalculator depthCalculator;
-    private static final double DEPTH_ALLOWANCE = -0.5;
+    private final double angle;
 
     public ProjectedTriangle(double angle, ProjectedPoint point1, ProjectedPoint point2, ProjectedPoint point3, DepthCalculator depthCalculator) {
         this.angle = angle;
@@ -46,7 +45,7 @@ public class ProjectedTriangle {
         bottomY = Math.clamp(bottomY, -1, Screen.getInstance().getAdjustedHeight() + 1);
         for (int j = 0; j <= Math.abs(topY - bottomY); j++) {
             int y = topY - j * polarity(topY - bottomY);
-            paintIfVisible(x, y, depthCalculator.calculateDepth(ProjectedPoint.xToActual(x), ProjectedPoint.yToActual(y)), color);
+            paintIfVisible(x, y, depthCalculator.calculateDepth(ProjectedPoint.xToActual(x), ProjectedPoint.yToActual(y)), color, Math.abs(topY - bottomY) <= 1);
         }
     }
 
@@ -86,13 +85,10 @@ public class ProjectedTriangle {
         }
     }
 
-    private void paintIfVisible(int x, int y, double depth, Color color) {
-        double[] zBufferInformation = ZBuffer.getInstance().get(x, y);
-        double depthDifference = zBufferInformation[0] - depth;
-        double angleDifference = zBufferInformation[1] - angle;
-        if ((depthDifference > 0 || (depthDifference > DEPTH_ALLOWANCE && angleDifference > 0)) && depth > 0 && Double.isFinite(depth) && depth < MAX_DISTANCE) {
+    private void paintIfVisible(int x, int y, double depth, Color color, boolean thin) {
+        if (depth < ZBuffer.getInstance().get(x, y) && depth > 0 && Double.isFinite(depth) && depth < MAX_DISTANCE) {
             Screen.getInstance().paintPixel(x, y, color);
-            ZBuffer.getInstance().set(x, y, depth, angle);
+            ZBuffer.getInstance().set(x, y, depth);
         }
     }
 

@@ -70,6 +70,7 @@ public class Cuboid extends Drawable {
                 center.translate(-halfWidth, -halfDepth, halfHeight),
                 color
         );
+        setPose(pose);
     }
 
     public Cuboid(Point3d center, double width, double height, double depth, Color color) {

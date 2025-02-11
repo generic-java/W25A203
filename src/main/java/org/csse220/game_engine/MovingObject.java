@@ -26,7 +26,7 @@ public abstract class MovingObject extends PlaceableObject {
         this.gravity = gravity;
     }
 
-    protected void update() {
+    public void update() {
 
     }
 
@@ -47,7 +47,7 @@ public abstract class MovingObject extends PlaceableObject {
         pose = translation.addTo(pose);
     }
 
-    public void setVelocity(GamePose velocity) {
+    public void setVel(GamePose velocity) {
         this.velocity = velocity;
     }
 

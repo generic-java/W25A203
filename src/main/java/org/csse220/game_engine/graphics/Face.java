@@ -77,6 +77,9 @@ public class Face extends Drawable {
                 frontCamera++;
             }
         }
+        if (!clearlyVisible()) { // If it would almost appear as a straight line
+            return;
+        }
         double newZ1;
         double newX1;
         double newZ2;
@@ -87,7 +90,7 @@ public class Face extends Drawable {
         switch (behindCamera) {
             case 0:
                 firstTriangle = new ProjectedTriangle(
-                        angleToEye(),
+                        visibleAngle(),
                         vertices[0].project(),
                         vertices[1].project(),
                         vertices[2].project(),
@@ -150,11 +153,32 @@ public class Face extends Drawable {
         return vector1.cross(vector2);
     }
 
-    private double angleToEye() {
-        double angle = normalVector().angleBetween(new Vector3d(0, -1, 1));
-        if (angle > Math.PI / 2) {
-            angle = Math.PI - angle;
+    private Vector3d currentNormalVector() {
+        for (Point3d vertex : vertices) {
+            vertex.calculateRelativePosition();
         }
-        return angle;
+        Vector3d vector2 = vertices[2].relativePose().relativeTo(vertices[0].relativePose());
+        Vector3d vector1 = vertices[1].relativePose().relativeTo(vertices[0].relativePose());
+        return vector1.cross(vector2);
+    }
+
+    private static final double MIN_ANGLE = Math.toRadians(1.5);
+
+    private boolean clearlyVisible() {
+        double firstAngle = currentNormalVector().angleBetween(new Vector3d(1, 0, 0));
+        firstAngle = firstAngle > Math.PI / 2 ? Math.PI - firstAngle : firstAngle;
+
+        double secondAngle = currentNormalVector().angleBetween(new Vector3d(0, 0, 1));
+        secondAngle = secondAngle > Math.PI / 2 ? Math.PI - secondAngle : secondAngle;
+
+        //System.out.println(currentNormalVector());
+
+        return Math.abs(firstAngle) > MIN_ANGLE && Math.abs(secondAngle) > 0;
+    }
+
+    private double visibleAngle() {
+        double secondAngle = currentNormalVector().angleBetween(new Vector3d(0, 0, 1));
+        secondAngle = secondAngle > Math.PI / 2 ? Math.PI - secondAngle : secondAngle;
+        return Math.abs(secondAngle);
     }
 }

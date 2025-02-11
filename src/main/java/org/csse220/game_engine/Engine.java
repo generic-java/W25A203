@@ -1,8 +1,9 @@
 package org.csse220.game_engine;
 
-import org.csse220.game_engine.graphics.Drawable;
+import org.csse220.game_engine.characters.GamePlayer;
 import org.csse220.game_engine.graphics.Screen;
 import org.csse220.game_engine.kinematics.Kinematics;
+import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.levels.Level;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class Engine {
     private Kinematics kinematics;
     private final ArrayList<Level> levels;
     private int levelNumber = -1;
-    private GameObject player = null;
+    private GamePlayer player = null;
 
     private Engine() {
         levels = new ArrayList<>();
@@ -34,7 +35,7 @@ public class Engine {
         }
     }
 
-    public void init(SolidGameObject player, JFrame window) {
+    public void init(GamePlayer player, JFrame window) {
         this.player = player;
         GameKeyListener keyListener = new GameKeyListener();
 
@@ -53,28 +54,21 @@ public class Engine {
     }
 
     public void setLevel(Level level) {
-        // TODO: finish this method
+        for (GameObject gameObject : level.getGameObjects()) {
+            addGameObject(gameObject);
+        }
     }
 
     public void addGameObject(GameObject gameObject) {
         kinematics.addGameObject(gameObject);
     }
 
-//    public void removeGameObject(GameObject gameObject) {
-//        gameObjects.remove(gameObject);
-//        if (gameObject.hasCollideable()) {
-//
-//        }
-//        if (gameObject.hasDrawable()) {
-//
-//        }
-//    }
-
-    public void addDrawable(Drawable drawable) {
-
+    public GamePlayer getPlayer() {
+        return player;
     }
 
-    public void removeDrawable(Drawable drawable) {
+    public GamePose getPlayerPosition() {
+        return player.getPose();
     }
 
     public boolean keyPressed(int keycode) {

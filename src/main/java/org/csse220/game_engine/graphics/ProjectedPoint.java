@@ -8,18 +8,18 @@ public class ProjectedPoint {
 
     public ProjectedPoint(double x, double y) {
         Dimension size = Screen.getInstance().getSize();
-        this.screenX = (int) (size.getWidth() / 2 + x);
-        this.screenY = (int) (size.getHeight() / 2 - y);
+        this.screenX = (int) (size.getWidth() / 2) + (int) x;
+        this.screenY = (int) (size.getHeight() / 2) - (int) y;
     }
 
     public static double xToActual(double screenX) {
         Dimension size = Screen.getInstance().getSize();
-        return screenX - size.getWidth() / 2;
+        return (screenX - size.getWidth() / 2);
     }
 
     public static double yToActual(double screenY) {
         Dimension size = Screen.getInstance().getSize();
-        return size.getHeight() / 2 - screenY;
+        return (size.getHeight() / 2 - screenY);
     }
 
     public int x() {

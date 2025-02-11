@@ -1,12 +1,18 @@
 package org.csse220.levels;
 
 import org.csse220.game_engine.GameObject;
+import org.csse220.game_engine.characters.Drone;
+import org.csse220.game_engine.characters.Enemy;
+import org.csse220.game_engine.characters.PathEnemy;
 import org.csse220.game_engine.game_objects.CuboidTerrain;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Point3d;
 import org.csse220.game_engine.math_utils.GamePose;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,6 +25,8 @@ import java.util.Scanner;
 public class Level {
     private final int numObjects;
     private final ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private final ArrayList<Enemy> enemies = new ArrayList<>();
+    private final ArrayList<CuboidTerrain> platforms = new ArrayList<>();
 
     private Level(int numObjects) {
         this.numObjects = numObjects;
@@ -81,19 +89,19 @@ public class Level {
         String tempName = jsonObject.getString("Name");
         JsonArray enemies = jsonObject.getJsonArray("enemies");
         Enemy[] tempEnemies = new Enemy[enemies.size()];
-        for(int i = 0; i<enemies.size();  i++){
+        for (int i = 0; i < enemies.size(); i++) {
             JsonObject currentJsonObj = enemies.getJsonObject(i);
             String type = currentJsonObj.getString("type");
-            if(type.equals("drone")){
+            if (type.equals("drone")) {
 
                 double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
                 double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
                 double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
 
                 //REPLACE WITH CONSTRUCTOR
-                tempEnemies[i] = new Enemy();
+                tempEnemies[i] = new Drone(new GamePose(poseX, poseY, poseZ, 0));
             }
-            if(type.equals("pathEnemy")){
+            if (type.equals("pathEnemy")) {
 
                 double startX = Double.parseDouble(currentJsonObj.getString("startX"));
                 double startY = Double.parseDouble(currentJsonObj.getString("startY"));
@@ -104,7 +112,7 @@ public class Level {
                 double endZ = Double.parseDouble(currentJsonObj.getString("endZ"));
 
                 //REPLACE WITH CONSTRUCTOR
-                tempEnemies[i] = new Enemy();
+                tempEnemies[i] = new PathEnemy(new GamePose(startX, startY, startZ, 0), new GamePose(endX, endY, endZ, 0));
             }
 
         }

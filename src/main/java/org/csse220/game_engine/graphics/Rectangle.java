@@ -14,6 +14,7 @@ public class Rectangle extends Drawable {
         super(pose, color);
         top = new Face(pose, topLeft, topRight, bottomLeft, color);
         bottom = new Face(pose, bottomLeft, bottomRight, topRight, color);
+        setPose(pose);
     }
 
     public Rectangle(Point3d topLeft, Point3d topRight, Point3d bottomRight, Point3d bottomLeft, Color color) {

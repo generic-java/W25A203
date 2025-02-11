@@ -29,7 +29,7 @@ public class LineSegment {
             } else if (k == 0) { // If this line segment is vertical
                 return point1.x() > other.point1.x() && point1.x() < other.point2.x();
             } else {
-                return new LineSegment(new Point2d(point1.y(), point1.x()), new Point2d(point2.y(), point2.x())).intersectsWith(new LineSegment(new Point2d(other.point1.y(), other.point1.x()), new Point2d(other.point2.y(), other.point2.x())));
+                return point1.x() == point2.x();
             }
         }
 

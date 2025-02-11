@@ -12,7 +12,6 @@ import org.csse220.game_engine.math_utils.Vector3d;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -40,7 +39,7 @@ public class Kinematics extends KillableThread {
 
     public Kinematics(SolidGameObject player, GameKeyListener gameKeyListener) {
         collideables = ConcurrentHashMap.newKeySet();
-        drawables = new HashSet<>();
+        drawables = ConcurrentHashMap.newKeySet();
         gameObjects = ConcurrentHashMap.newKeySet();
         timer = new ElapsedTime();
         this.player = player;
@@ -61,12 +60,14 @@ public class Kinematics extends KillableThread {
             double dt = timer.getAndReset();
             for (GamePose elementMoveStep : elementMoveSteps) {
                 for (GameObject gameObject : gameObjects) {
+                    gameObject.update();
                     gameObject.move(elementMoveStep, dt);
                 }
                 for (GameObject gameObject : collideables) {
                     for (GameObject toCheck : collideables) {
                         if (gameObject != toCheck && gameObject.getCollideable().hasCollided(toCheck.getCollideable())) {
                             gameObject.onCollide(toCheck, elementMoveStep);
+                            toCheck.onCollide(gameObject, elementMoveStep.scale(-1));
                         }
                     }
                 }
@@ -78,7 +79,7 @@ public class Kinematics extends KillableThread {
             CameraPose camPose = camera.getPose();
             Vector3d.updatePitchYaw(camPose.pitch(), camPose.yaw());
             Screen.getInstance().fill(Color.WHITE);
-            for (Drawable drawable : drawables) {
+            for (Drawable drawable : drawables) { // TODO: concurrent modification exception occurs here sometimes
                 drawable.draw(camera.getPose(), camPose.pitch(), camPose.yaw(), true);
             }
             ZBuffer.getInstance().wipe();
@@ -91,7 +92,6 @@ public class Kinematics extends KillableThread {
     }
 
     private void setPlayerVelocity(double dt) {
-        //System.out.println(player.velocity().z());
         Vector2d velocityVector = new Vector2d();
         double yawVel = 0;
         Camera camera = Camera.getInstance();
