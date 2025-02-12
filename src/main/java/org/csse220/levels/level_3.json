@@ -1,56 +1,15 @@
 {
-  "name": "Level3",
-  "numEnemies": 12,
+  "numObjects": 10,
+  "name": "Level1",
   "portalPoseX": "1",
   "portalPoseY": "2",
   "portalPoseZ": "3",
-  "platforms": [
-    {
-      "poseX": 0,
-      "poseY": 0,
-      "poseZ": 0,
-      "width": 0,
-      "height": 0,
-      "depth": 0,
-      "color": [
-        255,
-        255,
-        255
-      ]
-    },
-    {
-      "poseX": 0,
-      "poseY": 0,
-      "poseZ": 0,
-      "width": 0,
-      "height": 0,
-      "depth": 0,
-      "color": [
-        255,
-        255,
-        255
-      ]
-    },
-    {
-      "poseX": 0,
-      "poseY": 0,
-      "poseZ": 0,
-      "width": 0,
-      "height": 0,
-      "depth": 0,
-      "color": [
-        255,
-        255,
-        255
-      ]
-    }
-  ],
   "enemies": [
     {
       "type": "drone",
-      "poseX": "1",
-      "poseY": "2",
-      "poseZ": "3"
+      "poseX": "0",
+      "poseY": "0",
+      "poseZ": "0"
     },
     {
       "type": "pathEnemy",
@@ -60,6 +19,29 @@
       "endX": "4",
       "endY": "5",
       "endZ": "6"
+    }
+  ],
+  "platforms": [
+    {
+      "color": [
+        1,
+        2,
+        3
+      ],
+      "width": "100",
+      "height": "15",
+      "depth": "100",
+      "poseX": "0",
+      "poseY": "0",
+      "poseZ": "-15"
+    },
+    {
+      "width": "100",
+      "height": "15",
+      "depth": "100",
+      "poseX": "0",
+      "poseY": "120",
+      "poseZ": "0"
     }
   ],
   "bonfireFuelPoses": [

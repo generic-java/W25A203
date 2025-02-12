@@ -26,11 +26,9 @@ public class PathEnemy extends Enemy {
         if (getPose().between(startPose, endPose)) {
             setVel(nextVel);
             nextVel = velocity().scale(-1);
-        }
-        else if (pose.between(endPose, startPose)){
+        } else if (pose.between(endPose, startPose)) {
             setVel(nextVel);
             nextVel = velocity().scale(-1);
-
         }
     }
 }

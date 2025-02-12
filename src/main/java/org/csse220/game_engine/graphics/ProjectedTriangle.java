@@ -6,10 +6,6 @@ public class ProjectedTriangle {
     private static final double MAX_DISTANCE = 500;
 
     private final ProjectedPoint[] vertices;
-    private double c1;
-    private double c2;
-    private double c3;
-    private double c4;
     private final DepthCalculator depthCalculator;
     private final double angle;
 
@@ -49,10 +45,6 @@ public class ProjectedTriangle {
         }
     }
 
-    private static boolean withinScreenWidth(int x) {
-        return x >= 0 && x < Screen.getInstance().getAdjustedWidth();
-    }
-
     private boolean outsideScreen() {
         double screenWidth = Screen.getInstance().getAdjustedWidth();
         double screenHeight = Screen.getInstance().getAdjustedHeight();
@@ -90,32 +82,6 @@ public class ProjectedTriangle {
             Screen.getInstance().paintPixel(x, y, color);
             ZBuffer.getInstance().set(x, y, depth);
         }
-    }
-
-    /**
-     * @param x1 The x coordinate of the first vertex of the triangle
-     * @param y1 The y coordinate of the first vertex of the triangle
-     * @param z1 The depth of the point corresponding to the first vertex of the triangle relative to the player after being rotated in 3D space.
-     *           That is, the transformed y coordinate of the pixel in 3D space.
-     * @param x2 The x coordinate of the second vertex of the triangle
-     * @param y2 The y coordinate of the second vertex of the triangle
-     * @param z2 The depth of the point corresponding to the second vertex of the triangle relative to the player after being rotated in 3D space.
-     *           That is, the transformed y coordinate of the pixel in 3D space.
-     * @param x3 The x coordinate of the third vertex of the triangle
-     * @param y3 The y coordinate of the third vertex of the triangle
-     * @param z3 The depth of the point corresponding to the third vertex of the triangle relative to the player after being rotated in 3D space.
-     *           That is, the transformed y coordinate of the pixel in 3D space.
-     */
-
-    private void generatePixelDepthConstants(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3) {
-        c1 = (y2 * z3 - z2 * y3) * x1 + (y3 * z1 - z3 * y1) * x2 + (z2 * y1 - y2 * z1) * x3;
-        c2 = (z2 - z3) * x1 + (z3 - z1) * x2 + (z1 - z2) * x3;
-        c3 = (z2 - z3) * y1 + (z3 - z1) * y2 + (z1 - z2) * y3;
-        c4 = (y2 - y3) * x1 + (y3 - y1) * x2 + (y1 - y2) * x3;
-    }
-
-    private double getPixelDepth(double x, double y) {
-        return (c1 + c2 * y - c3 * x) / c4;
     }
 
     private static int polarity(double number) {

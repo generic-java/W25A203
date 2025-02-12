@@ -66,8 +66,8 @@ public class Kinematics extends KillableThread {
                 for (GameObject gameObject : collideables) {
                     for (GameObject toCheck : collideables) {
                         if (gameObject != toCheck && gameObject.getCollideable().hasCollided(toCheck.getCollideable())) {
-                            gameObject.onCollide(toCheck, elementMoveStep);
-                            //toCheck.onCollide(gameObject, elementMoveStep.scale(-1));
+                            gameObject.onMovingCollision(toCheck, elementMoveStep);
+                            toCheck.onStationaryCollision(gameObject, elementMoveStep.scale(-1));
                         }
                     }
                 }
@@ -134,6 +134,9 @@ public class Kinematics extends KillableThread {
     }
 
     public void addGameObject(GameObject gameObject) {
+        if (gameObject == null) {
+            return;
+        }
         gameObjects.add(gameObject);
         if (gameObject.hasCollideable()) {
             collideables.add(gameObject);
@@ -148,6 +151,9 @@ public class Kinematics extends KillableThread {
     }
 
     public void clearAllGameObjects() {
-        gameObjects.removeIf((gameObject) -> gameObject != player);
+        gameObjects.clear();
+        collideables.clear();
+        drawables.clear();
+        addGameObject(player);
     }
 }

@@ -77,9 +77,6 @@ public class Face extends Drawable {
                 frontCamera++;
             }
         }
-        if (!clearlyVisible()) { // If it would almost appear as a straight line
-            return;
-        }
         double newZ1;
         double newX1;
         double newZ2;

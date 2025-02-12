@@ -1,12 +1,10 @@
 package org.csse220.levels;
 
-import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.characters.Drone;
 import org.csse220.game_engine.characters.Enemy;
 import org.csse220.game_engine.characters.PathEnemy;
 import org.csse220.game_engine.game_objects.CuboidTerrain;
 import org.csse220.game_engine.graphics.Cuboid;
-import org.csse220.game_engine.graphics.Point3d;
 import org.csse220.game_engine.math_utils.GamePose;
 
 import javax.json.Json;
@@ -14,51 +12,46 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.awt.*;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.FileSystems;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
+import java.util.*;
 
 
 public class Level {
-    private final int numObjects;
-    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
+
     private final ArrayList<Enemy> enemies = new ArrayList<>();
     private final ArrayList<CuboidTerrain> platforms = new ArrayList<>();
 
-    private Level(int numObjects) {
-        this.numObjects = numObjects;
-        for (int i = 0; i < numObjects; i++) {
-            gameObjects.add(new CuboidTerrain(new GamePose(), new Cuboid(new Point3d(100 * (Math.random() - 0.5), 100 * (Math.random() - 0.5), 0), 5, 5, 5, Math.random() > 0.5 ? Color.GREEN : Color.ORANGE)));
-            //gameObjects.add(new GameObject(new GamePose(), null, new Cuboid(new Point3d(100 * (Math.random() - 0.5), 100 * (Math.random() - 0.5), 0), 5, 5, 5, Math.random() > 0.5 ? Color.GREEN : Color.ORANGE)));
-        }
-    }
-
-    public ArrayList<GameObject> getGameObjects() {
-        return gameObjects;
+    private Level(List<CuboidTerrain> platforms, List<Enemy> enemies) {
+        this.enemies.addAll(enemies);
+        this.platforms.addAll(platforms);
     }
 
     public static ArrayList<Level> loadAll() {
-
-        System.out.println("Please enter the name of the level file you would like to load.  Afterwards, enter another name or press / to quit the level loader.  Suggested level names are 'level_1.json' and 'level_2.json'.  'level_3.json' is a demonstration of how the program handles reading a file with invalid data.  Press the U and I keys to switch levels.\n");
-
         ArrayList<Level> levels = new ArrayList<>();
+        File dir = new File(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/main/java/org/csse220/levels/");
 
-        String levelName;
-        while (!(levelName = getLevelName()).equals("/")) {
-            try {
-                levels.add(loadLevel(levelName));
-            } catch (MissingDataException e) {
-                System.out.println("Level file isn't valid.  Please enter another file name.");
-                return loadAll();
-            } catch (IOException e) {
-                System.out.println("Level file does not exist.  Please enter another file name.");
-                return loadAll();
+        try {
+            for (File file : Objects.requireNonNull(dir.listFiles())) {
+                if (file.getName().contains(".json")) {
+                    try {
+                        levels.add(loadLevel(file));
+                    } catch (IOException e) {
+                        System.err.println(e);
+                    } catch (MissingDataException e) {
+                        System.err.println(e);
+                    }
+                }
             }
+        } catch (IllegalAccessError e) {
+            System.out.println("Couldn't load levels");
+            System.out.println(e);
+            throw new RuntimeException(e);
         }
-
         return levels;
     }
 
@@ -68,10 +61,8 @@ public class Level {
         return scanner.nextLine();
     }
 
-    public static Level loadLevel(String filename) throws IOException, MissingDataException {
-
-        Scanner sc = new Scanner(new FileReader(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/main/java/org/csse220/levels/" + filename));
-
+    public static Level loadLevel(File file) throws IOException, MissingDataException {
+        Scanner sc = new Scanner(new FileReader(file));
 
         StringBuilder jsonString = new StringBuilder();
         while (sc.hasNextLine()) {
@@ -80,13 +71,10 @@ public class Level {
         JsonReader reader = Json.createReader(new StringReader(jsonString.toString()));
 
         JsonObject jsonObject = reader.readObject();
-        if (!jsonObject.containsKey("numObjects") || !jsonObject.containsKey("enemies") || !jsonObject.containsKey("Name")) {
+        if (!jsonObject.containsKey("enemies") || !jsonObject.containsKey("name")) {
             throw new MissingDataException();
         }
 
-
-        int tempNumObjects = jsonObject.getInt("numObjects");
-        String tempName = jsonObject.getString("Name");
         JsonArray enemies = jsonObject.getJsonArray("enemies");
         Enemy[] tempEnemies = new Enemy[enemies.size()];
         for (int i = 0; i < enemies.size(); i++) {
@@ -116,7 +104,27 @@ public class Level {
             }
 
         }
+        JsonArray platforms = jsonObject.getJsonArray("platforms");
+        CuboidTerrain[] tempPlatforms = new CuboidTerrain[platforms.size()];
+        for (int i = 0; i < platforms.size(); i++) {
+            JsonObject currentJsonObj = platforms.getJsonObject(i);
+            System.out.println(currentJsonObj);
 
+
+            double width = Double.parseDouble(currentJsonObj.getString("width"));
+            double height = Double.parseDouble(currentJsonObj.getString("height"));
+            double depth = Double.parseDouble(currentJsonObj.getString("depth"));
+
+            double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
+            double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
+            double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
+
+            GamePose temp = new GamePose(poseX, poseY, poseZ, 0);
+
+            //REPLACE WITH CONSTRUCTOR
+            tempPlatforms[i] = new CuboidTerrain(new Cuboid(temp.toPoint3d(), width, height, depth, new Color(163, 52, 255)));
+        }
+        //tempPlatforms[0] = new CuboidTerrain(new Cuboid(new Point3d(0, 0, -15), 100, 10, 100, Color.PINK));
         double portalX = Double.parseDouble(jsonObject.getString("portalPoseX"));
         double portalY = Double.parseDouble(jsonObject.getString("portalPoseY"));
         double portalZ = Double.parseDouble(jsonObject.getString("portalPoseZ"));
@@ -126,7 +134,7 @@ public class Level {
 
         /*
 
-        UNCOMMENT AFTER INPLEMENTING BONFIRE CLASS
+        UNCOMMENT AFTER IMPLEMENTING BONFIRE CLASS
 
         JsonArray bonfireFuel = jsonObject.getJsonArray("bonfireFuelPose");
         BonfireFuel[] fuel = new BonfireFuel[bonfireFuel.size()];
@@ -141,17 +149,17 @@ public class Level {
         }
         */
 
-        return new Level(tempNumObjects);
+        return new Level(Arrays.asList(tempPlatforms), Arrays.asList(tempEnemies));
     }
 
-    public int getNumObjects() {
-        return numObjects;
+    public ArrayList<Enemy> getEnemies() {
+        return this.enemies;
     }
 
-    @Override
-    public String toString() {
-        return "Level[numObjects:" + numObjects + "]";
+    public ArrayList<CuboidTerrain> getPlatforms() {
+        return this.platforms;
     }
+
 
     public static class MissingDataException extends Exception {
         MissingDataException() {

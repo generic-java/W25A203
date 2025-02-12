@@ -15,14 +15,16 @@ public class GameObject extends MovingObject {
         super(pose);
         this.collideable = collideable;
         this.drawable = drawable;
-        if (hasCollideable())
+        if (hasCollideable()) {
             relativeCollideablePose = collideable.getPose().relativeTo(pose);
-        else
+        } else {
             relativeCollideablePose = new GamePose();
-        if (hasDrawable())
+        }
+        if (hasDrawable()) {
             relativeDrawablePose = drawable.getPose().relativeTo(pose);
-        else
+        } else {
             relativeDrawablePose = new GamePose();
+        }
     }
 
     public final boolean hasCollideable() {
@@ -36,10 +38,12 @@ public class GameObject extends MovingObject {
     @Override
     public void setPose(GamePose pose) {
         super.setPose(pose);
-        if (hasCollideable())
+        if (hasCollideable()) {
             collideable.setPose(relativeCollideablePose.addTo(pose));
-        if (hasDrawable())
+        }
+        if (hasDrawable()) {
             drawable.setPose(relativeDrawablePose.addTo(pose));
+        }
     }
 
     @Override
@@ -67,7 +71,11 @@ public class GameObject extends MovingObject {
         return drawable;
     }
 
-    public void onCollide(GameObject other, GamePose moveDirection) {
+    public void onMovingCollision(GameObject other, GamePose moveDirection) {
+
+    }
+
+    public void onStationaryCollision(GameObject other, GamePose moveDirection) {
 
     }
 

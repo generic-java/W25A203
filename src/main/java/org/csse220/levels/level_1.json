@@ -7,9 +7,9 @@
   "enemies": [
     {
       "type": "drone",
-      "poseX": "1",
-      "poseY": "2",
-      "poseZ": "3"
+      "poseX": "0",
+      "poseY": "0",
+      "poseZ": "0"
     },
     {
       "type": "pathEnemy",
@@ -19,6 +19,21 @@
       "endX": "4",
       "endY": "5",
       "endZ": "6"
+    }
+  ],
+  "platforms": [
+    {
+      "color": [
+        1,
+        2,
+        3
+      ],
+      "width": "100",
+      "height": "10",
+      "depth": "100",
+      "poseX": "0",
+      "poseY": "0",
+      "poseZ": "-15"
     }
   ],
   "bonfireFuelPoses": [

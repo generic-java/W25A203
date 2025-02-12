@@ -5,11 +5,13 @@ import org.csse220.game_engine.math_utils.GamePose;
 
 public abstract class MovingObject extends PlaceableObject {
 
+    private GamePose lastPose;
     private GamePose velocity;
     private double gravity;
 
     public MovingObject(GamePose pose, double gravity) {
         super(pose);
+        lastPose = pose;
         velocity = new GamePose();
         this.gravity = gravity;
     }
@@ -28,6 +30,16 @@ public abstract class MovingObject extends PlaceableObject {
 
     public void update() {
 
+    }
+
+    @Override
+    public void setPose(GamePose pose) {
+        lastPose = getPose();
+        super.setPose(pose);
+    }
+
+    protected GamePose lastPose() {
+        return lastPose;
     }
 
     /**

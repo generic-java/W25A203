@@ -29,9 +29,7 @@ public class Engine {
         if (this.levelNumber != levelNumber && levelNumber < levels.size()) {
             this.levelNumber = levelNumber;
             kinematics.clearAllGameObjects();
-            for (GameObject gameObject : levels.get(levelNumber).getGameObjects()) {
-                addGameObject(gameObject);
-            }
+            addLevelData(levels.get(levelNumber));
         }
     }
 
@@ -49,14 +47,19 @@ public class Engine {
         kinematics.start();
     }
 
-    private void kill() {
-        kinematics.kill();
-    }
+    private void addLevelData(Level level) {
+        for (GameObject gameObject : level.getEnemies()) {
+            addGameObject(gameObject);
+            System.out.println(gameObject.getPose());
+        }
 
-    public void setLevel(Level level) {
-        for (GameObject gameObject : level.getGameObjects()) {
+        for (GameObject gameObject : level.getPlatforms()) {
             addGameObject(gameObject);
         }
+    }
+
+    private void kill() {
+        kinematics.kill();
     }
 
     public void addGameObject(GameObject gameObject) {

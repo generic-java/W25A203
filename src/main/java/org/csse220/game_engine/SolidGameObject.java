@@ -5,7 +5,7 @@ import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.math_utils.GamePose;
 
 public class SolidGameObject extends GameObject {
-    private boolean touchingGround;
+    private boolean touchingGround = false;
     private static final double JUMP_VEL = 0.3;
     private static final GamePose COLLISION_CONSTANTS = new GamePose(0.005, 0.005, 0.005, 0.005);
 
@@ -29,22 +29,39 @@ public class SolidGameObject extends GameObject {
     }
 
     @Override
-    public void onCollide(GameObject other, GamePose moveDirection) {
-        if (velocity().equals(new GamePose(0, 0, 0, 0))) {
-            //return;
+    public void onMovingCollision(GameObject other, GamePose moveDirection) {
+        GamePose translation = velocity();
+        if (translation.equals(new GamePose(0, 0, 0, 0))) {
+            return;
         }
-        double moveSize = moveDirection.dot(velocity());
+        double moveSize = moveDirection.dot(translation);
+
+        if (moveSize == 0) {
+            return;
+            //throw new RuntimeException("Why am I colliding when I have no velocity?");
+        }
         double move = moveSize / Math.abs(moveSize);
         double collisionMultiplier = COLLISION_CONSTANTS.dot(moveDirection);
+        int i = 0;
+        GamePose initial = getPose();
+        GamePose increment = moveDirection.scale(-collisionMultiplier * move);
         while (other.getCollideable().hasCollided(getCollideable())) {
-            setPose(moveDirection.scale(-collisionMultiplier * move).addTo(pose));
+            setPose(increment.addTo(pose));
+            if (i > 1000000) {
+                System.out.println(moveDirection.scale(-collisionMultiplier * move));
+                System.out.println(getPose());
+                System.out.println(initial);
+                return;
+                //throw new RuntimeException("uh oh");
+            }
+            i++;
         }
-        setPose(moveDirection.scale(-collisionMultiplier * move).addTo(pose));
         setPose(pose.round(2));
-        //setPose(pose.addTo(moveDirection.scale(pose.round(2).relativeTo(pose).dot(moveDirection))));
-        //System.out.println(moveDirection.scale(pose.round(2).relativeTo(pose).dot(moveDirection)));
-        if (velocity().z() < 0 && moveDirection.z() > 0) {
-            touchingGround = true;
+        setPose(moveDirection.scale(-collisionMultiplier * move).addTo(pose));
+        if (moveDirection.z() > 0) {
+            if (velocity().z() < 0) {
+                touchingGround = true;
+            }
             setZVel(0);
         }
     }

@@ -13,8 +13,8 @@ public class Enemy extends SolidGameObject {
     }
 
     @Override
-    public void onCollide(GameObject other, GamePose moveDirection) {
-        super.onCollide(other, moveDirection);
+    public void onMovingCollision(GameObject other, GamePose moveDirection) {
+        super.onMovingCollision(other, moveDirection);
         // TODO: enemy specific code here
     }
 }

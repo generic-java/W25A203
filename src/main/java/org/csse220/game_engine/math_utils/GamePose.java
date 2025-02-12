@@ -1,5 +1,7 @@
 package org.csse220.game_engine.math_utils;
 
+import org.csse220.game_engine.graphics.Point3d;
+
 public class GamePose extends Vector3d {
     private final double yaw;
 
@@ -74,6 +76,10 @@ public class GamePose extends Vector3d {
     public GamePose round(int precision) {
         double factor = Math.pow(10, precision);
         return new GamePose(Math.round(x * factor) / factor, Math.round(y * factor) / factor, Math.round(z * factor) / factor, Math.round(yaw * factor) / factor);
+    }
+
+    public Point3d toPoint3d() {
+        return new Point3d(x, y, z);
     }
 
     public boolean between(GamePose first, GamePose second) {
