@@ -3,6 +3,7 @@ package org.csse220;
 
 import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.characters.Drone;
+import org.csse220.game_engine.characters.PathEnemy;
 import org.csse220.game_engine.game_objects.CuboidTerrain;
 import org.csse220.game_engine.graphics.CompoundDrawable;
 import org.csse220.game_engine.graphics.Cuboid;
@@ -86,7 +87,9 @@ public class Main {
 
 
 //
-        engine.addGameObject(new Drone(new GamePose(15, 15, -50, 0)));
+   //      engine.addGameObject(new Drone(new GamePose(0, 50, -70, 0)));
+        engine.addGameObject(new PathEnemy(new GamePose(70, 50, 0, 0), new GamePose(70, -50, 0, 0)));
+
 //        for (Level level : levels) {
 //            engine.addLevel(level);
 //        }

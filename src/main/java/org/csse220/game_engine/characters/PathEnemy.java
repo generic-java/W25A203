@@ -14,7 +14,7 @@ public class PathEnemy extends Enemy {
     private GamePose nextVel;
 
     public PathEnemy(GamePose startPose, GamePose endPose) {
-        super(startPose, new Hitbox(startPose, 5, 5, 5), new Cuboid(startPose, new Point3d(0, 0, 0), 5, 5, 5, Color.GREEN));
+        super(startPose, new Hitbox(startPose, 5, 5, 5), new Cuboid(startPose, new Point3d(0, 0, 0), 5, 5, 5, Color.magenta));
         this.startPose = startPose;
         this.endPose = endPose;
         setVel(endPose.relativeTo(startPose).normalize().scale(SPEED));
@@ -24,8 +24,12 @@ public class PathEnemy extends Enemy {
     @Override
     public void update() {
         if (getPose().between(startPose, endPose)) {
-            
-        } else {
+            setVel(nextVel);
+            nextVel = velocity().scale(-1);
+        }
+        else if (pose.between(endPose, startPose)){
+            setVel(nextVel);
+            nextVel = velocity().scale(-1);
 
         }
     }

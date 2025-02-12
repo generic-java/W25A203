@@ -10,7 +10,8 @@ import org.csse220.game_engine.math_utils.GamePose;
 import java.awt.*;
 
 public class Drone extends Enemy {
-    private static final double MOVE_SPEED = 0.25;
+    private static final double MOVE_SPEED = .0025;
+  //  private static final double MIN_DISTANCE = 2.0
     private boolean isActive;
 
     public Drone(GamePose pose) {
@@ -27,13 +28,13 @@ public class Drone extends Enemy {
 
     @Override
     public void update() {
-        if (isActive) {
+       // if (isActive) {
             GamePose playerPos = Engine.getInstance().getPlayerPosition();
             GamePose proportionalDistance = playerPos.relativeTo(pose);
-            GamePose velocity = proportionalDistance.scale(MOVE_SPEED*0.5);
+            GamePose velocity = proportionalDistance.scale(MOVE_SPEED);
 
             setPose(getPose().addTo(velocity));
-        }
+     //   }
     }
 
     @Override
