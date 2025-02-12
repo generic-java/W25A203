@@ -21,6 +21,18 @@ public class Rectangle extends Drawable {
         this(new GamePose(), topLeft, topRight, bottomRight, bottomLeft, color);
     }
 
+    @Override
+    public void hide() {
+        top.hide();
+        bottom.hide();
+    }
+
+    @Override
+    public void show() {
+        top.show();
+        bottom.show();
+    }
+
     public void draw(Vector3d camPose, double pitch, double yaw, boolean shade) {
         top.draw(camPose, pitch, yaw, shade);
         bottom.draw(camPose, pitch, yaw, shade);

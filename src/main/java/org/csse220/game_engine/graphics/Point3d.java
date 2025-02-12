@@ -79,6 +79,19 @@ public class Point3d extends Vector3d {
         return new Point3d(super.translate(translation));
     }
 
+    public Point3d translateZ(double z) {
+        return new Point3d(super.translateZ(z));
+    }
+
+    public Point3d translateY(double y) {
+        return new Point3d(super.translateY(y));
+    }
+
+    public Point3d translateX(double x) {
+        return new Point3d(super.translateX(x));
+    }
+
+
     public Point3d relativeTo(Point3d other) {
         return new Point3d(super.relativeTo(other));
     }
