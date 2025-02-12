@@ -2,6 +2,7 @@ package org.csse220;
 
 
 import org.csse220.game_engine.Engine;
+import org.csse220.game_engine.game_objects.BonfireFuel;
 import org.csse220.game_engine.graphics.CompoundDrawable;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Face;
@@ -91,6 +92,7 @@ public class Main {
 //        }
         //player.setZVel(-0.0001);
         engine.setLevel(0);
+        engine.addGameObject(new BonfireFuel(new GamePose(1, 1, 1, 1)));
         player.setPose(new GamePose(0, 0, 25, 0.1));
 
 
