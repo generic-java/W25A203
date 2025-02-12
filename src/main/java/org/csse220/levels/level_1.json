@@ -13,12 +13,12 @@
     },
     {
       "type": "pathEnemy",
-      "startX": "1",
+      "startX": "15",
       "startY": "2",
-      "startZ": "3",
+      "startZ": "0",
       "endX": "4",
       "endY": "5",
-      "endZ": "6"
+      "endZ": "0"
     }
   ],
   "platforms": [

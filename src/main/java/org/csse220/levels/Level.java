@@ -116,14 +116,14 @@ public class Level {
             double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
             double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
 
-            int red;
+         /*   int red;
             int green;
             int blue;
             JsonArray color = currentJsonObj.getJsonArray("color");
             for (JsonValue value : color) {
 
             }
-
+*/
             GamePose temp = new GamePose(poseX, poseY, poseZ, 0);
 
             //REPLACE WITH CONSTRUCTOR
