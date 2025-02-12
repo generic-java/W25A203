@@ -67,8 +67,5 @@ public class Drone extends Enemy {
 
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
 }
 
