@@ -91,7 +91,7 @@ public class Main {
 //        }
         //player.setZVel(-0.0001);
         engine.setLevel(0);
-        player.setPose(new GamePose(0, 0, 25, 0));
+        player.setPose(new GamePose(0, 0, 25, 0.1));
 
 
     }

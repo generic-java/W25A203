@@ -23,6 +23,8 @@ public class PathEnemy extends Enemy {
 
     @Override
     public void update() {
+        if (true)
+            return;
         if (getPose().between(startPose, endPose)) {
             setVel(nextVel);
             nextVel = velocity().scale(-1);
