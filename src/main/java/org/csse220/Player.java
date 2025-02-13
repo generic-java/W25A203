@@ -9,6 +9,7 @@ import org.csse220.game_engine.math_utils.GamePose;
 import java.awt.*;
 
 public class Player extends GamePlayer {
+    private int fuelCounter;
 
     public Player() {
         super(new GamePose(), new Hitbox(new GamePose(), 5, 5, 5), new Cuboid(new Point3d(0, 0, 0), 5, 5, 5, Color.ORANGE));
@@ -17,6 +18,15 @@ public class Player extends GamePlayer {
     }
 
     public void attackedByEnemy() {
-        
+
+    }
+
+    public int getFuelCounter() {
+        return fuelCounter;
+    }
+
+    @Override
+    public void pickUpFuel() {
+        fuelCounter++;
     }
 }

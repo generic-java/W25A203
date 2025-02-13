@@ -66,8 +66,13 @@ public class Kinematics extends KillableThread {
                 for (GameObject gameObject : collideables) {
                     for (GameObject toCheck : collideables) {
                         if (gameObject != toCheck && gameObject.getCollideable().hasCollided(toCheck.getCollideable())) {
-                            gameObject.onMovingCollision(toCheck, elementMoveStep);
-                            toCheck.onStationaryCollision(gameObject, elementMoveStep.scale(-1));
+                            if (gameObject.blocksMovement() && toCheck.blocksMovement()) {
+                                gameObject.onMovingCollision(toCheck, elementMoveStep);
+                                toCheck.onStationaryCollision(gameObject, elementMoveStep.scale(-1));
+                            } else {
+                                gameObject.softCollision(toCheck, elementMoveStep);
+                                toCheck.softCollision(gameObject, elementMoveStep);
+                            }
                         }
                     }
                 }

@@ -79,5 +79,17 @@ public class GameObject extends MovingObject {
 
     }
 
+    public void softCollision(GameObject other, GamePose moveDirection) {
+
+    }
+
+    public boolean blocksMovement() {
+        return true;
+    }
+
+    public void pickUpFuel() {
+    }
+
+
     //protected abstract boolean onCollide();
 }

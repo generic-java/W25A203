@@ -1,5 +1,6 @@
 package org.csse220.game_engine.game_objects;
 
+import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.SolidGameObject;
 import org.csse220.game_engine.graphics.CompoundDrawable;
@@ -9,6 +10,8 @@ import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.kinematics.CompositeHitbox;
 import org.csse220.game_engine.kinematics.Hitbox;
 import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.characters.GamePlayer;
+import org.csse220.Main;
 
 import java.awt.Color;
 
@@ -25,7 +28,19 @@ public class BonfireFuel extends GameObject {
                         new Cuboid(pose, pose.toPoint3d().translateZ(2), 1, 1, 1, new Color(247, 171, 64))));
     }
 
+
+    @Override
+    public void softCollision(GameObject other, GamePose moveDirection) {
+        other.pickUpFuel();
+        getDrawable().hide();
+    }
+
     public void deleteSelf() {
 
+    }
+
+    @Override
+    public boolean blocksMovement() {
+        return false;
     }
 }

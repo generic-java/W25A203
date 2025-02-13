@@ -40,4 +40,5 @@ public class CompoundDrawable extends Drawable {
     public void draw(Vector3d camPose, double pitch, double yaw, boolean shade) {
         drawables.keySet().forEach((drawable) -> drawable.draw(camPose, pitch, yaw, shade));
     }
+
 }
