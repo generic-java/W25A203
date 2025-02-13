@@ -1,5 +1,6 @@
 package org.csse220.levels;
 
+import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.characters.Drone;
 import org.csse220.game_engine.characters.Enemy;
 import org.csse220.game_engine.characters.PathEnemy;

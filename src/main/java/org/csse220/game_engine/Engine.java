@@ -58,6 +58,10 @@ public class Engine {
         }
     }
 
+    public void resetLevel() {
+        setLevel(this.levelNumber);
+    }
+
     private void kill() {
         kinematics.kill();
     }

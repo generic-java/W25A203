@@ -93,7 +93,7 @@ public class Main {
 //        }
         //player.setZVel(-0.0001);
         engine.setLevel(0);
-        engine.addGameObject(new BonfireFuel(new GamePose(20, 20, 1, 1)));
+        engine.addGameObject(new BonfireFuel(new GamePose(20, 20, -5, 1)));
 
         engine.addGameObject(new Bonfire(new GamePose(70, 70, 0, 1)));
         player.setPose(new GamePose(0, 0, 25, 0.1));
