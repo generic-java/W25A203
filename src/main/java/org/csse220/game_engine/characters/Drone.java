@@ -46,11 +46,6 @@ public class Drone extends Enemy {
         this.isActive = true; // if the drone is on the screen or not (should implement collisions)
     }
 
-//    private static GamePose RandomSpawn() {
-//        Random rand = new Random();
-//        double randomY = rand.nextDouble(); // random y position
-//        return new GamePose(, randomY, 50, 0, 0, 0); // enters the screen from the right edge
-//    }
 
     @Override
     public void update() {
