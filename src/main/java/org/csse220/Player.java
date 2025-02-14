@@ -30,14 +30,14 @@ public class Player extends GamePlayer {
             getDrawable().hide();
             Engine.getInstance().render();
             try {
-                Thread.sleep(250);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 //TODO DEAL WITH IT
             }
             getDrawable().show();
             Engine.getInstance().render();
             try {
-                Thread.sleep(250);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 //TODO DEAL WITH IT
             }

@@ -6,7 +6,7 @@
   "portalPoseZ": "3",
   "playerPoseX": "0",
   "playerPoseY": "0",
-  "playerPoseZ": "25",
+  "playerPoseZ": "50",
   "enemies": [
     {
       "type": "drone",

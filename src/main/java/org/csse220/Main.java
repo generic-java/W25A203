@@ -1,9 +1,8 @@
 package org.csse220;
 
-
 import org.csse220.game_engine.Engine;
-import org.csse220.game_engine.game_objects.Bonfire;
-import org.csse220.game_engine.game_objects.BonfireFuel;
+import org.csse220.game_engine.GameObject;
+import org.csse220.game_engine.game_objects.CuboidTerrain;
 import org.csse220.game_engine.graphics.CompoundDrawable;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Face;
@@ -24,7 +23,8 @@ public class Main {
 
         JFrame window = new JFrame("Demo");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(800, 600);
+        window.setSize(1500, 900);
+        window.requestFocus();
 
         Player player = new Player();
         Engine engine = Engine.getInstance();
@@ -39,23 +39,27 @@ public class Main {
                 new Cuboid(new GamePose(), new Point3d(0, 0, 5.5), 5, 5.5, 3.75, Color.GRAY),
                 new Cuboid(new GamePose(), new Point3d(-1.5, 0, 0), 1.5, 5, 1.5, Color.GRAY),
                 new Cuboid(new GamePose(), new Point3d(1.5, 0, 0), 1.5, 5, 1.5, Color.GRAY),
-                new Face(new GamePose(),
+                new Face(
+                        new GamePose(),
                         new Point3d(-2.5, 0, 4.75),
                         new Point3d(-2.5, -1, 4),
                         new Point3d(-2.5, 3, 3), Color.GRAY),
-                new Face(new GamePose(),
+                new Face(
+                        new GamePose(),
                         new Point3d(-3.5, 0, 4.75),
                         new Point3d(-3.5, -1, 4),
                         new Point3d(-3.5, 3, 3), Color.GRAY),
                 new Cuboid(new GamePose(), new Point3d(0, 0, 8.75), 4, 1, 2, Color.GRAY),
-                new Cuboid(new GamePose(), new Point3d(0, 0, 11.25), 5.5, 6.5, 5.5, Color.GRAY),
-                new Face(new GamePose(), // bottom part of left ear
+                new Cuboid(new GamePose(), new Point3d(0, 0, 11.25), 5.5, 6.5, 5.5, Color.GRAY), // head
+                new Face(
+                        new GamePose(), // bottom part of left ear
                         new Point3d(-2.75, -1, 11.25),
                         new Point3d(-2.75, 0, 8),
                         new Point3d(-6.75, 0.5, 11.25),
                         Color.DARK_GRAY
                 ),
-                new Face(new GamePose(),
+                new Face(
+                        new GamePose(),
                         new Point3d(-2.75, -1, 11.25),
                         new Point3d(-2.75, 0, 15),
                         new Point3d(-6.75, 0.5, 11.25),
@@ -68,7 +72,8 @@ public class Main {
                         new Point3d(6.75, 0.5, 11.25),
                         Color.DARK_GRAY
                 ),
-                new Face(new GamePose(),
+                new Face(
+                        new GamePose(),
                         new Point3d(2.75, -1, 11.25),
                         new Point3d(2.75, 0, 15),
                         new Point3d(6.75, 0.5, 11.25),
@@ -78,7 +83,107 @@ public class Main {
                 new Cuboid(new GamePose(), new Point3d(2, 2.875, 11.25), 2, 2, 0.25, Color.WHITE),
 
                 new Cuboid(new GamePose(), new Point3d(-2, 3, 11.25), 1, 1, 0.25, Color.BLACK),
-                new Cuboid(new GamePose(), new Point3d(2, 3, 11.25), 1, 1, 0.25, Color.BLACK)
+                new Cuboid(new GamePose(), new Point3d(2, 3, 11.25), 1, 1, 0.25, Color.BLACK),
+
+                new Face(
+                        new GamePose(),
+                        new Point3d(-0.75, 2.75, 8),
+                        new Point3d(-0.75, 2.75, 10),
+                        new Point3d(-0.75, 5, 6),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(0.75, 2.75, 8),
+                        new Point3d(0.75, 2.75, 10),
+                        new Point3d(0.75, 5, 6),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(-0.75, 2.75, 10),
+                        new Point3d(-0.75, 5, 7),
+                        new Point3d(-0.75, 5, 6),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(0.75, 2.75, 10),
+                        new Point3d(0.75, 5, 7),
+                        new Point3d(0.75, 5, 6),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(-0.75, 2.75, 10),
+                        new Point3d(-0.75, 5, 7),
+                        new Point3d(0.75, 5, 7),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(0.75, 2.75, 10),
+                        new Point3d(-0.75, 2.75, 10),
+                        new Point3d(0.75, 5, 7),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(-0.75, 5, 7),
+                        new Point3d(-0.75, 5, 4),
+                        new Point3d(-0.75, 6, 4),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(0.75, 5, 7),
+                        new Point3d(0.75, 5, 4),
+                        new Point3d(0.75, 6, 4),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(-0.75, 5, 7),
+                        new Point3d(-0.75, 6, 4),
+                        new Point3d(0.75, 6, 4),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(0.75, 5, 7),
+                        new Point3d(-0.75, 5, 7),
+                        new Point3d(0.75, 6, 4),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(-0.75, 5, 4),
+                        new Point3d(-0.75, 5, 7),
+                        new Point3d(-0.75, 3.5, 8),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(0.75, 5, 4),
+                        new Point3d(0.75, 5, 7),
+                        new Point3d(0.75, 3.5, 8),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(-0.75, 5, 4),
+                        new Point3d(0.75, 5, 4),
+                        new Point3d(-0.75, 3.5, 8),
+                        Color.DARK_GRAY
+                ),
+                new Face(
+                        new GamePose(),
+                        new Point3d(-0.75, 3.5, 8),
+                        new Point3d(0.75, 3.5, 8),
+                        new Point3d(0.75, 5, 4),
+                        Color.DARK_GRAY
+                )
+
         );
         //engine.addGameObject(new GameObject(new GamePose(), null, elephant));
 //        engine.addGameObject(new Drone(new GamePose(0, 0, 15, 0)));
@@ -93,10 +198,13 @@ public class Main {
 //        }
         //player.setZVel(-0.0001);
         engine.setLevel(0);
-        engine.addGameObject(new BonfireFuel(new GamePose(20, 20, -5, 1)));
-
-        engine.addGameObject(new Bonfire(new GamePose(70, 70, 0, 1)));
-        //player.setPose(new GamePose(0, 0, 25, 0.1));
+        //engine.addGameObject(new Drone(new GamePose(15, 0, 15, 0)));
+        //engine.setBackground(new Color(160, 230, 255));
+        engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(50, 0, 0), 25, 100, 100, Color.GREEN)));
+        //engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 0, 50), 100, 10, 100, Color.GREEN)));
+        player.setPose(new GamePose(0, 0, 25, 0));
+        engine.addGameObject(new GameObject(new GamePose(), null, elephant));
+        engine.startKinematics();
 
 
     }

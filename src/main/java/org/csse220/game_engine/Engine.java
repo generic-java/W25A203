@@ -7,6 +7,7 @@ import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.levels.Level;
 
 import javax.swing.*;
+import javax.xml.transform.stream.StreamSource;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -29,10 +30,11 @@ public class Engine {
     }
 
     public void setLevel(int levelNumber) {
-        if (this.levelNumber != levelNumber && levelNumber < levels.size()) {
+        if (levelNumber < levels.size()) {
             this.levelNumber = levelNumber;
             kinematics.clearAllGameObjects();
             addLevelData(levels.get(levelNumber));
+            player.setZVel(0);
             player.setPose(levels.get(levelNumber).getPlayerStartPose());
         }
 
@@ -64,6 +66,7 @@ public class Engine {
     }
 
     public void resetLevel() {
+
         setLevel(this.levelNumber);
     }
 
