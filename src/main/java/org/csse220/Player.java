@@ -28,12 +28,19 @@ public class Player extends GamePlayer {
     public void die() {
         for (int i = 0; i < 3; i++) {
             getDrawable().hide();
+            Engine.getInstance().render();
             try {
-                Thread.sleep(500);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 //TODO DEAL WITH IT
             }
             getDrawable().show();
+            Engine.getInstance().render();
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                //TODO DEAL WITH IT
+            }
         }
         Engine.getInstance().resetLevel();
         health = MAX_HEALTH;

@@ -79,17 +79,21 @@ public class Kinematics extends KillableThread {
             }
             setPlayerVelocity(dt);
 
-            updateCameraPosition();
-            Camera camera = Camera.getInstance();
-            CameraPose camPose = camera.getPose();
-            Vector3d.updatePitchYaw(camPose.pitch(), camPose.yaw());
-            Screen.getInstance().fill(Color.WHITE);
-            for (Drawable drawable : drawables) { // TODO: concurrent modification exception occurs here sometimes
-                drawable.draw(camera.getPose(), camPose.pitch(), camPose.yaw(), true);
-            }
-            ZBuffer.getInstance().wipe();
-            Screen.getInstance().refresh();
+            render();
         }
+    }
+
+    public void render() {
+        updateCameraPosition();
+        Camera camera = Camera.getInstance();
+        CameraPose camPose = camera.getPose();
+        Vector3d.updatePitchYaw(camPose.pitch(), camPose.yaw());
+        Screen.getInstance().fill(Color.WHITE);
+        for (Drawable drawable : drawables) { // TODO: concurrent modification exception occurs here sometimes
+            drawable.draw(camera.getPose(), camPose.pitch(), camPose.yaw(), true);
+        }
+        ZBuffer.getInstance().wipe();
+        Screen.getInstance().refresh();
     }
 
     private void updateCameraPosition() {

@@ -1,6 +1,5 @@
 package org.csse220.levels;
 
-import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.characters.Drone;
 import org.csse220.game_engine.characters.Enemy;
 import org.csse220.game_engine.characters.PathEnemy;
@@ -23,10 +22,12 @@ public class Level {
 
     private final ArrayList<Enemy> enemies = new ArrayList<>();
     private final ArrayList<CuboidTerrain> platforms = new ArrayList<>();
+    private GamePose playerStartPose;
 
-    private Level(List<CuboidTerrain> platforms, List<Enemy> enemies) {
+    private Level(List<CuboidTerrain> platforms, List<Enemy> enemies, GamePose playerStartPose) {
         this.enemies.addAll(enemies);
         this.platforms.addAll(platforms);
+        this.playerStartPose = playerStartPose;
     }
 
     public static ArrayList<Level> loadAll() {
@@ -138,6 +139,12 @@ public class Level {
         //REPLACE WITH CONSTRUCTOR AFTER IMPLEMENTATION
         Portal p = new Portal();
 
+        double playerPoseX = Double.parseDouble(jsonObject.getString("playerPoseX"));
+        double playerPoseY = Double.parseDouble(jsonObject.getString("playerPoseY"));
+        double playerPoseZ = Double.parseDouble(jsonObject.getString("playerPoseZ"));
+        GamePose playerStartPose = new GamePose(playerPoseX, playerPoseY, playerPoseZ, 0);
+
+
         /*
 
         UNCOMMENT AFTER IMPLEMENTING BONFIRE CLASS
@@ -155,7 +162,7 @@ public class Level {
         }
         */
 
-        return new Level(Arrays.asList(tempPlatforms), Arrays.asList(tempEnemies));
+        return new Level(Arrays.asList(tempPlatforms), Arrays.asList(tempEnemies), playerStartPose);
     }
 
     public ArrayList<Enemy> getEnemies() {
@@ -166,10 +173,16 @@ public class Level {
         return this.platforms;
     }
 
+    public GamePose getPlayerStartPose() {
+        return this.playerStartPose;
+    }
+
 
     public static class MissingDataException extends Exception {
         MissingDataException() {
             super("MISSING DATA!");
         }
     }
+
+
 }

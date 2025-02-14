@@ -30,7 +30,9 @@ public class Engine {
             this.levelNumber = levelNumber;
             kinematics.clearAllGameObjects();
             addLevelData(levels.get(levelNumber));
+            player.setPose(levels.get(levelNumber).getPlayerStartPose());
         }
+
     }
 
     public void init(GamePlayer player, JFrame window) {
@@ -60,6 +62,10 @@ public class Engine {
 
     public void resetLevel() {
         setLevel(this.levelNumber);
+    }
+
+    public void render() {
+        kinematics.render();
     }
 
     private void kill() {
