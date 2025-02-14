@@ -15,6 +15,7 @@ public class Face extends Drawable {
     private static final boolean CLIP_Y = true;
     private static final double CLIP_DISTANCE = 0.1;
 
+    private boolean hidden = false;
     private final Vector3d[] relativeVertices;
     private final Point3d[] vertices;
     private Color shadedColor;
@@ -52,7 +53,20 @@ public class Face extends Drawable {
         return new SimpleDepthCalculator(c1, c2, c3, c4);
     }
 
+    @Override
+    public void hide() {
+        hidden = true;
+    }
+
+    @Override
+    public void show() {
+        hidden = false;
+    }
+
     public void draw(Vector3d camPos, double pitch, double yaw, boolean shade) {
+        if (hidden) {
+            return;
+        }
         DepthCalculator depthCalculator = generateDepthCalculator(camPos);
         int behindCamera = 0;
         int frontCamera = 0;

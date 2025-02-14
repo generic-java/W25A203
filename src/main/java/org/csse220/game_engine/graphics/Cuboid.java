@@ -77,6 +77,20 @@ public class Cuboid extends Drawable {
         this(new GamePose(), center, width, height, depth, color);
     }
 
+    @Override
+    public void hide() {
+        for (Rectangle rect : rectangles) {
+            rect.hide();
+        }
+    }
+
+    @Override
+    public void show() {
+        for (Rectangle rect : rectangles) {
+            rect.show();
+        }
+    }
+
     public void draw(Vector3d camPose, double pitch, double yaw, boolean shade) {
         for (Rectangle rectangle : rectangles) {
             rectangle.draw(camPose, pitch, yaw, shade);

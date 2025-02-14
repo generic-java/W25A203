@@ -23,7 +23,22 @@ public class CompoundDrawable extends Drawable {
     }
 
     @Override
+    public void hide() {
+        for (Drawable drawable : drawables.keySet()) {
+            drawable.hide();
+        }
+    }
+
+    @Override
+    public void show() {
+        for (Drawable drawable : drawables.keySet()) {
+            drawable.show();
+        }
+    }
+
+    @Override
     public void draw(Vector3d camPose, double pitch, double yaw, boolean shade) {
         drawables.keySet().forEach((drawable) -> drawable.draw(camPose, pitch, yaw, shade));
     }
+
 }
