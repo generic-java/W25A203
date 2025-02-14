@@ -1,5 +1,6 @@
 package org.csse220.game_engine;
 
+import org.csse220.game_engine.characters.Drone;
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.math_utils.GamePose;
@@ -22,6 +23,10 @@ public class GameObject extends MovingObject {
         }
         if (hasDrawable()) {
             relativeDrawablePose = drawable.getPose().relativeTo(pose);
+            if (this instanceof Drone) {
+                //System.out.println("printing drone pose");
+                //System.out.println(relativeDrawablePose);
+            }
         } else {
             relativeDrawablePose = new GamePose();
         }

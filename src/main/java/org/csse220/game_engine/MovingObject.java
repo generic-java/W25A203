@@ -8,6 +8,7 @@ public abstract class MovingObject extends PlaceableObject {
     private GamePose lastPose;
     private GamePose velocity;
     private double gravity;
+    private static final double MAX_MOVE_TRANSLATION = 0.5;
 
     public MovingObject(GamePose pose, double gravity) {
         super(pose);
@@ -47,6 +48,9 @@ public abstract class MovingObject extends PlaceableObject {
      * to this method, it will move this object k * its current velocity in that direction.
      */
     public void move(GamePose moveDirection, double dt) {
+        if (dt > 100) {
+            dt = 100;
+        }
         if (moveDirection.z() > 0) {
             velocity = velocity.translateZ(-gravity * dt);
         }

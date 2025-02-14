@@ -37,6 +37,19 @@
       "poseX": "0",
       "poseY": "0",
       "poseZ": "-15"
+    },
+    {
+      "color": [
+        1,
+        2,
+        3
+      ],
+      "width": "100",
+      "height": "10",
+      "depth": "100",
+      "poseX": "120",
+      "poseY": "0",
+      "poseZ": "-15"
     }
   ],
   "bonfireFuelPoses": [

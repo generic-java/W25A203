@@ -1,6 +1,7 @@
 package org.csse220.game_engine.graphics;
 
-import org.csse220.Main;
+import org.csse220.game_engine.ElapsedTime;
+import org.csse220.game_engine.Engine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ public class Screen extends JComponent {
     public final Color[][] pixels;
     private final Color[][] buffer;
     private final double squareScreenWidth;
+    private final ElapsedTime timer = new ElapsedTime();
 
     public double getSquareScreenWidth() {
         return squareScreenWidth;
@@ -26,6 +28,7 @@ public class Screen extends JComponent {
             }
         }
         buffer = new Color[pixels.length][pixels[0].length];
+        timer.reset();
     }
 
     public void fill(Color color) {
@@ -89,7 +92,8 @@ public class Screen extends JComponent {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2.setColor(Color.BLACK);
-            g2.drawString("fps: " + Main.FPS, 70, 20);
+            g2.drawString("fps: " + Math.round(1000 / timer.getAndReset()), 70, 20);
+            g2.drawString("z: " + Engine.getInstance().getPlayer().getPose().z(), 70, 50);
         }
     }
 

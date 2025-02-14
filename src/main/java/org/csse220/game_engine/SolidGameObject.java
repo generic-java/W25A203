@@ -7,7 +7,7 @@ import org.csse220.game_engine.math_utils.GamePose;
 public class SolidGameObject extends GameObject {
     private boolean touchingGround = false;
     private static final double JUMP_VEL = 0.3;
-    private static final GamePose COLLISION_CONSTANTS = new GamePose(0.005, 0.005, 0.005, 0.005);
+    private static final GamePose COLLISION_CONSTANTS = new GamePose(0.01, 0.01, 0.01, 0.01);
 
     public SolidGameObject(GamePose pose, Collideable collideable, Drawable drawable) {
         super(pose, collideable, drawable);
@@ -35,29 +35,16 @@ public class SolidGameObject extends GameObject {
             return;
         }
         double moveSize = moveDirection.dot(translation);
-
-        if (moveSize == 0) {
-            return;
-            //throw new RuntimeException("Why am I colliding when I have no velocity?");
-        }
         double move = moveSize / Math.abs(moveSize);
         double collisionMultiplier = COLLISION_CONSTANTS.dot(moveDirection);
-        int i = 0;
-        GamePose initial = getPose();
+
         GamePose increment = moveDirection.scale(-collisionMultiplier * move);
+        int precision = moveDirection.yaw() > 0 ? 2 : 1;
+        GamePose roundingIncrement = moveDirection.scale(pose.round(precision).relativeTo(pose).dot(moveDirection));
+        setPose(pose.fullTranslation(roundingIncrement));
         while (other.getCollideable().hasCollided(getCollideable())) {
             setPose(increment.addTo(pose));
-            if (i > 1000000) {
-                System.out.println(moveDirection.scale(-collisionMultiplier * move));
-                System.out.println(getPose());
-                System.out.println(initial);
-                return;
-                //throw new RuntimeException("uh oh");
-            }
-            i++;
         }
-        setPose(pose.round(2));
-        setPose(moveDirection.scale(-collisionMultiplier * move).addTo(pose));
         if (moveDirection.z() > 0) {
             if (velocity().z() < 0) {
                 touchingGround = true;

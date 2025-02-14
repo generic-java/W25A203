@@ -7,6 +7,7 @@ import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.levels.Level;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Engine {
@@ -17,7 +18,9 @@ public class Engine {
     private int levelNumber = -1;
     private GamePlayer player = null;
 
+
     private Engine() {
+        //AudioSystem.getClip()
         levels = new ArrayList<>();
     }
 
@@ -44,15 +47,15 @@ public class Engine {
         window.add(Screen.getInstance());
         window.addKeyListener(keyListener);
         window.setVisible(true);
+    }
 
-        //renderer.start();
+    public void startKinematics() {
         kinematics.start();
     }
 
     private void addLevelData(Level level) {
         for (GameObject gameObject : level.getEnemies()) {
             addGameObject(gameObject);
-            System.out.println(gameObject.getPose());
         }
 
         for (GameObject gameObject : level.getPlatforms()) {
@@ -96,4 +99,7 @@ public class Engine {
     }
 
 
+    public void setBackground(Color color) {
+        kinematics.setBackground(color);
+    }
 }
