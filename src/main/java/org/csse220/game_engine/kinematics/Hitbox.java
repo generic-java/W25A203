@@ -30,7 +30,7 @@ public class Hitbox extends Collideable {
     }
 
     private void updateVertexPositions() {
-        center = new Point2d(pose.x(), pose.y());
+        center = xyCenter();
         topLeft = new Point2d(pose.x() - width / 2, pose.y() + depth / 2);
         topRight = new Point2d(pose.x() + width / 2, pose.y() + depth / 2);
         bottomRight = new Point2d(pose.x() + width / 2, pose.y() - depth / 2);
@@ -57,6 +57,7 @@ public class Hitbox extends Collideable {
 
 
     private LineSegment[] getLineSegments() {
+        //System.out.println(xyCenter());
         return new LineSegment[]{
                 new LineSegment(topLeft.rotateAbout(center, pose.yaw()), topRight.rotateAbout(center, pose.yaw())),
                 new LineSegment(topRight.rotateAbout(center, pose.yaw()), bottomRight.rotateAbout(center, pose.yaw())),
@@ -91,9 +92,7 @@ public class Hitbox extends Collideable {
         if (checkOther) {
             isInside = other.oneInside(this, false);
         }
-        return otherCenter.x() > pose.x() - width / 2 && otherCenter.x() < pose.x() + width / 2
-                && otherCenter.y() > pose.y() - width / 2 && otherCenter.y() < pose.y() + width / 2
-                || isInside;
+        return otherCenter.x() > pose.x() - width / 2 && otherCenter.x() < pose.x() + width / 2 && otherCenter.y() > pose.y() - depth / 2 && otherCenter.y() < pose.y() + depth / 2 || isInside;
     }
 
     private boolean oneInside(Hitbox other) {

@@ -24,7 +24,7 @@ public class ZBuffer {
 
     public void wipe() {
         for (int i = 0; i < buffer.length; i++) {
-            for (int j = 0; j < buffer.length; j++) {
+            for (int j = 0; j < buffer[0].length; j++) {
                 buffer[i][j] = Double.POSITIVE_INFINITY;
             }
         }

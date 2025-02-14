@@ -8,7 +8,7 @@ import org.csse220.game_engine.math_utils.GamePose;
 import java.awt.*;
 
 public class PathEnemy extends Enemy {
-    private final double SPEED = 0.025;
+    private static final double SPEED = 0.025;
     private final GamePose startPose;
     private final GamePose endPose;
     private GamePose nextVel;
@@ -26,13 +26,11 @@ public class PathEnemy extends Enemy {
         if (!getPose().between(startPose, endPose)) {
             if (pose.distanceTo(startPose) <= pose.distanceTo(endPose)) {
                 setPose(startPose);
-                setVel(nextVel);
-                nextVel = velocity().scale(-1);
             } else {
                 setPose(endPose);
-                setVel(nextVel);
-                nextVel = velocity().scale(-1);
             }
+            setVel(nextVel);
+            nextVel = velocity().scale(-1);
 
         }
     }

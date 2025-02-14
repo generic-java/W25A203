@@ -91,6 +91,10 @@ public class Cuboid extends Drawable {
         }
     }
 
+    public Point3d getCenter() {
+        return center;
+    }
+
     public Hitbox toHitbox() {
         return new Hitbox(center.toGamePose(), width, height, depth);
     }

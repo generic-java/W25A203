@@ -23,6 +23,7 @@ public class Kinematics extends KillableThread {
     private static final GamePose MOVE_Y = new GamePose(0, 1, 0, 0);
     private static final GamePose MOVE_Z = new GamePose(0, 0, 1, 0);
     private static final GamePose MOVE_YAW = new GamePose(0, 0, 0, 1);
+    private Color backgroundColor = Color.WHITE;
 
     private final Set<GameObject> gameObjects;
     private final ElapsedTime timer;
@@ -78,7 +79,7 @@ public class Kinematics extends KillableThread {
             Camera camera = Camera.getInstance();
             CameraPose camPose = camera.getPose();
             Vector3d.updatePitchYaw(camPose.pitch(), camPose.yaw());
-            Screen.getInstance().fill(Color.WHITE);
+            Screen.getInstance().fill(backgroundColor);
             for (Drawable drawable : drawables) { // TODO: concurrent modification exception occurs here sometimes
                 drawable.draw(camera.getPose(), camPose.pitch(), camPose.yaw(), true);
             }
@@ -155,5 +156,9 @@ public class Kinematics extends KillableThread {
         collideables.clear();
         drawables.clear();
         addGameObject(player);
+    }
+
+    public void setBackground(Color color) {
+        backgroundColor = color;
     }
 }

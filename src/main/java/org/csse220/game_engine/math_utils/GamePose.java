@@ -26,6 +26,9 @@ public class GamePose extends Vector3d {
         return translate(vector.x(), vector.y(), vector.z());
     }
 
+    public GamePose fullTranslation(GamePose gamePose) {
+        return new GamePose(x + gamePose.x(), y + gamePose.y(), z + gamePose.z(), yaw + gamePose.yaw());
+    }
 
     @Override
     public GamePose translate(double x, double y, double z) {
@@ -78,6 +81,16 @@ public class GamePose extends Vector3d {
         return new GamePose(Math.round(x * factor) / factor, Math.round(y * factor) / factor, Math.round(z * factor) / factor, Math.round(yaw * factor) / factor);
     }
 
+    public GamePose floor(int precision) {
+        double factor = Math.pow(10, precision);
+        return new GamePose(Math.floor(x * factor) / factor, Math.floor(y * factor) / factor, Math.floor(z * factor) / factor, Math.floor(yaw * factor) / factor);
+    }
+
+    public GamePose ceil(int precision) {
+        double factor = Math.pow(10, precision);
+        return new GamePose(Math.ceil(x * factor) / factor, Math.ceil(y * factor) / factor, Math.ceil(z * factor) / factor, Math.ceil(yaw * factor) / factor);
+    }
+
     public Point3d toPoint3d() {
         return new Point3d(x, y, z);
     }
@@ -105,5 +118,18 @@ public class GamePose extends Vector3d {
         }
 
         return x >= firstX && x <= secondX && y >= firstY && y <= secondY;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof GamePose pose) {
+            return x == pose.x() && y == pose.y() && z == pose.z() && yaw == pose.yaw();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nyaw: " + yaw;
     }
 }

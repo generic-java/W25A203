@@ -67,6 +67,11 @@ public class Point3d extends Vector3d {
         );
     }
 
+    private static double precisionRound(double num, int precision) {
+        double factor = Math.pow(10, precision);
+        return Math.round(num * factor) / factor;
+    }
+
     public static double projectionConstant() {
         return Screen.getInstance().getSquareScreenWidth() / FOV_CONSTANT;
     }

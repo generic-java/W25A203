@@ -11,6 +11,6 @@ public class CuboidTerrain extends GameObject {
     }
 
     public CuboidTerrain(Cuboid cuboid) {
-        this(new GamePose(), cuboid);
+        this(cuboid.getCenter().toGamePose(), cuboid);
     }
 }
