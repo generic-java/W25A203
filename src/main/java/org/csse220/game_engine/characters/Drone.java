@@ -1,9 +1,11 @@
 package org.csse220.game_engine.characters;
 
 import org.csse220.game_engine.Engine;
+import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.graphics.CompoundDrawable;
 import org.csse220.game_engine.graphics.Face;
 import org.csse220.game_engine.graphics.Point3d;
+import org.csse220.game_engine.kinematics.Hitbox;
 import org.csse220.game_engine.math_utils.GamePose;
 
 import java.awt.*;
@@ -14,7 +16,7 @@ public class Drone extends Enemy {
     private boolean isActive;
 
     public Drone(GamePose pose) {
-        super(pose, null,
+        super(pose, new Hitbox(pose, 2, 7, 2),
                 new CompoundDrawable(
                         pose,
                         new Face(
@@ -55,6 +57,22 @@ public class Drone extends Enemy {
 
         setPose(getPose().addTo(velocity));
         //   }
+    }
+
+    @Override
+    public boolean blocksMovement() {
+        return false;
+    }
+
+    @Override
+    public void softCollision(GameObject other, GamePose pose) {
+        other.hitByDrone();
+    }
+
+    @Override
+    public void hitByPlayer() {
+        Engine.getInstance().removeGameObject(this);
+        System.out.println("HIT BY PLAYER OUCHWWWWWWW");
     }
 
     public boolean isActive() {

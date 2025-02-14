@@ -157,7 +157,16 @@ public class Kinematics extends KillableThread {
     }
 
     public void removeGameObject(GameObject gameObject) {
+        if (gameObject == null) {
+            return;
+        }
         gameObjects.remove(gameObject);
+        if (gameObject.hasCollideable()) {
+            collideables.remove(gameObject);
+        }
+        if (gameObject.hasDrawable()) {
+            drawables.remove(gameObject.getDrawable());
+        }
     }
 
     public void clearAllGameObjects() {

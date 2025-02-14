@@ -1,6 +1,7 @@
 package org.csse220;
 
 import org.csse220.game_engine.Engine;
+import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.characters.GamePlayer;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.graphics.Point3d;
@@ -65,5 +66,10 @@ public class Player extends GamePlayer {
 
     public int getHealth() {
         return health;
+    }
+
+    @Override
+    public void softCollision(GameObject other, GamePose pose) {
+        other.hitByPlayer();
     }
 }

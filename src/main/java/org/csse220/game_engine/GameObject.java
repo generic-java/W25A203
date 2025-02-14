@@ -60,6 +60,12 @@ public class GameObject extends MovingObject {
             drawable.setPose(relativeDrawablePose.addTo(pose));
     }
 
+    public void hitByDrone() {
+    }
+
+    public void hitByPlayer() {
+    }
+
     public double yaw() {
         return yaw;
     }

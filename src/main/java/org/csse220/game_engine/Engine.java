@@ -82,6 +82,10 @@ public class Engine {
         kinematics.addGameObject(gameObject);
     }
 
+    public void removeGameObject(GameObject gameObject) {
+        kinematics.removeGameObject(gameObject);
+    }
+
     public GamePlayer getPlayer() {
         return player;
     }
