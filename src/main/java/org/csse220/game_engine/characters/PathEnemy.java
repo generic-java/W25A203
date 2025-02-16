@@ -31,7 +31,6 @@ public class PathEnemy extends Enemy {
             }
             setVel(nextVel);
             nextVel = velocity().scale(-1);
-
         }
     }
 
