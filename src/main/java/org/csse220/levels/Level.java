@@ -3,6 +3,7 @@ package org.csse220.levels;
 import org.csse220.game_engine.characters.Drone;
 import org.csse220.game_engine.characters.Enemy;
 import org.csse220.game_engine.characters.PathEnemy;
+import org.csse220.game_engine.game_objects.BonfireFuel;
 import org.csse220.game_engine.game_objects.CuboidTerrain;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.math_utils.GamePose;
@@ -25,12 +26,14 @@ public class Level {
 
     private final ArrayList<Enemy> enemies = new ArrayList<>();
     private final ArrayList<CuboidTerrain> platforms = new ArrayList<>();
-    private GamePose playerStartPose;
+    private final GamePose playerStartPose;
+    private final ArrayList<BonfireFuel> bonfireFuels = new ArrayList<>();
 
-    private Level(List<CuboidTerrain> platforms, List<Enemy> enemies, GamePose playerStartPose) {
+    private Level(List<CuboidTerrain> platforms, List<Enemy> enemies, GamePose playerStartPose, List<BonfireFuel> bonfireFuels) {
         this.enemies.addAll(enemies);
         this.platforms.addAll(platforms);
         this.playerStartPose = playerStartPose;
+        this.bonfireFuels.addAll(bonfireFuels);
     }
 
     public static ArrayList<Level> loadAll() {
@@ -147,24 +150,20 @@ public class Level {
         GamePose playerStartPose = new GamePose(playerPoseX, playerPoseY, playerPoseZ, 0);
 
 
-        /*
-
-        UNCOMMENT AFTER IMPLEMENTING BONFIRE CLASS
-
-        JsonArray bonfireFuel = jsonObject.getJsonArray("bonfireFuelPose");
-        BonfireFuel[] fuel = new BonfireFuel[bonfireFuel.size()];
-        for(int i = 0; i < bonfireFuelPose.size(); i++ ){
-            JsonObject currentJsonObj = bonfireFuel.getJsonObject(i);
+        JsonArray bonfireFuelPoses = jsonObject.getJsonArray("bonfireFuelPoses");
+        BonfireFuel[] fuel = new BonfireFuel[bonfireFuelPoses.size()];
+        for (int i = 0; i < bonfireFuelPoses.size(); i++) {
+            JsonObject currentJsonObj = bonfireFuelPoses.getJsonObject(i);
             double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
             double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
             double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
 
             //REPLACE WITH CONSTRUCTOR
-            fuel[i] = new BonfireFuel();
+            fuel[i] = new BonfireFuel(new GamePose(poseX, poseY, poseZ, 0));
         }
-        */
 
-        return new Level(Arrays.asList(tempPlatforms), Arrays.asList(tempEnemies), playerStartPose);
+
+        return new Level(Arrays.asList(tempPlatforms), Arrays.asList(tempEnemies), playerStartPose, Arrays.asList(fuel));
     }
 
     public ArrayList<Enemy> getEnemies() {
@@ -173,6 +172,10 @@ public class Level {
 
     public ArrayList<CuboidTerrain> getPlatforms() {
         return this.platforms;
+    }
+
+    public ArrayList<BonfireFuel> getBonfireFuels() {
+        return this.bonfireFuels;
     }
 
     public GamePose getPlayerStartPose() {

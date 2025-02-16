@@ -53,6 +53,9 @@ public class Player extends GamePlayer {
         if (getPose().z < MIN_Z) {
             die();
         }
+        if (this.health <= 0) {
+            die();
+        }
     }
 
     public int getFuelCounter() {
@@ -62,6 +65,7 @@ public class Player extends GamePlayer {
     @Override
     public void pickUpFuel() {
         fuelCounter++;
+        System.out.println(fuelCounter);
     }
 
     public int getHealth() {
@@ -71,5 +75,10 @@ public class Player extends GamePlayer {
     @Override
     public void softCollision(GameObject other, GamePose pose) {
         other.hitByPlayer();
+    }
+
+    @Override
+    public void hitByDrone() {
+        health--;
     }
 }
