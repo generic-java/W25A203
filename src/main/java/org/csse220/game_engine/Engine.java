@@ -63,6 +63,10 @@ public class Engine {
         for (GameObject gameObject : level.getPlatforms()) {
             addGameObject(gameObject);
         }
+
+        for (GameObject gameObject : level.getBonfireFuels()) {
+            addGameObject(gameObject);
+        }
     }
 
     public void resetLevel() {
