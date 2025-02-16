@@ -1,5 +1,6 @@
 package org.csse220.game_engine.graphics;
 
+import org.csse220.Player;
 import org.csse220.game_engine.ElapsedTime;
 import org.csse220.game_engine.Engine;
 
@@ -94,7 +95,14 @@ public class Screen extends JComponent {
             g2.setColor(Color.BLACK);
             g2.drawString("fps: " + Math.round(1000 / timer.getAndReset()), 70, 20);
             g2.drawString("z: " + Engine.getInstance().getPlayer().getPose().z(), 70, 50);
+            g2.drawString("Fuel Amount: " + String.valueOf(((Player) Engine.getInstance().getPlayer()).getFuelCounter()), 70, 80);
+            g2.drawString(String.format("LevelNumber: %s", Engine.getInstance().getLevelNumber() + 1), 70, 100);
+            g2.drawString(String.format("Health: %s", ((Player) (Engine.getInstance().getPlayer())).getHealth()), 70, 120);
+
+
+            //String testString = String.format("LevelNumber: %s", Engine.getInstance().getLevelNumber()+1);
         }
+
     }
 
     public static Screen getInstance() {

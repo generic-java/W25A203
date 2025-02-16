@@ -54,19 +54,22 @@
   ],
   "bonfireFuelPoses": [
     {
-      "poseX": "1",
-      "poseY": "2",
-      "poseZ": "3"
+      "poseX": "25",
+      "poseY": "25",
+      "poseZ": "-5"
     },
     {
-      "poseX": "4",
-      "poseY": "5",
-      "poseZ": "6"
+      "poseX": "20",
+      "poseY": "20",
+      "poseZ": "-5"
     },
     {
-      "poseX": "7",
-      "poseY": "8",
-      "poseZ": "9"
+      "poseX": "30",
+      "poseY": "30",
+      "poseZ": "-5"
     }
-  ]
+  ],
+  "bonfireX": "40",
+  "bonfireY": "50",
+  "bonfireZ": "-5"
 }

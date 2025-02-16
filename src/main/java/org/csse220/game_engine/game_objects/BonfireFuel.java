@@ -11,6 +11,7 @@ import java.awt.*;
 
 public class BonfireFuel extends GameObject {
 
+    private boolean isHidden = false;
 
     public BonfireFuel(GamePose pose) {
 
@@ -25,12 +26,23 @@ public class BonfireFuel extends GameObject {
 
     @Override
     public void softCollision(GameObject other, GamePose moveDirection) {
-        other.pickUpFuel();
-        getDrawable().hide();
+        if (!isHidden) {
+            other.pickUpFuel();
+            isHidden = true;
+            getDrawable().hide();
+        }
+
+
     }
 
     public void deleteSelf() {
 
+    }
+
+    @Override
+    public void reset() {
+        this.isHidden = false;
+        getDrawable().show();
     }
 
     @Override

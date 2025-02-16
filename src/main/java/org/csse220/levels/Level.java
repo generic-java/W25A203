@@ -3,6 +3,7 @@ package org.csse220.levels;
 import org.csse220.game_engine.characters.Drone;
 import org.csse220.game_engine.characters.Enemy;
 import org.csse220.game_engine.characters.PathEnemy;
+import org.csse220.game_engine.game_objects.Bonfire;
 import org.csse220.game_engine.game_objects.BonfireFuel;
 import org.csse220.game_engine.game_objects.CuboidTerrain;
 import org.csse220.game_engine.graphics.Cuboid;
@@ -27,13 +28,15 @@ public class Level {
     private final ArrayList<Enemy> enemies = new ArrayList<>();
     private final ArrayList<CuboidTerrain> platforms = new ArrayList<>();
     private final GamePose playerStartPose;
+    private final Bonfire bonfire;
     private final ArrayList<BonfireFuel> bonfireFuels = new ArrayList<>();
 
-    private Level(List<CuboidTerrain> platforms, List<Enemy> enemies, GamePose playerStartPose, List<BonfireFuel> bonfireFuels) {
+    private Level(List<CuboidTerrain> platforms, List<Enemy> enemies, GamePose playerStartPose, List<BonfireFuel> bonfireFuels, Bonfire bonfire) {
         this.enemies.addAll(enemies);
         this.platforms.addAll(platforms);
         this.playerStartPose = playerStartPose;
         this.bonfireFuels.addAll(bonfireFuels);
+        this.bonfire = bonfire;
     }
 
     public static ArrayList<Level> loadAll() {
@@ -57,6 +60,7 @@ public class Level {
             System.out.println(e);
             throw new RuntimeException(e);
         }
+        System.out.println("Loaded " + levels.size() + " levels");
         return levels;
     }
 
@@ -79,6 +83,12 @@ public class Level {
         if (!jsonObject.containsKey("enemies") || !jsonObject.containsKey("name")) {
             throw new MissingDataException();
         }
+
+
+        double bonfireX = Double.parseDouble(jsonObject.getString("bonfireX"));
+        double bonfireY = Double.parseDouble(jsonObject.getString("bonfireY"));
+        double bonfireZ = Double.parseDouble(jsonObject.getString("bonfireZ"));
+        Bonfire fire = new Bonfire(new GamePose(bonfireX, bonfireY, bonfireZ, 0));
 
         JsonArray enemies = jsonObject.getJsonArray("enemies");
         Enemy[] tempEnemies = new Enemy[enemies.size()];
@@ -163,7 +173,7 @@ public class Level {
         }
 
 
-        return new Level(Arrays.asList(tempPlatforms), Arrays.asList(tempEnemies), playerStartPose, Arrays.asList(fuel));
+        return new Level(Arrays.asList(tempPlatforms), Arrays.asList(tempEnemies), playerStartPose, Arrays.asList(fuel), fire);
     }
 
     public ArrayList<Enemy> getEnemies() {
@@ -176,6 +186,14 @@ public class Level {
 
     public ArrayList<BonfireFuel> getBonfireFuels() {
         return this.bonfireFuels;
+    }
+
+    public Bonfire getBonfire() {
+        return this.bonfire;
+    }
+
+    public int getNumBonfireFuels() {
+        return this.bonfireFuels.size();
     }
 
     public GamePose getPlayerStartPose() {

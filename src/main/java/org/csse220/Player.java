@@ -37,6 +37,7 @@ public class Player extends GamePlayer {
         }
         Engine.getInstance().resetLevel();
         health = MAX_HEALTH;
+        fuelCounter = 0;
     }
 
     private void trySleep(int millis) {
@@ -62,8 +63,10 @@ public class Player extends GamePlayer {
         return fuelCounter;
     }
 
+
     @Override
     public void pickUpFuel() {
+
         fuelCounter++;
         System.out.println(fuelCounter);
     }
@@ -81,4 +84,24 @@ public class Player extends GamePlayer {
     public void hitByDrone() {
         health--;
     }
+
+    @Override
+    public void hitByPathEnemy() {
+        die();
+    }
+
+    @Override
+    public void onHitByBonfire() {
+
+        if (this.fuelCounter == Engine.getInstance().getCurrentLevel().getNumBonfireFuels()) {
+            System.out.println("onHitByBonfire");
+            Engine.getInstance().incrementLevel();
+        }
+    }
+
+    @Override
+    public void reset() {
+        fuelCounter = 0;
+    }
+
 }

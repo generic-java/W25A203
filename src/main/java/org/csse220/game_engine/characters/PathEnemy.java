@@ -1,5 +1,6 @@
 package org.csse220.game_engine.characters;
 
+import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.kinematics.Hitbox;
 import org.csse220.game_engine.math_utils.GamePose;
@@ -13,7 +14,7 @@ public class PathEnemy extends Enemy {
     private GamePose nextVel;
 
     public PathEnemy(GamePose startPose, GamePose endPose) {
-        super(startPose, new Hitbox(startPose, 5, 5, 5), new Cuboid(startPose, new GamePose(), 5, 5, 5, Color.magenta));
+        super(startPose, new Hitbox(startPose, 5, 5, 5), new Cuboid(startPose, startPose, 5, 5, 5, Color.magenta));
         this.startPose = startPose;
         this.endPose = endPose;
         setVel(endPose.relativeTo(startPose).normalize().scale(SPEED));
@@ -38,4 +39,10 @@ public class PathEnemy extends Enemy {
     public boolean blocksMovement() {
         return false;
     }
+
+    @Override
+    public void softCollision(GameObject other, GamePose pose) {
+        other.hitByPathEnemy();
+    }
+
 }

@@ -1,5 +1,6 @@
 package org.csse220.game_engine.game_objects;
 
+import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.graphics.CompoundDrawable;
 import org.csse220.game_engine.graphics.Cuboid;
@@ -18,5 +19,10 @@ public class Bonfire extends GameObject {
                 new CompoundDrawable(pose,
                         new Cuboid(pose, pose, 25, 20, 25, new Color(94, 49, 16)),
                         new Cuboid(pose, pose.translateZ(20), 25, 5, 25, new Color(247, 171, 64))));
+    }
+
+    @Override
+    public void onMovingCollision(GameObject other, GamePose moveDirection) {
+        other.onHitByBonfire();
     }
 }

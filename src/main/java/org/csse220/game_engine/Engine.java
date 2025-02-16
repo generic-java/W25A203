@@ -40,6 +40,7 @@ public class Engine {
             kinematics.clearAllGameObjects();
             addLevelData(levels.get(levelNumber));
             player.setZVel(0);
+            player.reset();
             player.setPose(levels.get(levelNumber).getPlayerStartPose());
         }
 
@@ -71,12 +72,22 @@ public class Engine {
 
         for (GameObject gameObject : level.getBonfireFuels()) {
             addGameObject(gameObject);
+            gameObject.reset();
         }
+
+        addGameObject(level.getBonfire());
     }
 
     public void resetLevel() {
 
         setLevel(this.levelNumber);
+    }
+
+    public void incrementLevel() {
+        if (levelNumber != levels.size()) {
+            levelNumber++;
+            setLevel(levelNumber);
+        }
     }
 
     public void render() {
@@ -101,6 +112,14 @@ public class Engine {
 
     public GamePose getPlayerPosition() {
         return player.getPose();
+    }
+
+    public int getLevelNumber() {
+        return levelNumber;
+    }
+
+    public Level getCurrentLevel() {
+        return levels.get(levelNumber);
     }
 
     public boolean keyPressed(int keycode) {

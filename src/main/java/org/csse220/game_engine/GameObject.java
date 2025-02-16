@@ -63,6 +63,10 @@ public class GameObject extends MovingObject {
     public void hitByDrone() {
     }
 
+    public void hitByPathEnemy() {
+
+    }
+
     public void hitByPlayer() {
     }
 
@@ -89,6 +93,15 @@ public class GameObject extends MovingObject {
     public void softCollision(GameObject other, GamePose moveDirection) {
 
     }
+
+    public void reset() {
+
+    }
+
+    public void onHitByBonfire() {
+    }
+
+    ;
 
     public boolean blocksMovement() {
         return true;

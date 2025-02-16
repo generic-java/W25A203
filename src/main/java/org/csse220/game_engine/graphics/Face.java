@@ -192,4 +192,8 @@ public class Face extends Drawable {
     public void hide() {
         hidden = true;
     }
+
+    public boolean getHidden() {
+        return hidden;
+    }
 }
