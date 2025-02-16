@@ -36,9 +36,9 @@ public class Main {
         //engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 120, 0), 100, 10, 100, Color.GREEN)));
 
         CompoundDrawable elephant = new CompoundDrawable(new GamePose(0, 0, 0, 0),
-                new Cuboid(new GamePose(), new Point3d(0, 0, 5.5), 5, 5.5, 3.75, Color.GRAY),
-                new Cuboid(new GamePose(), new Point3d(-1.5, 0, 0), 1.5, 5, 1.5, Color.GRAY),
-                new Cuboid(new GamePose(), new Point3d(1.5, 0, 0), 1.5, 5, 1.5, Color.GRAY),
+                new Cuboid(new GamePose(0, 0, 5.5, 0), 5, 5.5, 3.75, Color.GRAY),
+                new Cuboid(new GamePose(-1.5, 0, 0, 0), 1.5, 5, 1.5, Color.GRAY),
+                new Cuboid(new GamePose(1.5, 0, 0, 0), 1.5, 5, 1.5, Color.GRAY),
                 new Face(
                         new GamePose(),
                         new Point3d(-2.5, 0, 4.75),
@@ -49,8 +49,8 @@ public class Main {
                         new Point3d(-3.5, 0, 4.75),
                         new Point3d(-3.5, -1, 4),
                         new Point3d(-3.5, 3, 3), Color.GRAY),
-                new Cuboid(new GamePose(), new Point3d(0, 0, 8.75), 4, 1, 2, Color.GRAY),
-                new Cuboid(new GamePose(), new Point3d(0, 0, 11.25), 5.5, 6.5, 5.5, Color.GRAY), // head
+                new Cuboid(new GamePose(0, 0, 8.75, 0), 4, 1, 2, Color.GRAY),
+                new Cuboid(new GamePose(0, 0, 11.25, 0), 5.5, 6.5, 5.5, Color.GRAY), // head
                 new Face(
                         new GamePose(), // bottom part of left ear
                         new Point3d(-2.75, -1, 11.25),
@@ -79,11 +79,11 @@ public class Main {
                         new Point3d(6.75, 0.5, 11.25),
                         Color.DARK_GRAY
                 ), // eyes
-                new Cuboid(new GamePose(), new Point3d(-2, 2.875, 11.25), 2, 2, 0.25, Color.WHITE),
-                new Cuboid(new GamePose(), new Point3d(2, 2.875, 11.25), 2, 2, 0.25, Color.WHITE),
+                new Cuboid(new GamePose(-2, 2.875, 11.25, 0), 2, 2, 0.25, Color.WHITE),
+                new Cuboid(new GamePose(2, 2.875, 11.25, 0), 2, 2, 0.25, Color.WHITE),
 
-                new Cuboid(new GamePose(), new Point3d(-2, 3, 11.25), 1, 1, 0.25, Color.BLACK),
-                new Cuboid(new GamePose(), new Point3d(2, 3, 11.25), 1, 1, 0.25, Color.BLACK),
+                new Cuboid(new GamePose(-2, 3, 11.25, 0), 1, 1, 0.25, Color.BLACK),
+                new Cuboid(new GamePose(2, 3, 11.25, 0), 1, 1, 0.25, Color.BLACK),
 
                 new Face(
                         new GamePose(),
@@ -200,9 +200,9 @@ public class Main {
         engine.setLevel(0);
         //engine.addGameObject(new Drone(new GamePose(15, 0, 15, 0)));
         //engine.setBackground(new Color(160, 230, 255));
-        engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(50, 0, 0), 25, 100, 100, Color.GREEN)));
+        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(50, 0, 0, 0.5), 25, 100, 100, Color.GREEN)));
         //engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 0, 50), 100, 10, 100, Color.GREEN)));
-        player.setPose(new GamePose(0, 0, 25, 0));
+        //player.setPose(new GamePose(0, 0, 25, 0));
         engine.addGameObject(new GameObject(new GamePose(), null, elephant));
         engine.startKinematics();
 

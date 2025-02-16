@@ -26,10 +26,6 @@ public class GamePose extends Vector3d {
         return translate(vector.x(), vector.y(), vector.z());
     }
 
-    public GamePose fullTranslation(GamePose gamePose) {
-        return new GamePose(x + gamePose.x(), y + gamePose.y(), z + gamePose.z(), yaw + gamePose.yaw());
-    }
-
     @Override
     public GamePose translate(double x, double y, double z) {
         Vector3d vector = super.translate(x, y, z);

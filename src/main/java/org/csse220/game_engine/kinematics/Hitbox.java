@@ -57,7 +57,6 @@ public class Hitbox extends Collideable {
 
 
     private LineSegment[] getLineSegments() {
-        //System.out.println(xyCenter());
         return new LineSegment[]{
                 new LineSegment(topLeft.rotateAbout(center, pose.yaw()), topRight.rotateAbout(center, pose.yaw())),
                 new LineSegment(topRight.rotateAbout(center, pose.yaw()), bottomRight.rotateAbout(center, pose.yaw())),

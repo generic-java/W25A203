@@ -131,7 +131,7 @@ public class Level {
             GamePose temp = new GamePose(poseX, poseY, poseZ, 0);
 
             //REPLACE WITH CONSTRUCTOR
-            tempPlatforms[i] = new CuboidTerrain(new Cuboid(temp.toPoint3d(), width, height, depth, new Color(163, 52, 255)));
+            tempPlatforms[i] = new CuboidTerrain(new Cuboid(temp, width, height, depth, new Color(163, 52, 255)));
         }
         //tempPlatforms[0] = new CuboidTerrain(new Cuboid(new Point3d(0, 0, -15), 100, 10, 100, Color.PINK));
         double portalX = Double.parseDouble(jsonObject.getString("portalPoseX"));

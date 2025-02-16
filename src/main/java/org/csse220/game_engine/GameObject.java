@@ -86,10 +86,6 @@ public class GameObject extends MovingObject {
 
     }
 
-    public void onStationaryCollision(GameObject other, GamePose moveDirection) {
-
-    }
-
     public void softCollision(GameObject other, GamePose moveDirection) {
 
     }

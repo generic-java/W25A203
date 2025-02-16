@@ -15,10 +15,10 @@ public class Face extends Drawable {
     private static final boolean CLIP_Y = true;
     private static final double CLIP_DISTANCE = 0.1;
 
-    private boolean hidden = false;
     private final Vector3d[] relativeVertices;
     private final Point3d[] vertices;
     private Color shadedColor;
+    private boolean hidden;
 
     public Face(GamePose pose, Point3d point1, Point3d point2, Point3d point3, Color color) {
         super(pose, color);
@@ -51,16 +51,6 @@ public class Face extends Drawable {
         double c4 = vertices[0].relativeX() * vertices[1].relativeZ() - vertices[0].relativeX() * vertices[2].relativeZ() - vertices[1].relativeX() * vertices[0].relativeZ() + vertices[1].relativeX() * vertices[2].relativeZ() + vertices[2].relativeX() * vertices[0].relativeZ() - vertices[2].relativeX() * vertices[1].relativeZ();
 
         return new SimpleDepthCalculator(c1, c2, c3, c4);
-    }
-
-    @Override
-    public void hide() {
-        hidden = true;
-    }
-
-    @Override
-    public void show() {
-        hidden = false;
     }
 
     public void draw(Vector3d camPos, double pitch, double yaw, boolean shade) {
@@ -173,7 +163,7 @@ public class Face extends Drawable {
         return vector1.cross(vector2);
     }
 
-    private static final double MIN_ANGLE = Math.toRadians(1.5);
+    private static final double MIN_ANGLE = Math.toRadians(0.5);
 
     private boolean clearlyVisible() {
         double firstAngle = currentNormalVector().angleBetween(new Vector3d(1, 0, 0));
@@ -184,12 +174,22 @@ public class Face extends Drawable {
 
         //System.out.println(currentNormalVector());
 
-        return Math.abs(firstAngle) > MIN_ANGLE && Math.abs(secondAngle) > 0;
+        return Math.abs(firstAngle) > MIN_ANGLE && Math.abs(secondAngle) > MIN_ANGLE;
     }
 
     private double visibleAngle() {
         double secondAngle = currentNormalVector().angleBetween(new Vector3d(0, 0, 1));
         secondAngle = secondAngle > Math.PI / 2 ? Math.PI - secondAngle : secondAngle;
         return Math.abs(secondAngle);
+    }
+
+    @Override
+    public void show() {
+        hidden = false;
+    }
+
+    @Override
+    public void hide() {
+        hidden = true;
     }
 }

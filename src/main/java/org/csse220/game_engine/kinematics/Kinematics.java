@@ -18,7 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Kinematics extends KillableThread {
     private final static double MOVE_VEL = 0.055;
     private final static double TURN_VEL = 0.003;
-    private final GamePose CAMERA_OFFSET = new GamePose(0, -15, 15, 0);
+    private static final Vector3d CAMERA_KP = new Vector3d(0.005, 0.005, 1);
+    private final GamePose CAMERA_OFFSET = new GamePose(0, -35, 20, 0);
     private static final GamePose MOVE_X = new GamePose(1, 0, 0, 0);
     private static final GamePose MOVE_Y = new GamePose(0, 1, 0, 0);
     private static final GamePose MOVE_Z = new GamePose(0, 0, 1, 0);
@@ -65,11 +66,11 @@ public class Kinematics extends KillableThread {
                     gameObject.move(elementMoveStep, dt);
                 }
                 for (GameObject gameObject : collideables) {
-                    for (GameObject toCheck : collideables) {
+                    for (GameObject toCheck : collideables) { // The below if statement \/ is the problematic child
                         if (gameObject != toCheck && gameObject.getCollideable().hasCollided(toCheck.getCollideable())) {
                             if (gameObject.blocksMovement() && toCheck.blocksMovement()) {
                                 gameObject.onMovingCollision(toCheck, elementMoveStep);
-                                toCheck.onStationaryCollision(gameObject, elementMoveStep.scale(-1));
+                                toCheck.onMovingCollision(gameObject, elementMoveStep);
                             } else {
                                 gameObject.softCollision(toCheck, elementMoveStep);
                                 toCheck.softCollision(gameObject, elementMoveStep);
@@ -78,18 +79,18 @@ public class Kinematics extends KillableThread {
                     }
                 }
             }
+            render(dt);
             setPlayerVelocity(dt);
 
-            render();
         }
     }
 
-    public void render() {
-        updateCameraPosition();
+    public void render(double dt) {
+        updateCameraPosition(dt);
         Camera camera = Camera.getInstance();
         CameraPose camPose = camera.getPose();
         Vector3d.updatePitchYaw(camPose.pitch(), camPose.yaw());
-        Screen.getInstance().fill(Color.WHITE);
+        Screen.getInstance().fill(backgroundColor);
         for (Drawable drawable : drawables) { // TODO: concurrent modification exception occurs here sometimes
             drawable.draw(camera.getPose(), camPose.pitch(), camPose.yaw(), true);
         }
@@ -97,8 +98,13 @@ public class Kinematics extends KillableThread {
         Screen.getInstance().refresh();
     }
 
-    private void updateCameraPosition() {
-        Camera.getInstance().setPose(player.getPose().addTo(CAMERA_OFFSET.rotateYaw(player.getPose().yaw())));
+    private void updateCameraPosition(double dt) {
+        Camera camera = Camera.getInstance();
+        GamePose targetPose = player.getPose().addTo(CAMERA_OFFSET.rotateYaw(player.getPose().yaw()));
+        Vector3d error = targetPose.relativeTo(camera.getPose());
+        Vector3d cameraVelocity = new Vector3d(error.x() * CAMERA_KP.x(), error.y() * CAMERA_KP.y(), error.z() * CAMERA_KP.z()).scale(dt);
+        Vector3d newCameraPose = camera.getPose().addTo(cameraVelocity);
+        camera.setPose(new GamePose(newCameraPose.x(), newCameraPose.y(), targetPose.z(), targetPose.yaw()));
     }
 
     private void setPlayerVelocity(double dt) {

@@ -9,7 +9,7 @@ public class Point3d extends Vector3d {
     private static double FOV_CONSTANT;
 
     static {
-        setFOV(Math.toRadians(140));
+        setFOV(Math.toRadians(100));
     }
 
     public static void setFOV(double FOV) {

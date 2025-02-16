@@ -7,13 +7,13 @@ import org.csse220.game_engine.math_utils.Vector3d;
 import java.awt.*;
 
 public class Cuboid extends Drawable {
-    private final Point3d center;
+    private final GamePose center;
     private final double width;
     private final double height;
     private final double depth;
     Rectangle[] rectangles = new Rectangle[6];
 
-    public Cuboid(GamePose pose, Point3d center, double width, double height, double depth, Color color) {
+    public Cuboid(GamePose pose, GamePose center, double width, double height, double depth, Color color) {
         super(pose, color);
         this.center = center;
         this.width = width;
@@ -23,57 +23,57 @@ public class Cuboid extends Drawable {
         double halfHeight = height / 2;
         double halfDepth = depth / 2;
         rectangles[0] = new Rectangle(
-                pose,
-                center.translate(-halfWidth, halfDepth, halfHeight),
-                center.translate(halfWidth, halfDepth, halfHeight),
-                center.translate(halfWidth, -halfDepth, halfHeight),
-                center.translate(-halfWidth, -halfDepth, halfHeight),
+                center,
+                center.translate(-halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(-halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 color
         );
         rectangles[1] = new Rectangle(
-                pose,
-                center.translate(-halfWidth, halfDepth, -halfHeight),
-                center.translate(halfWidth, halfDepth, -halfHeight),
-                center.translate(halfWidth, -halfDepth, -halfHeight),
-                center.translate(-halfWidth, -halfDepth, -halfHeight),
+                center,
+                center.translate(-halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, -halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(-halfWidth, -halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 color
         );
         rectangles[2] = new Rectangle(
-                pose,
-                center.translate(-halfWidth, halfDepth, -halfHeight),
-                center.translate(-halfWidth, halfDepth, halfHeight),
-                center.translate(-halfWidth, -halfDepth, halfHeight),
-                center.translate(-halfWidth, -halfDepth, -halfHeight),
+                center,
+                center.translate(-halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(-halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(-halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(-halfWidth, -halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 color
         );
         rectangles[3] = new Rectangle(
-                pose,
-                center.translate(halfWidth, halfDepth, -halfHeight),
-                center.translate(halfWidth, halfDepth, halfHeight),
-                center.translate(halfWidth, -halfDepth, halfHeight),
-                center.translate(halfWidth, -halfDepth, -halfHeight),
+                center,
+                center.translate(halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, -halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 color
         );
         rectangles[4] = new Rectangle(
-                pose,
-                center.translate(-halfWidth, halfDepth, -halfHeight),
-                center.translate(halfWidth, halfDepth, -halfHeight),
-                center.translate(halfWidth, halfDepth, halfHeight),
-                center.translate(-halfWidth, halfDepth, halfHeight),
+                center,
+                center.translate(-halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(-halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 color
         );
         rectangles[5] = new Rectangle(
-                pose,
-                center.translate(-halfWidth, -halfDepth, -halfHeight),
-                center.translate(halfWidth, -halfDepth, -halfHeight),
-                center.translate(halfWidth, -halfDepth, halfHeight),
-                center.translate(-halfWidth, -halfDepth, halfHeight),
+                center,
+                center.translate(-halfWidth, -halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, -halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
+                center.translate(-halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 color
         );
-        setPose(pose);
+        setPose(center);
     }
 
-    public Cuboid(Point3d center, double width, double height, double depth, Color color) {
+    public Cuboid(GamePose center, double width, double height, double depth, Color color) {
         this(new GamePose(), center, width, height, depth, color);
     }
 
@@ -106,10 +106,10 @@ public class Cuboid extends Drawable {
     }
 
     public Point3d getCenter() {
-        return center;
+        return center.toPoint3d();
     }
 
     public Hitbox toHitbox() {
-        return new Hitbox(center.toGamePose(), width, height, depth);
+        return new Hitbox(center, width, height, depth);
     }
 }

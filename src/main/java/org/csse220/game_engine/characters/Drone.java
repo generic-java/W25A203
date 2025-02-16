@@ -72,7 +72,6 @@ public class Drone extends Enemy {
     @Override
     public void hitByPlayer() {
         Engine.getInstance().removeGameObject(this);
-        System.out.println("HIT BY PLAYER OUCHWWWWWWW");
     }
 
     public boolean isActive() {

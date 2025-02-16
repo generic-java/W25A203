@@ -7,7 +7,6 @@ import org.csse220.game_engine.math_utils.GamePose;
 import org.csse220.levels.Level;
 
 import javax.swing.*;
-import javax.xml.transform.stream.StreamSource;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -18,11 +17,17 @@ public class Engine {
     private final ArrayList<Level> levels;
     private int levelNumber = -1;
     private GamePlayer player = null;
+    private final SoundPlayer soundPlayer;
 
 
     private Engine() {
-        //AudioSystem.getClip()
+        soundPlayer = new SoundPlayer();
+        soundPlayer.startBackground();
         levels = new ArrayList<>();
+    }
+
+    public SoundPlayer getSoundPlayer() {
+        return soundPlayer;
     }
 
     public void addLevel(Level level) {
@@ -71,7 +76,7 @@ public class Engine {
     }
 
     public void render() {
-        kinematics.render();
+        kinematics.render(0.01);
     }
 
     private void kill() {

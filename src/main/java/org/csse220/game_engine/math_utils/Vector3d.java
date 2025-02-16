@@ -1,5 +1,7 @@
 package org.csse220.game_engine.math_utils;
 
+import org.csse220.game_engine.graphics.Point3d;
+
 public class Vector3d extends Vector2d {
     private static double cosPitch;
     private static double sinPitch;
@@ -124,6 +126,10 @@ public class Vector3d extends Vector2d {
         return translate(translation.x(), translation.y(), translation.z());
     }
 
+    public Vector3d addTo(Vector3d vector) {
+        return new Vector3d(x + vector.x(), y + vector.y(), vector.z());
+    }
+
     public Vector3d translate(double x, double y, double z) {
         return new Vector3d(this.x + x, this.y + y, this.z + z);
     }
@@ -142,6 +148,10 @@ public class Vector3d extends Vector2d {
 
     public Vector3d scale(double scalar) {
         return new Vector3d(x * scalar, y * scalar, z * scalar);
+    }
+
+    public Point3d toPoint3d() {
+        return new Point3d(this);
     }
 
     public GamePose toGamePose() {
