@@ -30,7 +30,6 @@ public class Main {
         Engine engine = Engine.getInstance();
         engine.init(player, window);
         levels.forEach((level) -> engine.addLevel(level));
-        //engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 0, -15), 100, 10, 100, Color.PINK)));
 
 
         //engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 120, 0), 100, 10, 100, Color.GREEN)));
@@ -200,9 +199,47 @@ public class Main {
         engine.setLevel(0);
         //engine.addGameObject(new Drone(new GamePose(15, 0, 15, 0)));
         //engine.setBackground(new Color(160, 230, 255));
-        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(50, 0, 0, 0.5), 25, 100, 100, Color.GREEN)));
+        //engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(10, 10, -5, 0), 20, 500, 500, Color.PINK)));
+
+        //engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(50, 0, 0, 0.5), 25, 100, 100, Color.GREEN)));
+
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(150, 25, -10, 0), 30, 5, 5, Color.ORANGE)));
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(150, 40, -10, 0), 30, 5, 5, Color.ORANGE)));
+//
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(140, 32, -5, 1.55), 30, 2.5, 5, Color.ORANGE)));
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(160, 32, -5, 1.55), 30, 2.5, 5, Color.ORANGE)));
+//
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(150, 25, -2.5, 0), 30, 2.5, 5, Color.ORANGE)));
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(150, 40, -2.5, 0), 30, 2.5, 5, Color.ORANGE)));
+//
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(140, 32, 0, 1.55), 30, 2.5, 5, Color.ORANGE)));
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(160, 32, 0, 1.55), 30, 2.5, 5, Color.ORANGE)));
+//
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(150, 25, 2.5, 0), 30, 2.5, 5, Color.ORANGE)));
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(150, 40, 2.5, 0), 30, 2.5, 5, Color.ORANGE)));
+//
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(140, 32, 5, 1.55), 30, 2.5, 5, Color.ORANGE)));
+//        engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(160, 32, 5, 1.55), 30, 2.5, 5, Color.ORANGE)));
+        //engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(150, 25, -5, 1.5), 30, 5, 5, Color.ORANGE)));
         //engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 0, 50), 100, 10, 100, Color.GREEN)));
         //player.setPose(new GamePose(0, 0, 25, 0));
+
+        CompoundDrawable bonfire = new CompoundDrawable(new GamePose(0, 0, 0, 0),
+                new Cuboid(new GamePose(150, 25, -10, 0), 30, 5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(150, 40, -10, 0), 30, 5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(140, 32, -5, 1.55), 30, 2.5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(160, 32, -5, 1.55), 30, 2.5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(150, 25, -2.5, 0), 30, 2.5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(150, 40, -2.5, 0), 30, 2.5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(140, 32, 0, 1.55), 30, 2.5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(160, 32, 0, 1.55), 30, 2.5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(150, 25, 2.5, 0), 30, 2.5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(150, 40, 2.5, 0), 30, 2.5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(140, 32, 5, 1.55), 30, 2.5, 5, Color.ORANGE),
+                new Cuboid(new GamePose(160, 32, 5, 1.55), 30, 2.5, 5, Color.ORANGE)
+        );
+
+        engine.addGameObject(new GameObject(new GamePose(), null, bonfire));
         engine.addGameObject(new GameObject(new GamePose(), null, elephant));
         engine.startKinematics();
 
