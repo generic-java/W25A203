@@ -223,23 +223,24 @@ public class Main {
         //engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(150, 25, -5, 1.5), 30, 5, 5, Color.ORANGE)));
         //engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 0, 50), 100, 10, 100, Color.GREEN)));
         //player.setPose(new GamePose(0, 0, 25, 0));
-
-        CompoundDrawable bonfire = new CompoundDrawable(new GamePose(0, 0, 0, 0),
-                new Cuboid(new GamePose(150, 25, -10, 0), 30, 5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(150, 40, -10, 0), 30, 5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(140, 32, -5, 1.55), 30, 2.5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(160, 32, -5, 1.55), 30, 2.5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(150, 25, -2.5, 0), 30, 2.5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(150, 40, -2.5, 0), 30, 2.5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(140, 32, 0, 1.55), 30, 2.5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(160, 32, 0, 1.55), 30, 2.5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(150, 25, 2.5, 0), 30, 2.5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(150, 40, 2.5, 0), 30, 2.5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(140, 32, 5, 1.55), 30, 2.5, 5, Color.ORANGE),
-                new Cuboid(new GamePose(160, 32, 5, 1.55), 30, 2.5, 5, Color.ORANGE)
-        );
-
-        engine.addGameObject(new GameObject(new GamePose(), null, bonfire));
+//        GamePose standardPose = new GamePose(150, 25, -10, 0);
+//        CompoundDrawable bonfire = new CompoundDrawable(new GamePose(0, 0, 0, 0),
+//                new Cuboid(standardPose, 30, 5, 5, Color.ORANGE),
+//                new Cuboid(standardPose.translateY(15), 30, 5, 5, Color.ORANGE),
+//
+//                new Cuboid(new GamePose(standardPose.x-10, standardPose.y+12, standardPose.z+5, 1.55), 30, 2.5, 5, Color.ORANGE),
+//                new Cuboid(new GamePose(standardPose.x-10, standardPose.y+12, standardPose.z+5, 1.55), 30, 2.5, 5, Color.ORANGE),
+//                new Cuboid(new GamePose(150, 25, -2.5, 0), 30, 2.5, 5, Color.ORANGE),
+//                new Cuboid(new GamePose(150, 40, -2.5, 0), 30, 2.5, 5, Color.ORANGE),
+//                new Cuboid(new GamePose(140, 32, 0, 1.55), 30, 2.5, 5, Color.ORANGE),
+//                new Cuboid(new GamePose(160, 32, 0, 1.55), 30, 2.5, 5, Color.ORANGE),
+//                new Cuboid(new GamePose(150, 25, 2.5, 0), 30, 2.5, 5, Color.ORANGE),
+//                new Cuboid(new GamePose(150, 40, 2.5, 0), 30, 2.5, 5, Color.ORANGE),
+//                new Cuboid(new GamePose(140, 32, 5, 1.55), 30, 2.5, 5, Color.ORANGE),
+//                new Cuboid(new GamePose(160, 32, 5, 1.55), 30, 2.5, 5, Color.ORANGE)
+//        );
+//
+//        engine.addGameObject(new GameObject(new GamePose(), null, bonfire));
         engine.addGameObject(new GameObject(new GamePose(), null, elephant));
         engine.startKinematics();
 
