@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Kinematics extends KillableThread {
-    private final static double MOVE_VEL = 0.055;
+    private final static double MOVE_VEL = 0.075;
     private final static double TURN_VEL = 0.003;
     private static final Vector3d CAMERA_KP = new Vector3d(0.005, 0.005, 1);
     private final GamePose CAMERA_OFFSET = new GamePose(0, -35, 20, 0);
@@ -69,11 +69,11 @@ public class Kinematics extends KillableThread {
                     for (GameObject toCheck : collideables) { // The below if statement \/ is the problematic child
                         if (gameObject != toCheck && gameObject.getCollideable().hasCollided(toCheck.getCollideable())) {
                             if (gameObject.blocksMovement() && toCheck.blocksMovement()) {
-                                gameObject.onMovingCollision(toCheck, elementMoveStep);
-                                toCheck.onMovingCollision(gameObject, elementMoveStep);
+                                gameObject.onSolidCollision(toCheck, elementMoveStep);
+                                toCheck.onSolidCollision(gameObject, elementMoveStep);
                             } else {
-                                gameObject.softCollision(toCheck, elementMoveStep);
-                                toCheck.softCollision(gameObject, elementMoveStep);
+                                gameObject.onSoftCollision(toCheck, elementMoveStep);
+                                toCheck.onSoftCollision(gameObject, elementMoveStep);
                             }
                         }
                     }
@@ -91,7 +91,7 @@ public class Kinematics extends KillableThread {
         CameraPose camPose = camera.getPose();
         Vector3d.updatePitchYaw(camPose.pitch(), camPose.yaw());
         Screen.getInstance().fill(backgroundColor);
-        for (Drawable drawable : drawables) { // TODO: concurrent modification exception occurs here sometimes
+        for (Drawable drawable : drawables) {
             drawable.draw(camera.getPose(), camPose.pitch(), camPose.yaw(), true);
         }
         ZBuffer.getInstance().wipe();
@@ -105,6 +105,7 @@ public class Kinematics extends KillableThread {
         Vector3d cameraVelocity = new Vector3d(error.x() * CAMERA_KP.x(), error.y() * CAMERA_KP.y(), error.z() * CAMERA_KP.z()).scale(dt);
         Vector3d newCameraPose = camera.getPose().addTo(cameraVelocity);
         camera.setPose(new GamePose(newCameraPose.x(), newCameraPose.y(), targetPose.z(), targetPose.yaw()));
+        camera.setPose(camera.getPose().round(new GamePose(1, 1, 1, 3))); // TODO make this should be a constant
     }
 
     private void setPlayerVelocity(double dt) {

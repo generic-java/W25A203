@@ -80,8 +80,18 @@ public class Vector3d extends Vector2d {
         return new Vector3d(rotatedVector.x, rotatedVector.y, z);
     }
 
+    public Vector3d rotatePitch(Vector3d center, double pitch) {
+        Vector2d rotatedVector = new Vector2d(y, z).translate(-center.x(), -center.y()).rotate(pitch).translate(center.x(), center.y());
+        return new Vector3d(x, rotatedVector.x, rotatedVector.y);
+    }
+
     public Vector3d rotateYaw(double yaw) {
         return rotateYaw(ORIGIN, yaw);
+    }
+
+    public Vector3d round(int precision) {
+        double factor = Math.pow(10, precision);
+        return new Vector3d(Math.round(x * factor) / factor, Math.round(y * factor) / factor, Math.round(z * factor) / factor);
     }
 
     public double distanceTo(Vector3d point) {

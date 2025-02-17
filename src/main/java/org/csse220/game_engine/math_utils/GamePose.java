@@ -10,6 +10,10 @@ public class GamePose extends Vector3d {
         this.yaw = yaw;
     }
 
+    public GamePose(double x, double y, double z) {
+        this(x, y, z, 0);
+    }
+
     public GamePose() {
         this(0, 0, 0, 0);
     }
@@ -70,6 +74,11 @@ public class GamePose extends Vector3d {
 
     public double dot(GamePose other) {
         return super.dot(other) + yaw() * other.yaw;
+    }
+
+    public GamePose round(GamePose precisionVector) {
+        return new GamePose(Math.round(x * Math.pow(10, precisionVector.x())) / Math.pow(10, precisionVector.x()), Math.round(y * Math.pow(10, precisionVector.y())) / Math.pow(10, precisionVector.y()), Math.round(z * Math.pow(10, precisionVector.z())) / Math.pow(10, precisionVector.z()), Math.round(yaw * Math.pow(10, precisionVector.yaw())) / Math.pow(10, precisionVector.yaw()));
+
     }
 
     public GamePose round(int precision) {

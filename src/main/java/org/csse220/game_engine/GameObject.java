@@ -1,6 +1,6 @@
 package org.csse220.game_engine;
 
-import org.csse220.game_engine.characters.Drone;
+import org.csse220.game_engine.characters.PaperAirplane;
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.math_utils.GamePose;
@@ -23,7 +23,7 @@ public class GameObject extends MovingObject {
         }
         if (hasDrawable()) {
             relativeDrawablePose = drawable.getPose().relativeTo(pose);
-            if (this instanceof Drone) {
+            if (this instanceof PaperAirplane) {
                 //System.out.println("printing drone pose");
                 //System.out.println(relativeDrawablePose);
             }
@@ -63,11 +63,15 @@ public class GameObject extends MovingObject {
     public void hitByDrone() {
     }
 
-    public void hitByPathEnemy() {
+    public void hitByLethalEnemy() {
 
     }
 
     public void hitByPlayer() {
+    }
+
+    public void hitByTrampoline() {
+
     }
 
     public double yaw() {
@@ -86,11 +90,11 @@ public class GameObject extends MovingObject {
         return drawable;
     }
 
-    public void onMovingCollision(GameObject other, GamePose moveDirection) {
+    public void onSolidCollision(GameObject other, GamePose moveDirection) {
 
     }
 
-    public void softCollision(GameObject other, GamePose moveDirection) {
+    public void onSoftCollision(GameObject other, GamePose moveDirection) {
 
     }
 

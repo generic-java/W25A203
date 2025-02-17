@@ -88,6 +88,14 @@ public class Vector2d {
         return magnitude == 0 ? this : multiply(1 / magnitude);
     }
 
+    public double dot(Vector2d other) {
+        return x * other.x + y * other.y;
+    }
+
+    public double angleBetween(Vector2d other) {
+        return Math.acos(dot(other) / (magnitude * other.magnitude));
+    }
+
     @Override
     public boolean equals(Object vector) {
         if (vector == null) {

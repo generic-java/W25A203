@@ -9,6 +9,8 @@ public abstract class MovingObject extends PlaceableObject {
     private GamePose velocity;
     private double gravity;
     private static final double MAX_MOVE_TRANSLATION = 0.5;
+    private static final GamePose PRECISION_ROUNDING = new GamePose(1, 1, 1, 3);
+    private GamePose lastTranslation = new GamePose();
 
     public MovingObject(GamePose pose, double gravity) {
         super(pose);
@@ -48,7 +50,7 @@ public abstract class MovingObject extends PlaceableObject {
      * to this method, it will move this object k * its current velocity in that direction.
      */
     public void move(GamePose moveDirection, double dt) {
-        if (dt > 100) {
+        if (dt > 100) { // TODO: make variable for cap
             dt = 100;
         }
         if (moveDirection.z() > 0) {
@@ -60,7 +62,14 @@ public abstract class MovingObject extends PlaceableObject {
                 velocity.z() * moveDirection.z(),
                 velocity.yaw() * moveDirection.yaw()
         ).scale(dt);
+        lastTranslation = translation;
         pose = translation.addTo(pose);
+        GamePose roundingIncrement = moveDirection.scale(pose.round((int) moveDirection.dot(PRECISION_ROUNDING)).relativeTo(pose).dot(moveDirection));
+        pose = pose.addTo(roundingIncrement);
+    }
+
+    public GamePose getLastTranslation() {
+        return lastTranslation;
     }
 
     public void setVel(GamePose velocity) {

@@ -85,13 +85,14 @@ public class Face extends Drawable {
         double newX1;
         double newZ2;
         double newX2;
+        double visibleAngle = visibleAngle();
         if (!CLIP_Y && behindCamera > 0) {
             return;
         }
         switch (behindCamera) {
             case 0:
                 firstTriangle = new ProjectedTriangle(
-                        visibleAngle(),
+                        visibleAngle,
                         vertices[0].project(),
                         vertices[1].project(),
                         vertices[2].project(),
@@ -112,8 +113,8 @@ public class Face extends Drawable {
 
                 firstTriangle = new ProjectedTriangle(firstBehind, secondBehind, firstFront, depthCalculator);
 
-                ProjectedTriangle firstCandidate = new ProjectedTriangle(firstFront, secondFront, firstBehind, depthCalculator);
-                ProjectedTriangle secondCandidate = new ProjectedTriangle(firstFront, secondFront, secondBehind, depthCalculator);
+                ProjectedTriangle firstCandidate = new ProjectedTriangle(visibleAngle, firstFront, secondFront, firstBehind, depthCalculator);
+                ProjectedTriangle secondCandidate = new ProjectedTriangle(visibleAngle, firstFront, secondFront, secondBehind, depthCalculator);
 
                 display(firstCandidate, shade);
                 display(secondCandidate, shade);
@@ -123,7 +124,7 @@ public class Face extends Drawable {
                 newX1 = Vector2d.interpolate(front[0].relativeY(), front[0].relativeX(), behind[0].relativeY(), behind[0].relativeX(), CLIP_DISTANCE);
                 newZ2 = Vector2d.interpolate(front[0].relativeY(), front[0].relativeZ(), behind[1].relativeY(), behind[1].relativeZ(), CLIP_DISTANCE);
                 newX2 = Vector2d.interpolate(front[0].relativeY(), front[0].relativeX(), behind[1].relativeY(), behind[1].relativeX(), CLIP_DISTANCE);
-                firstTriangle = new ProjectedTriangle(front[0].project(), Point3d.project(newX1, CLIP_DISTANCE, newZ1), Point3d.project(newX2, CLIP_DISTANCE, newZ2), depthCalculator);
+                firstTriangle = new ProjectedTriangle(visibleAngle, front[0].project(), Point3d.project(newX1, CLIP_DISTANCE, newZ1), Point3d.project(newX2, CLIP_DISTANCE, newZ2), depthCalculator);
                 break;
             case 3:
                 return;
@@ -165,22 +166,12 @@ public class Face extends Drawable {
 
     private static final double MIN_ANGLE = Math.toRadians(0.5);
 
-    private boolean clearlyVisible() {
-        double firstAngle = currentNormalVector().angleBetween(new Vector3d(1, 0, 0));
-        firstAngle = firstAngle > Math.PI / 2 ? Math.PI - firstAngle : firstAngle;
-
-        double secondAngle = currentNormalVector().angleBetween(new Vector3d(0, 0, 1));
-        secondAngle = secondAngle > Math.PI / 2 ? Math.PI - secondAngle : secondAngle;
-
-        //System.out.println(currentNormalVector());
-
-        return Math.abs(firstAngle) > MIN_ANGLE && Math.abs(secondAngle) > MIN_ANGLE;
-    }
-
     private double visibleAngle() {
-        double secondAngle = currentNormalVector().angleBetween(new Vector3d(0, 0, 1));
+        double firstAngle = currentNormalVector().angleBetween(new Vector3d(0, 0, 1));
+        firstAngle = firstAngle > Math.PI / 2 ? Math.PI - firstAngle : firstAngle;
+        double secondAngle = currentNormalVector().angleBetween(new Vector3d(1, 0, 0));
         secondAngle = secondAngle > Math.PI / 2 ? Math.PI - secondAngle : secondAngle;
-        return Math.abs(secondAngle);
+        return Math.min(firstAngle, secondAngle);
     }
 
     @Override

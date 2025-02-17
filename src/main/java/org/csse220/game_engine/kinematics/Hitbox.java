@@ -15,14 +15,21 @@ public class Hitbox extends Collideable {
     private Point2d bottomRight;
     private Point2d bottomLeft;
     private final Set<Hitbox> thisHitbox = new HashSet<>();
+    private static final double DEFAULT_CHECK_RADIUS = 100;
+    private final double checkRadius;
 
-    public Hitbox(GamePose pose, double width, double height, double depth) {
+    public Hitbox(GamePose pose, double width, double height, double depth, double checkRadius) {
         super(pose);
         this.width = width;
         this.height = height;
         this.depth = depth;
         updateVertexPositions();
         thisHitbox.add(this);
+        this.checkRadius = checkRadius;
+    }
+
+    public Hitbox(GamePose pose, double width, double height, double depth) {
+        this(pose, width, height, depth, Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2)) + 1);
     }
 
     public Point2d xyCenter() {
@@ -67,6 +74,9 @@ public class Hitbox extends Collideable {
     }
 
     public boolean intersects(Hitbox other) {
+        if (other.getPose().distanceTo(getPose()) > checkRadius + other.getCheckRadius()) {
+            return false;
+        }
         boolean twoDimensionalIntersection = false;
         for (LineSegment segment : getLineSegments()) {
             for (LineSegment otherSegment : other.getLineSegments()) {
@@ -100,6 +110,10 @@ public class Hitbox extends Collideable {
 
     boolean zIntersection(Hitbox other) {
         return pose.z() + height / 2 >= other.getPose().z() - other.height() / 2 && pose.z() - height / 2 <= other.getPose().z() + other.height() / 2;
+    }
+
+    public double getCheckRadius() {
+        return checkRadius;
     }
 
     @Override

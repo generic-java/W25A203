@@ -2,7 +2,7 @@ package org.csse220.game_engine.characters;
 
 import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.GameObject;
-import org.csse220.game_engine.graphics.CompoundDrawable;
+import org.csse220.game_engine.graphics.CompositeDrawable;
 import org.csse220.game_engine.graphics.Face;
 import org.csse220.game_engine.graphics.Point3d;
 import org.csse220.game_engine.kinematics.Hitbox;
@@ -10,14 +10,14 @@ import org.csse220.game_engine.math_utils.GamePose;
 
 import java.awt.*;
 
-public class Drone extends Enemy {
+public class PaperAirplane extends Enemy {
     private static final double MOVE_SPEED = .0025;
     //  private static final double MIN_DISTANCE = 2.0
     private boolean isActive;
 
-    public Drone(GamePose pose) {
+    public PaperAirplane(GamePose pose) {
         super(pose, new Hitbox(pose, 2, 7, 2),
-                new CompoundDrawable(
+                new CompositeDrawable(
                         pose,
                         new Face(
                                 new Point3d(pose.x(), pose.y(), pose.z()),
@@ -65,7 +65,7 @@ public class Drone extends Enemy {
     }
 
     @Override
-    public void softCollision(GameObject other, GamePose pose) {
+    public void onSoftCollision(GameObject other, GamePose pose) {
         other.hitByDrone();
     }
 

@@ -1,7 +1,7 @@
 package org.csse220.levels;
 
-import org.csse220.game_engine.characters.Drone;
 import org.csse220.game_engine.characters.Enemy;
+import org.csse220.game_engine.characters.PaperAirplane;
 import org.csse220.game_engine.characters.PathEnemy;
 import org.csse220.game_engine.game_objects.Bonfire;
 import org.csse220.game_engine.game_objects.BonfireFuel;
@@ -102,7 +102,7 @@ public class Level {
                 double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
 
                 //REPLACE WITH CONSTRUCTOR
-                tempEnemies[i] = new Drone(new GamePose(poseX, poseY, poseZ, 0));
+                tempEnemies[i] = new PaperAirplane(new GamePose(poseX, poseY, poseZ, 0));
             }
             if (type.equals("pathEnemy")) {
 

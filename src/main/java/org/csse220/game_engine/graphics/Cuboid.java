@@ -23,7 +23,7 @@ public class Cuboid extends Drawable {
         double halfHeight = height / 2;
         double halfDepth = depth / 2;
         rectangles[0] = new Rectangle(
-                center,
+                pose,
                 center.translate(-halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
@@ -31,7 +31,7 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[1] = new Rectangle(
-                center,
+                pose,
                 center.translate(-halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, -halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
@@ -39,7 +39,7 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[2] = new Rectangle(
-                center,
+                pose,
                 center.translate(-halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(-halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(-halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
@@ -47,7 +47,7 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[3] = new Rectangle(
-                center,
+                pose,
                 center.translate(halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
@@ -55,7 +55,7 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[4] = new Rectangle(
-                center,
+                pose,
                 center.translate(-halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
@@ -63,18 +63,17 @@ public class Cuboid extends Drawable {
                 color
         );
         rectangles[5] = new Rectangle(
-                center,
+                pose,
                 center.translate(-halfWidth, -halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, -halfDepth, -halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 center.translate(-halfWidth, -halfDepth, halfHeight).rotateYaw(this.center, center.yaw()).toPoint3d(),
                 color
         );
-        setPose(center);
     }
 
     public Cuboid(GamePose center, double width, double height, double depth, Color color) {
-        this(new GamePose(), center, width, height, depth, color);
+        this(center, center, width, height, depth, color);
     }
 
     @Override

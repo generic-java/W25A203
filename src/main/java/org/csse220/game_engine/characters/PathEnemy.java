@@ -1,13 +1,12 @@
 package org.csse220.game_engine.characters;
 
-import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.kinematics.Hitbox;
 import org.csse220.game_engine.math_utils.GamePose;
 
 import java.awt.*;
 
-public class PathEnemy extends Enemy {
+public class PathEnemy extends LethalEnemy {
     private static final double SPEED = 0.025;
     private final GamePose startPose;
     private final GamePose endPose;
@@ -38,10 +37,4 @@ public class PathEnemy extends Enemy {
     public boolean blocksMovement() {
         return false;
     }
-
-    @Override
-    public void softCollision(GameObject other, GamePose pose) {
-        other.hitByPathEnemy();
-    }
-
 }

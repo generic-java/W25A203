@@ -2,12 +2,10 @@ package org.csse220;
 
 import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.GameObject;
+import org.csse220.game_engine.characters.Elephant;
 import org.csse220.game_engine.characters.GamePlayer;
-import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.kinematics.Hitbox;
 import org.csse220.game_engine.math_utils.GamePose;
-
-import java.awt.*;
 
 public class Player extends GamePlayer {
     private int fuelCounter;
@@ -16,9 +14,10 @@ public class Player extends GamePlayer {
     private static final double MIN_Z = -500.0;
 
     public Player() {
-        super(new GamePose(), new Hitbox(new GamePose(), 5, 5, 5), new Cuboid(new GamePose(0, 0, 0, 0), 5, 5, 5, Color.ORANGE));
+        super(new GamePose(), new Hitbox(new GamePose(), 5, 5, 5), new Elephant(new GamePose()));
         setGravity(0.0006);
         setPose(new GamePose(0, 0, 15, 0));
+        getDrawable().show();
     }
 
     public void attackedByEnemy() {
@@ -30,10 +29,10 @@ public class Player extends GamePlayer {
         for (int i = 0; i < 3; i++) {
             getDrawable().hide();
             Engine.getInstance().render();
-            trySleep(100);
+            trySleep(75);
             getDrawable().show();
             Engine.getInstance().render();
-            trySleep(100);
+            trySleep(75);
         }
         Engine.getInstance().resetLevel();
         health = MAX_HEALTH;
@@ -76,7 +75,7 @@ public class Player extends GamePlayer {
     }
 
     @Override
-    public void softCollision(GameObject other, GamePose pose) {
+    public void onSoftCollision(GameObject other, GamePose pose) {
         other.hitByPlayer();
     }
 
@@ -86,7 +85,7 @@ public class Player extends GamePlayer {
     }
 
     @Override
-    public void hitByPathEnemy() {
+    public void hitByLethalEnemy() {
         die();
     }
 
@@ -94,7 +93,6 @@ public class Player extends GamePlayer {
     public void onHitByBonfire() {
 
         if (this.fuelCounter == Engine.getInstance().getCurrentLevel().getNumBonfireFuels()) {
-            System.out.println("onHitByBonfire");
             Engine.getInstance().incrementLevel();
         }
     }
