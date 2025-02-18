@@ -22,7 +22,6 @@ public class Main {
     public void start() {
         ArrayList<Level> levels = Level.loadAll();
 
-
         JFrame window = new JFrame("Demo");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(1500, 900);
@@ -205,7 +204,7 @@ public class Main {
 //            engine.addLevel(level);
 //        }
         //player.setZVel(-0.0001);
-        //engine.setLevel(0);
+        engine.setLevel(0);
 //        engine.addGameObject(new Spike(new GamePose(0, -30, 0, 0)));
         //engine.addGameObject(new Drone(new GamePose(15, 0, 15, 0))) w;
         //engine.setBackground(new Color(160, 230, 255));
