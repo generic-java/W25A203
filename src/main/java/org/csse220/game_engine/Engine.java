@@ -74,6 +74,12 @@ public class Engine {
             addGameObject(gameObject);
             gameObject.reset();
         }
+        for (GameObject gameObject : level.getTrampolines()) {
+            addGameObject(gameObject);
+        }
+        for (GameObject gameObject : level.getGrassBlocks()) {
+            addGameObject(gameObject);
+        }
 
         addGameObject(level.getBonfire());
     }

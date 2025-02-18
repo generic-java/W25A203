@@ -52,6 +52,66 @@
       "poseZ": "-15"
     }
   ],
+  "trampolines": [
+    {
+      "width": "40",
+      "height": "40",
+      "depth": "40",
+      "poseX": "140",
+      "poseY": "30",
+      "poseZ": "30"
+    },
+    {
+      "width": "50",
+      "height": "4",
+      "depth": "60",
+      "poseX": "180",
+      "poseY": "70",
+      "poseZ": "50"
+    }
+  ],
+  "grassBlocks": [
+    {
+      "width": "50",
+      "height": "40",
+      "depth": "50",
+      "poseX": "0",
+      "poseY": "0",
+      "poseZ": "0"
+    },
+    {
+      "width": "50",
+      "height": "40",
+      "depth": "50",
+      "poseX": "80",
+      "poseY": "80",
+      "poseZ": "30"
+    },
+    {
+      "width": "50",
+      "height": "40",
+      "depth": "50",
+      "poseX": "0",
+      "poseY": "160",
+      "poseZ": "60"
+    },
+    {
+      "width": "50",
+      "height": "40",
+      "depth": "50",
+      "poseX": "-80",
+      "poseY": "240",
+      "poseZ": "90"
+    },
+    {
+      "width": "50",
+      "height": "40",
+      "depth": "50",
+      "poseX": "-80",
+      "poseY": "320",
+      "poseZ": "90"
+    }
+  ],
   "bonfireFuelPoses": [
     {
       "poseX": "25",
@@ -67,6 +127,38 @@
       "poseX": "30",
       "poseY": "30",
       "poseZ": "-5"
+    }
+  ],
+  "bonfireFuelPoses": [
+    {
+      "poseX": "25",
+      "poseY": "25",
+      "poseZ": "-5"
+    },
+    {
+      "poseX": "20",
+      "poseY": "20",
+      "poseZ": "-5"
+    },
+    {
+      "poseX": "30",
+      "poseY": "30",
+      "poseZ": "-5"
+    },
+    {
+      "type": "spike",
+      "poseX": "50",
+      "poseY": "50",
+      "poseZ": "50"
+    },
+    {
+      "type": "lava",
+      "poseX": "80",
+      "poseY": "80",
+      "poseZ": "40",
+      "width": "5",
+      "height": "5",
+      "depth": "5"
     }
   ],
   "bonfireX": "40",

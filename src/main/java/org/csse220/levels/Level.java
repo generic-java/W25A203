@@ -1,11 +1,7 @@
 package org.csse220.levels;
 
-import org.csse220.game_engine.characters.Enemy;
-import org.csse220.game_engine.characters.PaperAirplane;
-import org.csse220.game_engine.characters.PathEnemy;
-import org.csse220.game_engine.game_objects.Bonfire;
-import org.csse220.game_engine.game_objects.BonfireFuel;
-import org.csse220.game_engine.game_objects.CuboidTerrain;
+import org.csse220.game_engine.characters.*;
+import org.csse220.game_engine.game_objects.*;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.math_utils.GamePose;
 
@@ -30,13 +26,17 @@ public class Level {
     private final GamePose playerStartPose;
     private final Bonfire bonfire;
     private final ArrayList<BonfireFuel> bonfireFuels = new ArrayList<>();
+    private final ArrayList<Trampoline> trampolines = new ArrayList<>();
+    private final ArrayList<GrassBlock> grassBlocks = new ArrayList<>();
 
-    private Level(List<CuboidTerrain> platforms, List<Enemy> enemies, GamePose playerStartPose, List<BonfireFuel> bonfireFuels, Bonfire bonfire) {
+    private Level(List<CuboidTerrain> platforms, List<Enemy> enemies, GamePose playerStartPose, List<BonfireFuel> bonfireFuels, Bonfire bonfire, List<Trampoline> trampolines, List<GrassBlock> grassBlocks) {
         this.enemies.addAll(enemies);
         this.platforms.addAll(platforms);
         this.playerStartPose = playerStartPose;
         this.bonfireFuels.addAll(bonfireFuels);
         this.bonfire = bonfire;
+        this.trampolines.addAll(trampolines);
+        this.grassBlocks.addAll(grassBlocks);
     }
 
     public static ArrayList<Level> loadAll() {
@@ -117,8 +117,62 @@ public class Level {
                 //REPLACE WITH CONSTRUCTOR
                 tempEnemies[i] = new PathEnemy(new GamePose(startX, startY, startZ, 0), new GamePose(endX, endY, endZ, 0));
             }
+            if (type.equals("lava")) {
+                double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
+                double poseY = Double.parseDouble(currentJsonObj.getString("poseX"));
+                double poseZ = Double.parseDouble(currentJsonObj.getString("poseX"));
+
+                double width = Double.parseDouble(currentJsonObj.getString("width"));
+                double height = Double.parseDouble(currentJsonObj.getString("height"));
+                double depth = Double.parseDouble(currentJsonObj.getString("depth"));
+
+                tempEnemies[i] = new Lava(new GamePose(poseX, poseY, poseZ, 0), width, height, depth);
+            }
+
+            if (type.equals("spike")) {
+
+                double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
+                double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
+                double poseZ = Double.parseDouble(currentJsonObj.getString("poseX"));
+
+                tempEnemies[i] = new Spike(new GamePose(poseX, poseY, poseZ, 0));
+            }
 
         }
+
+        JsonArray touchGrass = jsonObject.getJsonArray("grassBlocks");
+        GrassBlock[] grassBlocks = new GrassBlock[touchGrass.size()];
+        for (int i = 0; i < touchGrass.size(); i++) {
+            JsonObject currentJsonObj = touchGrass.getJsonObject(i);
+            double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
+            double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
+            double poseZ = Double.parseDouble(currentJsonObj.getString("poseX"));
+
+            double width = Double.parseDouble(currentJsonObj.getString("width"));
+            double height = Double.parseDouble(currentJsonObj.getString("height"));
+            double depth = Double.parseDouble(currentJsonObj.getString("depth"));
+
+            grassBlocks[i] = new GrassBlock(new GamePose(poseX, poseY, poseZ, 0), width, height, depth);
+        }
+
+        JsonArray tramps = jsonObject.getJsonArray("trampolines");
+        Trampoline[] trampolines = new Trampoline[tramps.size()];
+        for (int i = 0; i < tramps.size(); i++) {
+            JsonObject currentJsonObj = tramps.getJsonObject(i);
+
+
+            double width = Double.parseDouble(currentJsonObj.getString("width"));
+            double height = Double.parseDouble(currentJsonObj.getString("height"));
+            double depth = Double.parseDouble(currentJsonObj.getString("depth"));
+
+            double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
+            double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
+            double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
+
+            trampolines[i] = new Trampoline(new GamePose(poseX, poseY, poseZ, 0), width, height, depth);
+        }
+
+
         JsonArray platforms = jsonObject.getJsonArray("platforms");
         CuboidTerrain[] tempPlatforms = new CuboidTerrain[platforms.size()];
         for (int i = 0; i < platforms.size(); i++) {
@@ -151,9 +205,6 @@ public class Level {
         double portalY = Double.parseDouble(jsonObject.getString("portalPoseY"));
         double portalZ = Double.parseDouble(jsonObject.getString("portalPoseZ"));
 
-        //REPLACE WITH CONSTRUCTOR AFTER IMPLEMENTATION
-        Portal p = new Portal();
-
         double playerPoseX = Double.parseDouble(jsonObject.getString("playerPoseX"));
         double playerPoseY = Double.parseDouble(jsonObject.getString("playerPoseY"));
         double playerPoseZ = Double.parseDouble(jsonObject.getString("playerPoseZ"));
@@ -173,7 +224,7 @@ public class Level {
         }
 
 
-        return new Level(Arrays.asList(tempPlatforms), Arrays.asList(tempEnemies), playerStartPose, Arrays.asList(fuel), fire);
+        return new Level(Arrays.asList(tempPlatforms), Arrays.asList(tempEnemies), playerStartPose, Arrays.asList(fuel), fire, Arrays.asList(trampolines), Arrays.asList(grassBlocks));
     }
 
     public ArrayList<Enemy> getEnemies() {
@@ -188,8 +239,16 @@ public class Level {
         return this.bonfireFuels;
     }
 
+    public ArrayList<Trampoline> getTrampolines() {
+        return this.trampolines;
+    }
+
     public Bonfire getBonfire() {
         return this.bonfire;
+    }
+
+    public ArrayList<GrassBlock> getGrassBlocks() {
+        return grassBlocks;
     }
 
     public int getNumBonfireFuels() {

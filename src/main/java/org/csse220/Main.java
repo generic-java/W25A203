@@ -211,14 +211,16 @@ public class Main {
         //engine.addGameObject(new CuboidTerrain(new Cuboid(new GamePose(50, 0, 0, 0.5), 25, 100, 100, Color.GREEN)));
         //engine.addGameObject(new CuboidTerrain(new Cuboid(new Point3d(0, 0, 50), 100, 10, 100, Color.GREEN)));
         //player.setPose(new GamePose(0, 0, 25, 0));
-        engine.addGameObject(new GrassBlock(new GamePose(), 50, 40, 50));
-        engine.addGameObject(new GrassBlock(new GamePose(80, 80, 30), 50, 40, 50));
-        engine.addGameObject(new GrassBlock(new GamePose(0, 160, 60), 50, 40, 50));
-        engine.addGameObject(new GrassBlock(new GamePose(-80, 240, 90), 50, 40, 50));
-        engine.addGameObject(new GrassBlock(new GamePose(-80, 320, 90), 50, 40, 50));
-        engine.addGameObject(new Spike(new GamePose(-80, 300, 120)));
-        engine.addGameObject(new Lava(new GamePose(-80, 360, 120), 50, 50, 50));
-        engine.addGameObject(new Trampoline(new GamePose(0, -50, 0), 50, 50, 50));
+
+
+//        engine.addGameObject(new GrassBlock(new GamePose(), 50, 40, 50));
+//        engine.addGameObject(new GrassBlock(new GamePose(80, 80, 30), 50, 40, 50));
+//        engine.addGameObject(new GrassBlock(new GamePose(0, 160, 60), 50, 40, 50));
+//        engine.addGameObject(new GrassBlock(new GamePose(-80, 240, 90), 50, 40, 50));
+//        engine.addGameObject(new GrassBlock(new GamePose(-80, 320, 90), 50, 40, 50));
+//        engine.addGameObject(new Spike(new GamePose(-80, 300, 120)));
+//        engine.addGameObject(new Lava(new GamePose(-80, 360, 120), 50, 50, 50));
+//        engine.addGameObject(new Trampoline(new GamePose(0, -50, 0), 50, 50, 50));
 
         //engine.addGameObject(new GameObject(new GamePose(), null, elephant));
         engine.startKinematics();
