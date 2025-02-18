@@ -19,11 +19,12 @@ public class Kinematics extends KillableThread {
     private final static double MOVE_VEL = 0.075;
     private final static double TURN_VEL = 0.003;
     private static final Vector3d CAMERA_KP = new Vector3d(0.005, 0.005, 1);
-    private final GamePose CAMERA_OFFSET = new GamePose(0, -35, 20, 0);
+    private final GamePose CAMERA_OFFSET = new GamePose(0, -20, 35, 0);
     private static final GamePose MOVE_X = new GamePose(1, 0, 0, 0);
     private static final GamePose MOVE_Y = new GamePose(0, 1, 0, 0);
     private static final GamePose MOVE_Z = new GamePose(0, 0, 1, 0);
     private static final GamePose MOVE_YAW = new GamePose(0, 0, 0, 1);
+    private static final GamePose ROUNDING_PRECISION = new GamePose(1, 1, 1, 3);
     private Color backgroundColor = Color.WHITE;
 
     private final Set<GameObject> gameObjects;
@@ -31,6 +32,7 @@ public class Kinematics extends KillableThread {
     private final SolidGameObject player;
     private final Set<GameObject> collideables;
     private final Set<Drawable> drawables;
+    private final Set<Runnable> eventManagers;
     private final GameKeyListener gameKeyListener;
     private final GamePose[] elementMoveSteps = {
             MOVE_X,
@@ -43,6 +45,7 @@ public class Kinematics extends KillableThread {
         collideables = ConcurrentHashMap.newKeySet();
         drawables = ConcurrentHashMap.newKeySet();
         gameObjects = ConcurrentHashMap.newKeySet();
+        eventManagers = ConcurrentHashMap.newKeySet();
         timer = new ElapsedTime();
         this.player = player;
         addGameObject(player);
@@ -60,6 +63,9 @@ public class Kinematics extends KillableThread {
     public void run() {
         while (isActive()) {
             double dt = timer.getAndReset();
+            for (Runnable runnable : eventManagers) {
+                runnable.run();
+            }
             for (GamePose elementMoveStep : elementMoveSteps) {
                 for (GameObject gameObject : gameObjects) {
                     gameObject.update();
@@ -105,7 +111,7 @@ public class Kinematics extends KillableThread {
         Vector3d cameraVelocity = new Vector3d(error.x() * CAMERA_KP.x(), error.y() * CAMERA_KP.y(), error.z() * CAMERA_KP.z()).scale(dt);
         Vector3d newCameraPose = camera.getPose().addTo(cameraVelocity);
         camera.setPose(new GamePose(newCameraPose.x(), newCameraPose.y(), targetPose.z(), targetPose.yaw()));
-        camera.setPose(camera.getPose().round(new GamePose(1, 1, 1, 3))); // TODO make this should be a constant
+        camera.setPose(camera.getPose().round(ROUNDING_PRECISION));
     }
 
     private void setPlayerVelocity(double dt) {
@@ -185,5 +191,9 @@ public class Kinematics extends KillableThread {
 
     public void setBackground(Color color) {
         backgroundColor = color;
+    }
+
+    public void addEventManager(Runnable runnable) {
+        eventManagers.add(runnable);
     }
 }

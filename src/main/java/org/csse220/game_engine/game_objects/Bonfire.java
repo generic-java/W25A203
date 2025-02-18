@@ -15,9 +15,8 @@ public class Bonfire extends GameObject {
 
         super(
                 pose,
-                new CompositeHitbox(pose, new Hitbox(pose.translateY(7.5), 30, 32.5, 30)),
+                new CompositeHitbox(pose, new Hitbox(pose, 25, 25, 25)),
                 new CompositeDrawable(new GamePose(0, 0, 0, 0),
-                        //new Cuboid(pose.translateY(7.5), 30, 32.5, 30, Color.BLUE),
                         new Cuboid(new GamePose(pose.x, pose.y, pose.z, 0), 30, 5, 5, Color.ORANGE),
                         new Cuboid(new GamePose(pose.x, pose.y + 15, pose.z, 0), 30, 5, 5, Color.ORANGE),
 
