@@ -22,7 +22,7 @@ public class Engine {
 
     private Engine() {
         soundPlayer = new SoundPlayer();
-        //soundPlayer.startBackground();
+        soundPlayer.startBackground();
         levels = new ArrayList<>();
     }
 
@@ -131,6 +131,10 @@ public class Engine {
             instance = new Engine();
         }
         return instance;
+    }
+
+    public void addEventManager(Runnable runnable) {
+        kinematics.addEventManager(runnable);
     }
 
 

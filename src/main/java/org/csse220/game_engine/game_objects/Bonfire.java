@@ -1,8 +1,7 @@
 package org.csse220.game_engine.game_objects;
 
-import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.GameObject;
-import org.csse220.game_engine.graphics.CompoundDrawable;
+import org.csse220.game_engine.graphics.CompositeDrawable;
 import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.kinematics.CompositeHitbox;
 import org.csse220.game_engine.kinematics.Hitbox;
@@ -16,7 +15,7 @@ public class Bonfire extends GameObject {
         super(
                 pose,
                 new CompositeHitbox(pose, new Hitbox(pose, 25, 25, 25)),
-                new CompoundDrawable(new GamePose(0, 0, 0, 0),
+                new CompositeDrawable(new GamePose(0, 0, 0, 0),
                         new Cuboid(new GamePose(pose.x, pose.y, pose.z, 0), 30, 5, 5, Color.ORANGE),
                         new Cuboid(new GamePose(pose.x, pose.y + 15, pose.z, 0), 30, 5, 5, Color.ORANGE),
 
@@ -39,7 +38,7 @@ public class Bonfire extends GameObject {
     }
 
     @Override
-    public void onMovingCollision(GameObject other, GamePose moveDirection) {
+    public void onSolidCollision(GameObject other, GamePose moveDirection) {
         other.onHitByBonfire();
     }
 }
