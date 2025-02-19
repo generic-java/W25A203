@@ -1,16 +1,17 @@
 package org.csse220.game_engine.characters;
 
 import org.csse220.game_engine.ElapsedTime;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.Engine;
+import org.csse220.game_engine.math.GamePose;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PaperAirplaneManager {
-    private int maxDrones = 10; // Maximum number of drones to spawn
-    private ArrayList<PaperAirplane> paperAirplanes = new ArrayList<>();
+public class PaperAirplaneManager implements Runnable {
+    private static final int MAX_AIRPLANES = 3; // Maximum number of drones to spawn
+    private final ArrayList<PaperAirplane> paperAirplanes = new ArrayList<>();
     private final ElapsedTime elapsedTime;
-    private static final long SPAWN_INTERVAL = 30000; // 30 seconds
+    private static final long SPAWN_INTERVAL = 5000; // 30 seconds
 
     public PaperAirplaneManager() {
         this.elapsedTime = new ElapsedTime();
@@ -24,16 +25,21 @@ public class PaperAirplaneManager {
     }
 
     private void spawnDrones() {
-        paperAirplanes.clear();
-        int numberOfDrones = (int) (Math.random() * maxDrones); // random number of drones to spawn
+        int numberOfDrones = (int) (Math.random() * MAX_AIRPLANES); // random number of drones to spawn
         Random rand = new Random();
+        GamePose playerPose = Engine.getInstance().getPlayerPosition();
 
         for (int i = 0; i < numberOfDrones; i++) {
+            double randomX = (rand.nextDouble() - 0.5) * 100;
             double randomY = rand.nextDouble() * 100;
-            GamePose spawnPose = new GamePose(-264, randomY, 50, 0);
-            PaperAirplane newPaperAirplane = new PaperAirplane(spawnPose);
-            paperAirplanes.add(newPaperAirplane);
+            GamePose spawnPose = new GamePose(randomX, randomY, 0, 0).rotateYaw(playerPose.yaw()).addTo(playerPose).setYaw(0);
+            Engine.getInstance().addGameObject(new PaperAirplane(spawnPose));
         }
+    }
+
+    @Override
+    public void run() {
+        update();
     }
 
     public ArrayList<PaperAirplane> getDrones() {

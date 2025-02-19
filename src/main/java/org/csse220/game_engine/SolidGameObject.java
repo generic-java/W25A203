@@ -2,7 +2,7 @@ package org.csse220.game_engine;
 
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.GamePose;
 
 public class SolidGameObject extends GameObject {
     private boolean touchingGround = false;
@@ -54,8 +54,9 @@ public class SolidGameObject extends GameObject {
 
 
     public void hitByTrampoline() {
-        if (velocity().z() < 0) {
+        if (velocity().z() <= 0) {
             setZVel(JUMP_VEL * 2);
+            Engine.getInstance().getSoundPlayer().trampolineSound();
         }
     }
 

@@ -3,7 +3,7 @@ package org.csse220.game_engine;
 import org.csse220.game_engine.characters.PaperAirplane;
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.GamePose;
 
 public class GameObject extends MovingObject {
     private final Collideable collideable;
@@ -24,8 +24,8 @@ public class GameObject extends MovingObject {
         if (hasDrawable()) {
             relativeDrawablePose = drawable.getPose().relativeTo(pose);
             if (this instanceof PaperAirplane) {
-                //System.out.println("printing drone pose");
-                //System.out.println(relativeDrawablePose);
+                System.out.println("printing drone pose");
+                System.out.println(relativeDrawablePose);
             }
         } else {
             relativeDrawablePose = new GamePose();
@@ -112,6 +112,10 @@ public class GameObject extends MovingObject {
     }
 
     public void pickUpFuel() {
+    }
+
+    public void hitByWater() {
+
     }
 
 

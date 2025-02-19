@@ -1,4 +1,4 @@
-package org.csse220.game_engine.math_utils;
+package org.csse220.game_engine.math;
 
 import java.util.Objects;
 

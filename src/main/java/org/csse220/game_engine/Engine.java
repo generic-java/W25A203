@@ -3,7 +3,7 @@ package org.csse220.game_engine;
 import org.csse220.game_engine.characters.GamePlayer;
 import org.csse220.game_engine.graphics.Screen;
 import org.csse220.game_engine.kinematics.Kinematics;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.GamePose;
 import org.csse220.levels.Level;
 
 import javax.swing.*;
@@ -22,7 +22,7 @@ public class Engine {
 
     private Engine() {
         soundPlayer = new SoundPlayer();
-        soundPlayer.startBackground();
+        //soundPlayer.startBackground();
         levels = new ArrayList<>();
     }
 

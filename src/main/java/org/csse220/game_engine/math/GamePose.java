@@ -1,4 +1,4 @@
-package org.csse220.game_engine.math_utils;
+package org.csse220.game_engine.math;
 
 import org.csse220.game_engine.graphics.Point3d;
 
@@ -65,6 +65,10 @@ public class GamePose extends Vector3d {
 
     public GamePose scale(double scalar) {
         return new GamePose(x() * scalar, y() * scalar, z() * scalar, yaw() * scalar);
+    }
+
+    public GamePose setYaw(double yaw) {
+        return new GamePose(this.x, this.y, this.z, yaw);
     }
 
     @Override

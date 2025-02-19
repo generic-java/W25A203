@@ -3,7 +3,7 @@ package org.csse220.game_engine.characters;
 import org.csse220.game_engine.graphics.CompositeDrawable;
 import org.csse220.game_engine.graphics.Face;
 import org.csse220.game_engine.kinematics.Hitbox;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.GamePose;
 
 import java.awt.*;
 

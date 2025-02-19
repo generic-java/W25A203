@@ -1,4 +1,4 @@
-package org.csse220.game_engine.math_utils;
+package org.csse220.game_engine.math;
 
 public class CameraPose extends GamePose {
     private final double pitch;

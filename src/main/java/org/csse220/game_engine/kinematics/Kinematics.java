@@ -1,14 +1,15 @@
 package org.csse220.game_engine.kinematics;
 
 import org.csse220.game_engine.*;
+import org.csse220.game_engine.characters.GamePlayer;
 import org.csse220.game_engine.graphics.Camera;
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.graphics.Screen;
 import org.csse220.game_engine.graphics.ZBuffer;
-import org.csse220.game_engine.math_utils.CameraPose;
-import org.csse220.game_engine.math_utils.GamePose;
-import org.csse220.game_engine.math_utils.Vector2d;
-import org.csse220.game_engine.math_utils.Vector3d;
+import org.csse220.game_engine.math.CameraPose;
+import org.csse220.game_engine.math.GamePose;
+import org.csse220.game_engine.math.Vector2d;
+import org.csse220.game_engine.math.Vector3d;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -26,10 +27,13 @@ public class Kinematics extends KillableThread {
     private static final GamePose MOVE_YAW = new GamePose(0, 0, 0, 1);
     private static final GamePose ROUNDING_PRECISION = new GamePose(1, 1, 1, 3);
     private Color backgroundColor = Color.WHITE;
+    private final ElapsedTime fpsTimer = new ElapsedTime();
+    private double frames = 0;
+    private static final int FPS_RESET = 500;
 
     private final Set<GameObject> gameObjects;
     private final ElapsedTime timer;
-    private final SolidGameObject player;
+    private final GamePlayer player;
     private final Set<GameObject> collideables;
     private final Set<Drawable> drawables;
     private final Set<Runnable> eventManagers;
@@ -41,7 +45,7 @@ public class Kinematics extends KillableThread {
             MOVE_YAW,
     };
 
-    public Kinematics(SolidGameObject player, GameKeyListener gameKeyListener) {
+    public Kinematics(GamePlayer player, GameKeyListener gameKeyListener) {
         collideables = ConcurrentHashMap.newKeySet();
         drawables = ConcurrentHashMap.newKeySet();
         gameObjects = ConcurrentHashMap.newKeySet();
@@ -63,16 +67,22 @@ public class Kinematics extends KillableThread {
     public void run() {
         while (isActive()) {
             double dt = timer.getAndReset();
+            frames++;
+            if (fpsTimer.getElapsedTime() >= FPS_RESET) {
+                Screen.getInstance().writeText("FPS", "FPS: " + Math.round(frames / FPS_RESET * 1000), Screen.DEFAULT_TEXT_COLOR, 10, 30);
+                fpsTimer.reset();
+                frames = 0;
+            }
             for (Runnable runnable : eventManagers) {
                 runnable.run();
             }
             for (GamePose elementMoveStep : elementMoveSteps) {
                 for (GameObject gameObject : gameObjects) {
-                    gameObject.update();
+                    gameObject.update(dt);
                     gameObject.move(elementMoveStep, dt);
                 }
                 for (GameObject gameObject : collideables) {
-                    for (GameObject toCheck : collideables) { // The below if statement \/ is the problematic child
+                    for (GameObject toCheck : collideables) {
                         if (gameObject != toCheck && gameObject.getCollideable().hasCollided(toCheck.getCollideable())) {
                             if (gameObject.blocksMovement() && toCheck.blocksMovement()) {
                                 gameObject.onSolidCollision(toCheck, elementMoveStep);
@@ -87,7 +97,6 @@ public class Kinematics extends KillableThread {
             }
             render(dt);
             setPlayerVelocity(dt);
-
         }
     }
 
@@ -145,6 +154,9 @@ public class Kinematics extends KillableThread {
         }
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
             player.jump();
+        }
+        if (gameKeyListener.isKeyPressed(KeyEvent.VK_F)) {
+            player.doPower();
         }
         velocityVector = velocityVector.normalize().multiply(MOVE_VEL).rotate(camera.getPose().yaw());
         player.setXVel(velocityVector.x);

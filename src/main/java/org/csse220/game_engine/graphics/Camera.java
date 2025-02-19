@@ -1,7 +1,7 @@
 package org.csse220.game_engine.graphics;
 
-import org.csse220.game_engine.math_utils.CameraPose;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.CameraPose;
+import org.csse220.game_engine.math.GamePose;
 
 public class Camera {
     private static Camera instance = null;

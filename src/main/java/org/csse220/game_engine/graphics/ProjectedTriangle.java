@@ -1,6 +1,6 @@
 package org.csse220.game_engine.graphics;
 
-import org.csse220.game_engine.math_utils.Vector2d;
+import org.csse220.game_engine.math.Vector2d;
 
 import java.awt.*;
 

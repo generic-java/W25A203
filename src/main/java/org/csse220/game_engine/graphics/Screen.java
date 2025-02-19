@@ -1,19 +1,22 @@
 package org.csse220.game_engine.graphics;
 
-import org.csse220.Player;
-import org.csse220.game_engine.ElapsedTime;
-import org.csse220.game_engine.Engine;
-
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.util.ArrayList;
 
 public class Screen extends JComponent {
     private static Screen instance = null;
     private final int PIXEL_SIZE = 4; // How pixelated the screen should appear.  Shouldn't be less than 1
     public final Color[][] pixels;
     private final Color[][] buffer;
+    private final ArrayList<Text> textBuffer = new ArrayList<>();
     private final double squareScreenWidth;
-    private final ElapsedTime timer = new ElapsedTime();
+    private Font font;
+    public static final Color DEFAULT_TEXT_COLOR = new Color(0, 150, 50);
+
 
     public double getSquareScreenWidth() {
         return squareScreenWidth;
@@ -29,7 +32,12 @@ public class Screen extends JComponent {
             }
         }
         buffer = new Color[pixels.length][pixels[0].length];
-        timer.reset();
+        try {
+            Font loaded = Font.createFont(Font.TRUETYPE_FONT, new File(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/main/java/org/csse220/fonts/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf"));
+            font = loaded.deriveFont(Font.PLAIN, loaded.getSize() * 30);
+        } catch (IOException | FontFormatException e) {
+            font = Font.getFont("Sans Serif");
+        }
     }
 
     public void fill(Color color) {
@@ -54,6 +62,13 @@ public class Screen extends JComponent {
     public void paintPixel(int x, int y, Color color) {
         if (y < pixels.length && y >= 0 && x < pixels[0].length && x >= 0) {
             pixels[y][x] = color;
+        }
+    }
+
+    public void writeText(String key, String text, Color color, int x, int y) {
+        synchronized (textBuffer) {
+            textBuffer.removeIf((textObject) -> textObject.key().equals(key));
+            textBuffer.add(new Text(key, text, color, x, y));
         }
     }
 
@@ -82,25 +97,23 @@ public class Screen extends JComponent {
      */
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         synchronized (buffer) {
-            super.paintComponent(g);
             for (int i = 0; i < buffer.length; i++) {
                 for (int j = 0; j < buffer[0].length; j++) {
                     g.setColor(buffer[i][j]);
                     g.fillRect(j * PIXEL_SIZE, i * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
                 }
             }
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(Color.BLACK);
-            g2.drawString("fps: " + Math.round(1000 / timer.getAndReset()), 70, 20);
-            g2.drawString("z: " + Engine.getInstance().getPlayer().getPose().z(), 70, 50);
-            g2.drawString("Fuel Amount: " + String.valueOf(((Player) Engine.getInstance().getPlayer()).getFuelCounter()), 70, 80);
-            g2.drawString(String.format("LevelNumber: %s", Engine.getInstance().getLevelNumber() + 1), 70, 100);
-            g2.drawString(String.format("Health: %s", ((Player) (Engine.getInstance().getPlayer())).getHealth()), 70, 120);
-
-
-            //String testString = String.format("LevelNumber: %s", Engine.getInstance().getLevelNumber()+1);
+        }
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setFont(font);
+        synchronized (textBuffer) {
+            for (Text text : textBuffer) {
+                g2.setColor(text.color());
+                g2.drawString(text.value(), text.x(), text.y());
+            }
         }
 
     }

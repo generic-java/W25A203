@@ -1,62 +1,66 @@
 package org.csse220.game_engine.characters;
 
+import org.csse220.game_engine.ElapsedTime;
 import org.csse220.game_engine.Engine;
 import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.graphics.CompositeDrawable;
 import org.csse220.game_engine.graphics.Face;
 import org.csse220.game_engine.graphics.Point3d;
 import org.csse220.game_engine.kinematics.Hitbox;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.GamePose;
 
 import java.awt.*;
 
 public class PaperAirplane extends Enemy {
-    private static final double MOVE_SPEED = .0025;
-    //  private static final double MIN_DISTANCE = 2.0
-    private boolean isActive;
+    private static final double MOVE_KP = 0.0055;
+    private static final int MAX_TRACKING_TIME_MILLIS = 5000;
+    private static final int MAX_DISPLAY_TIME_MILLIS = 15000;
+    private static final GamePose DEATH_TARGET_POSE = new GamePose(0, 0, -100, 0);
+    private final ElapsedTime timer;
 
     public PaperAirplane(GamePose pose) {
-        super(pose, new Hitbox(pose, 2, 7, 2),
+        super(pose, new Hitbox(pose, 8, 7, 15),
                 new CompositeDrawable(
                         pose,
                         new Face(
+                                pose,
                                 new Point3d(pose.x(), pose.y(), pose.z()),
                                 new Point3d(pose.x() + 3, pose.y() - 0.5, pose.z() + 1.5),
                                 new Point3d(pose.x(), pose.y() + 8, pose.z()),
                                 Color.WHITE
                         ),
                         new Face(
+                                pose,
                                 new Point3d(pose.x(), pose.y(), pose.z()),
                                 new Point3d(pose.x() - 3, pose.y() - 0.5, pose.z() + 1.5),
                                 new Point3d(pose.x(), pose.y() + 8, pose.z()),
                                 Color.WHITE
                         ),
                         new Face(
+                                pose,
                                 new Point3d(pose.x(), pose.y(), pose.z()),
                                 new Point3d(pose.x(), pose.y() - 0.5, pose.z() - 2),
                                 new Point3d(pose.x(), pose.y() + 8, pose.z()),
                                 Color.WHITE
                         )
                 ));
-        //this.velocity = new GamePose(-0.05, 0, 0, 0, 0, 0); // moves left
-        this.isActive = true; // if the drone is on the screen or not (should implement collisions)
+        timer = new ElapsedTime();
     }
 
-//    private static GamePose RandomSpawn() {
-//        Random rand = new Random();
-//        double randomY = rand.nextDouble(); // random y position
-//        return new GamePose(, randomY, 50, 0, 0, 0); // enters the screen from the right edge
-//    }
 
     @Override
-    public void update() {
-        // if (isActive) {
-        GamePose playerPos = Engine.getInstance().getPlayerPosition();
-        GamePose proportionalDistance = playerPos.relativeTo(pose);
-        GamePose velocity = proportionalDistance.scale(MOVE_SPEED);
+    public void update(double dt) {
+        super.update(dt);
+        GamePose targetPose = DEATH_TARGET_POSE;
+        if (timer.getElapsedTime() < MAX_TRACKING_TIME_MILLIS) {
+            targetPose = Engine.getInstance().getPlayerPosition().translateZ(10);
+        } else if (timer.getElapsedTime() > MAX_DISPLAY_TIME_MILLIS) {
+            Engine.getInstance().removeGameObject(this);
+        }
 
-        setPose(getPose().addTo(velocity));
-        //   }
+        GamePose error = targetPose.relativeTo(getPose());
+        double targetYaw = error.angle - Math.PI / 2;
+        setPose(getPose().addTo(error.scale(MOVE_KP)).setYaw(targetYaw));
     }
 
     @Override
@@ -74,8 +78,8 @@ public class PaperAirplane extends Enemy {
         Engine.getInstance().removeGameObject(this);
     }
 
-    public boolean isActive() {
-
-        return isActive;
+    @Override
+    public void hitByWater() {
+        hitByPlayer();
     }
 }

@@ -3,7 +3,7 @@ package org.csse220.game_engine.characters;
 import org.csse220.game_engine.GameObject;
 import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.GamePose;
 
 public abstract class LethalEnemy extends Enemy {
     public LethalEnemy(GamePose pose, Collideable collideable, Drawable drawable) {

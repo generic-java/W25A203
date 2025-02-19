@@ -1,7 +1,7 @@
 package org.csse220.game_engine;
 
 import org.csse220.game_engine.graphics.PlaceableObject;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.GamePose;
 
 public abstract class MovingObject extends PlaceableObject {
 
@@ -31,7 +31,7 @@ public abstract class MovingObject extends PlaceableObject {
         this.gravity = gravity;
     }
 
-    public void update() {
+    public void update(double dt) {
 
     }
 

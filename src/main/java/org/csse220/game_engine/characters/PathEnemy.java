@@ -1,10 +1,7 @@
 package org.csse220.game_engine.characters;
 
-import org.csse220.game_engine.graphics.Cuboid;
 import org.csse220.game_engine.kinematics.Hitbox;
-import org.csse220.game_engine.math_utils.GamePose;
-
-import java.awt.*;
+import org.csse220.game_engine.math.GamePose;
 
 public class PathEnemy extends LethalEnemy {
     private static final double SPEED = 0.025;
@@ -13,7 +10,9 @@ public class PathEnemy extends LethalEnemy {
     private GamePose nextVel;
 
     public PathEnemy(GamePose startPose, GamePose endPose) {
-        super(startPose, new Hitbox(startPose, 5, 5, 5), new Cuboid(startPose, startPose, 5, 5, 5, Color.magenta));
+        super(startPose, new Hitbox(startPose, 5, 15, 5), new Elephant(startPose));
+
+
         this.startPose = startPose;
         this.endPose = endPose;
         setVel(endPose.relativeTo(startPose).normalize().scale(SPEED));
@@ -21,7 +20,8 @@ public class PathEnemy extends LethalEnemy {
     }
 
     @Override
-    public void update() {
+    public void update(double dt) {
+        System.out.println(velocity());
         if (!getPose().between(startPose, endPose)) {
             if (pose.distanceTo(startPose) <= pose.distanceTo(endPose)) {
                 setPose(startPose);
@@ -31,10 +31,6 @@ public class PathEnemy extends LethalEnemy {
             setVel(nextVel);
             nextVel = velocity().scale(-1);
         }
-    }
-
-    @Override
-    public boolean blocksMovement() {
-        return false;
+        setPose(pose.setYaw(velocity().angle - Math.PI / 2));
     }
 }

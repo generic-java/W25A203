@@ -7,49 +7,60 @@ import java.nio.file.FileSystems;
 
 public class SoundPlayer {
     private static final String PATH_PREFIX = FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/main/java/org/csse220/sounds/";
-    private AudioInputStream deathSound;
+    private MiniPlayer deathSound;
     private AudioInputStream loseHealthSound;
-    private AudioInputStream gainFuelSound;
+    private MiniPlayer gainFuelSound;
+    private MiniPlayer boingSound;
     private AudioInputStream winSound;
-    private AudioInputStream backgroundSong;
+    private MiniPlayer backgroundSong;
+
 
     public SoundPlayer() {
-        try {
-            deathSound = AudioSystem.getAudioInputStream(new File(PATH_PREFIX + "death_sound.wav"));
-//            loseHealthSound = AudioSystem.getAudioInputStream(new File(PATH_PREFIX + "lose_health.wav"));
-//            gainFuelSound = AudioSystem.getAudioInputStream(new File(PATH_PREFIX + "gain_fuel.wav"));
+
+        deathSound = new MiniPlayer(PATH_PREFIX + "death_sound.wav");
+        boingSound = new MiniPlayer(PATH_PREFIX + "boing.wav");
+        //            loseHealthSound = AudioSystem.getAudioInputStream(new File(PATH_PREFIX + "lose_health.wav"));
+        gainFuelSound = new MiniPlayer(PATH_PREFIX + "gain_fuel.wav");
 //            winSound = AudioSystem.getAudioInputStream(new File(PATH_PREFIX + "win_sound.wav"));
-            backgroundSong = AudioSystem.getAudioInputStream(new File(PATH_PREFIX + "background.wav"));
-        } catch (UnsupportedAudioFileException | IOException e) {
-            e.printStackTrace();
-        }
+        backgroundSong = new MiniPlayer(PATH_PREFIX + "background.wav");
+
     }
 
     public void startBackground() {
-        new Thread(() -> {
-            try {
-                Clip clip = AudioSystem.getClip();
-                clip.open(backgroundSong);
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-            } catch (LineUnavailableException | IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+        backgroundSong.play();
     }
 
-    public void playSound(AudioInputStream sound) {
-        new Thread(() -> {
-            try {
-                Clip clip = AudioSystem.getClip();
-                clip.open(sound);
-                clip.start();
-            } catch (LineUnavailableException | IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-    }
 
     public void deathSound() {
-        playSound(deathSound);
+        deathSound.play();
     }
+
+    public void gainFuelSound() {
+        gainFuelSound.play();
+    }
+
+    public void trampolineSound() {
+        boingSound.play();
+    }
+
+    private static class MiniPlayer {
+        private final Clip clip;
+
+        private MiniPlayer(String fileName) {
+            try {
+                AudioInputStream sound = AudioSystem.getAudioInputStream(new File(fileName));
+                clip = AudioSystem.getClip();
+                clip.open(sound);
+            } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public void play() {
+            clip.setFramePosition(0);
+            clip.start();
+        }
+    }
+
+
 }

@@ -3,7 +3,7 @@ package org.csse220.levels;
 import org.csse220.game_engine.characters.*;
 import org.csse220.game_engine.game_objects.*;
 import org.csse220.game_engine.graphics.Cuboid;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.GamePose;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -119,8 +119,8 @@ public class Level {
             }
             if (type.equals("lava")) {
                 double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
-                double poseY = Double.parseDouble(currentJsonObj.getString("poseX"));
-                double poseZ = Double.parseDouble(currentJsonObj.getString("poseX"));
+                double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
+                double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
 
                 double width = Double.parseDouble(currentJsonObj.getString("width"));
                 double height = Double.parseDouble(currentJsonObj.getString("height"));
@@ -133,7 +133,7 @@ public class Level {
 
                 double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
                 double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
-                double poseZ = Double.parseDouble(currentJsonObj.getString("poseX"));
+                double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
 
                 tempEnemies[i] = new Spike(new GamePose(poseX, poseY, poseZ, 0));
             }
@@ -146,7 +146,7 @@ public class Level {
             JsonObject currentJsonObj = touchGrass.getJsonObject(i);
             double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
             double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
-            double poseZ = Double.parseDouble(currentJsonObj.getString("poseX"));
+            double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
 
             double width = Double.parseDouble(currentJsonObj.getString("width"));
             double height = Double.parseDouble(currentJsonObj.getString("height"));
@@ -174,36 +174,27 @@ public class Level {
 
 
         JsonArray platforms = jsonObject.getJsonArray("platforms");
-        CuboidTerrain[] tempPlatforms = new CuboidTerrain[platforms.size()];
-        for (int i = 0; i < platforms.size(); i++) {
-            JsonObject currentJsonObj = platforms.getJsonObject(i);
+        CuboidTerrain[] tempPlatforms = new CuboidTerrain[0];
+        if (platforms != null) {
+            tempPlatforms = new CuboidTerrain[platforms.size()];
+            for (int i = 0; i < platforms.size(); i++) {
+                JsonObject currentJsonObj = platforms.getJsonObject(i);
 
 
-            double width = Double.parseDouble(currentJsonObj.getString("width"));
-            double height = Double.parseDouble(currentJsonObj.getString("height"));
-            double depth = Double.parseDouble(currentJsonObj.getString("depth"));
+                double width = Double.parseDouble(currentJsonObj.getString("width"));
+                double height = Double.parseDouble(currentJsonObj.getString("height"));
+                double depth = Double.parseDouble(currentJsonObj.getString("depth"));
 
-            double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
-            double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
-            double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
+                double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
+                double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
+                double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
 
-         /*   int red;
-            int green;
-            int blue;
-            JsonArray color = currentJsonObj.getJsonArray("color");
-            for (JsonValue value : color) {
+                GamePose platformPose = new GamePose(poseX, poseY, poseZ, 0);
 
+                tempPlatforms[i] = new CuboidTerrain(new Cuboid(platformPose, width, height, depth, new Color(163, 52, 255)));
             }
-*/
-            GamePose temp = new GamePose(poseX, poseY, poseZ, 0);
-
-            //REPLACE WITH CONSTRUCTOR
-            tempPlatforms[i] = new CuboidTerrain(new Cuboid(temp, width, height, depth, new Color(163, 52, 255)));
         }
-        //tempPlatforms[0] = new CuboidTerrain(new Cuboid(new Point3d(0, 0, -15), 100, 10, 100, Color.PINK));
-        double portalX = Double.parseDouble(jsonObject.getString("portalPoseX"));
-        double portalY = Double.parseDouble(jsonObject.getString("portalPoseY"));
-        double portalZ = Double.parseDouble(jsonObject.getString("portalPoseZ"));
+
 
         double playerPoseX = Double.parseDouble(jsonObject.getString("playerPoseX"));
         double playerPoseY = Double.parseDouble(jsonObject.getString("playerPoseY"));
@@ -219,7 +210,6 @@ public class Level {
             double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
             double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
 
-            //REPLACE WITH CONSTRUCTOR
             fuel[i] = new BonfireFuel(new GamePose(poseX, poseY, poseZ, 0));
         }
 

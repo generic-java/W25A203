@@ -9,72 +9,86 @@
   "playerPoseZ": "50",
   "enemies": [
     {
-      "type": "drone",
-      "poseX": "0",
-      "poseY": "0",
-      "poseZ": "0"
+      "type": "pathEnemy",
+      "startX": "60",
+      "startY": "80",
+      "startZ": "53",
+      "endX": "100",
+      "endY": "80",
+      "endZ": "53"
     },
     {
-      "type": "pathEnemy",
-      "startX": "15",
-      "startY": "2",
-      "startZ": "0",
-      "endX": "4",
-      "endY": "5",
-      "endZ": "0"
+      "type": "spike",
+      "poseX": "-100",
+      "poseY": "240",
+      "poseZ": "110"
+    },
+    {
+      "type": "spike",
+      "poseX": "-95",
+      "poseY": "240",
+      "poseZ": "110"
+    },
+    {
+      "type": "spike",
+      "poseX": "-90",
+      "poseY": "240",
+      "poseZ": "110"
+    },
+    {
+      "type": "spike",
+      "poseX": "-85",
+      "poseY": "240",
+      "poseZ": "110"
     },
     {
       "type": "spike",
       "poseX": "-80",
-      "poseY": "300",
-      "poseZ": "120"
+      "poseY": "240",
+      "poseZ": "110"
+    },
+    {
+      "type": "spike",
+      "poseX": "-75",
+      "poseY": "240",
+      "poseZ": "110"
+    },
+    {
+      "type": "spike",
+      "poseX": "-70",
+      "poseY": "240",
+      "poseZ": "110"
+    },
+    {
+      "type": "spike",
+      "poseX": "-65",
+      "poseY": "240",
+      "poseZ": "110"
+    },
+    {
+      "type": "spike",
+      "poseX": "-60",
+      "poseY": "240",
+      "poseZ": "110"
     },
     {
       "type": "lava",
-      "poseX": "-80",
-      "poseY": "360",
-      "poseZ": "120",
-      "width": "50",
-      "height": "50",
-      "depth": "50"
-    }
-  ],
-  "platforms": [
-    {
-      "color": [
-        1,
-        2,
-        3
-      ],
-      "width": "100",
-      "height": "10",
-      "depth": "100",
       "poseX": "0",
-      "poseY": "0",
-      "poseZ": "-15"
-    },
-    {
-      "color": [
-        1,
-        2,
-        3
-      ],
-      "width": "100",
-      "height": "10",
-      "depth": "100",
-      "poseX": "120",
-      "poseY": "0",
-      "poseZ": "-15"
+      "poseY": "160",
+      "poseZ": "82.5",
+      "width": "50",
+      "height": "5",
+      "depth": "5"
     }
   ],
   "trampolines": [
     {
-      "width": "50",
-      "height": "50",
-      "depth": "50",
-      "poseX": "0",
-      "poseY": "-50",
-      "poseZ": "0"
+      "width": "10",
+      "height": "5",
+      "depth": "10",
+      "poseX": "-80",
+      "poseY": "320",
+      "poseZ": "112.5"
     }
   ],
   "grassBlocks": [
@@ -87,7 +101,7 @@
       "poseZ": "0"
     },
     {
-      "width": "50",
+      "width": "70",
       "height": "40",
       "depth": "50",
       "poseX": "80",
@@ -117,26 +131,64 @@
       "poseX": "-80",
       "poseY": "320",
       "poseZ": "90"
+    },
+    {
+      "width": "50",
+      "height": "40",
+      "depth": "50",
+      "poseX": "-80",
+      "poseY": "400",
+      "poseZ": "300"
     }
   ],
   "bonfireFuelPoses": [
     {
-      "poseX": "25",
-      "poseY": "25",
-      "poseZ": "-5"
+      "poseX": "-20",
+      "poseY": "20",
+      "poseZ": "25"
+    },
+    {
+      "poseX": "-15",
+      "poseY": "20",
+      "poseZ": "25"
+    },
+    {
+      "poseX": "-10",
+      "poseY": "20",
+      "poseZ": "25"
+    },
+    {
+      "poseX": "-5",
+      "poseY": "20",
+      "poseZ": "25"
+    },
+    {
+      "poseX": "0",
+      "poseY": "20",
+      "poseZ": "25"
+    },
+    {
+      "poseX": "5",
+      "poseY": "20",
+      "poseZ": "25"
+    },
+    {
+      "poseX": "10",
+      "poseY": "20",
+      "poseZ": "25"
+    },
+    {
+      "poseX": "15",
+      "poseY": "20",
+      "poseZ": "25"
     },
     {
       "poseX": "20",
       "poseY": "20",
-      "poseZ": "-5"
-    },
-    {
-      "poseX": "30",
-      "poseY": "30",
-      "poseZ": "-5"
+      "poseZ": "25"
     }
   ],
   "bonfireX": "-80",
-  "bonfireY": "320",
-  "bonfireZ": "-55"
+  "bonfireY": "400",
+  "bonfireZ": "350"
 }

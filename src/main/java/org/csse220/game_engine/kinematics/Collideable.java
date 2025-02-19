@@ -1,7 +1,7 @@
 package org.csse220.game_engine.kinematics;
 
 import org.csse220.game_engine.graphics.PlaceableObject;
-import org.csse220.game_engine.math_utils.GamePose;
+import org.csse220.game_engine.math.GamePose;
 
 import java.util.Set;
 
