@@ -30,8 +30,8 @@ public class PaperAirplaneManager implements Runnable {
         GamePose playerPose = Engine.getInstance().getPlayerPosition();
 
         for (int i = 0; i < numberOfDrones; i++) {
-            double randomX = (rand.nextDouble() - 0.5) * 100;
-            double randomY = rand.nextDouble() * 100;
+            double randomX = (rand.nextDouble() - 0.5) * 600;
+            double randomY = rand.nextDouble() * 100 + 200;
             GamePose spawnPose = new GamePose(randomX, randomY, 0, 0).rotateYaw(playerPose.yaw()).addTo(playerPose).setYaw(0);
             Engine.getInstance().addGameObject(new PaperAirplane(spawnPose));
         }

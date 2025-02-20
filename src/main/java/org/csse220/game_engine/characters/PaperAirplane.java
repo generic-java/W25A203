@@ -14,7 +14,7 @@ import java.awt.*;
 public class PaperAirplane extends Enemy {
     private static final double MOVE_KP = 0.0055;
     private static final int MAX_TRACKING_TIME_MILLIS = 5000;
-    private static final int MAX_DISPLAY_TIME_MILLIS = 15000;
+    private static final int MAX_DISPLAY_TIME_MILLIS = 10000;
     private static final GamePose DEATH_TARGET_POSE = new GamePose(0, 0, -100, 0);
     private final ElapsedTime timer;
 
@@ -57,7 +57,6 @@ public class PaperAirplane extends Enemy {
         } else if (timer.getElapsedTime() > MAX_DISPLAY_TIME_MILLIS) {
             Engine.getInstance().removeGameObject(this);
         }
-
         GamePose error = targetPose.relativeTo(getPose());
         double targetYaw = error.angle - Math.PI / 2;
         setPose(getPose().addTo(error.scale(MOVE_KP)).setYaw(targetYaw));

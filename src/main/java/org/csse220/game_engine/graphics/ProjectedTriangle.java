@@ -5,10 +5,10 @@ import org.csse220.game_engine.math.Vector2d;
 import java.awt.*;
 
 public class ProjectedTriangle {
-    private static final double MAX_DISTANCE = 500;
+    private static final double MAX_DISTANCE = 750;
     private static final double MAX_DISPLAY_CUTOFF_ANGLE = 0.0000000000015;
     private static final double MIN_DISPLAY_CUTOFF_ANGLE = 0.00000000001;
-    private static final double MAX_DISPLAY_CUTOFF_RATIO = 1.5;
+    private static final double MAX_DISPLAY_CUTOFF_RATIO = 1.3;
     private static final double MIN_DISPLAY_CUTOFF_RATIO = 0.2;
     private static final double RATIO_STRETCH = 0.5;
     private static final double ANGLE_STRETCH = 1;
@@ -35,7 +35,7 @@ public class ProjectedTriangle {
         Vector2d vector3 = new Vector2d(vertices[2].x() - vertices[1].x(), vertices[2].y() - vertices[1].y());
         double area = vector1.magnitude * vector2.magnitude * Math.sin(vector1.angleBetween(vector2)) / 2;
         double perimeter = vector1.magnitude + vector2.magnitude + vector3.magnitude;
-        shouldDisplay = area / perimeter > minRatio(area) && angle >= 0 * minAngle(area);
+        shouldDisplay = area / perimeter > 0 * minRatio(area) && angle >= 0 * minAngle(area);
         this.depthCalculator = depthCalculator;
     }
 

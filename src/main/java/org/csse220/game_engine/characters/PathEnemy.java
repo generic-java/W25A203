@@ -21,7 +21,6 @@ public class PathEnemy extends LethalEnemy {
 
     @Override
     public void update(double dt) {
-        System.out.println(velocity());
         if (!getPose().between(startPose, endPose)) {
             if (pose.distanceTo(startPose) <= pose.distanceTo(endPose)) {
                 setPose(startPose);

@@ -17,6 +17,8 @@ import java.io.StringReader;
 import java.nio.file.FileSystems;
 import java.util.List;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Level {
@@ -42,9 +44,10 @@ public class Level {
     public static ArrayList<Level> loadAll() {
         ArrayList<Level> levels = new ArrayList<>();
         File dir = new File(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/main/java/org/csse220/levels/");
+        List<File> files = getFiles(dir);
 
         try {
-            for (File file : Objects.requireNonNull(dir.listFiles())) {
+            for (File file : files) {
                 if (file.getName().contains(".json")) {
                     try {
                         levels.add(loadLevel(file));
@@ -60,14 +63,27 @@ public class Level {
             System.out.println(e);
             throw new RuntimeException(e);
         }
-        System.out.println("Loaded " + levels.size() + " levels");
         return levels;
     }
 
-    private static String getLevelName() {
-        System.out.println("Enter the file name of the level:\n");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+    private static List<File> getFiles(File dir) {
+        List<File> files = new ArrayList<>(Arrays.asList(Objects.requireNonNull(dir.listFiles())));
+        files.removeIf((file) -> !file.getName().contains(".json"));
+        files.sort((first, second) -> {
+            int firstLevelNumber = 1;
+            int secondLevelNumber = 0;
+            Pattern pattern = Pattern.compile(".*_([0-9])\\.json", Pattern.CASE_INSENSITIVE);
+            Matcher firstMatcher = pattern.matcher(first.getName());
+            if (firstMatcher.find()) {
+                firstLevelNumber = Integer.parseInt(firstMatcher.group(1));
+            }
+            Matcher secondMatcher = pattern.matcher(second.getName());
+            if (secondMatcher.find()) {
+                secondLevelNumber = Integer.parseInt(secondMatcher.group(1));
+            }
+            return firstLevelNumber - secondLevelNumber;
+        });
+        return files;
     }
 
     public static Level loadLevel(File file) throws IOException, MissingDataException {
@@ -80,10 +96,6 @@ public class Level {
         JsonReader reader = Json.createReader(new StringReader(jsonString.toString()));
 
         JsonObject jsonObject = reader.readObject();
-        if (!jsonObject.containsKey("enemies") || !jsonObject.containsKey("name")) {
-            throw new MissingDataException();
-        }
-
 
         double bonfireX = Double.parseDouble(jsonObject.getString("bonfireX"));
         double bonfireY = Double.parseDouble(jsonObject.getString("bonfireY"));
@@ -191,7 +203,7 @@ public class Level {
 
                 GamePose platformPose = new GamePose(poseX, poseY, poseZ, 0);
 
-                tempPlatforms[i] = new CuboidTerrain(new Cuboid(platformPose, width, height, depth, new Color(163, 52, 255)));
+                tempPlatforms[i] = new CuboidTerrain(new Cuboid(platformPose, width, height, depth, new Color(90, 250, 90)));
             }
         }
 

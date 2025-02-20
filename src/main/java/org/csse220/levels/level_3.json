@@ -1,164 +1,216 @@
 {
-  "numObjects": 10,
-  "name": "Level1",
-  "portalPoseX": "1",
-  "portalPoseY": "2",
-  "portalPoseZ": "3",
   "playerPoseX": "0",
   "playerPoseY": "0",
-  "playerPoseZ": "50",
+  "playerPoseZ": "350",
   "enemies": [
     {
-      "type": "drone",
-      "poseX": "0",
-      "poseY": "0",
-      "poseZ": "0"
-    },
-    {
-      "type": "pathEnemy",
-      "startX": "15",
-      "startY": "2",
-      "startZ": "0",
-      "endX": "4",
-      "endY": "5",
-      "endZ": "0"
-    }
-  ],
-  "platforms": [
-    {
-      "color": [
-        1,
-        2,
-        3
-      ],
-      "width": "100",
-      "height": "10",
-      "depth": "100",
-      "poseX": "0",
-      "poseY": "0",
-      "poseZ": "-15"
-    },
-    {
-      "color": [
-        1,
-        2,
-        3
-      ],
-      "width": "100",
-      "height": "10",
-      "depth": "100",
-      "poseX": "120",
-      "poseY": "0",
-      "poseZ": "-15"
-    }
-  ],
-  "grassBlocks": [
-    {
-      "width": "50",
-      "height": "40",
-      "depth": "50",
-      "poseX": "0",
-      "poseY": "0",
-      "poseZ": "0"
-    },
-    {
-      "width": "50",
-      "height": "40",
-      "depth": "50",
-      "poseX": "80",
-      "poseY": "80",
-      "poseZ": "30"
-    },
-    {
-      "width": "50",
-      "height": "40",
-      "depth": "50",
-      "poseX": "0",
-      "poseY": "160",
-      "poseZ": "60"
-    },
-    {
-      "width": "50",
-      "height": "40",
-      "depth": "50",
-      "poseX": "-80",
-      "poseY": "240",
-      "poseZ": "90"
-    },
-    {
-      "width": "50",
-      "height": "40",
-      "depth": "50",
-      "poseX": "-80",
-      "poseY": "320",
-      "poseZ": "90"
-    }
-  ],
-  "bonfireFuelPoses": [
-    {
-      "poseX": "25",
-      "poseY": "25",
-      "poseZ": "-5"
-    },
-    {
+      "type": "spike",
       "poseX": "20",
-      "poseY": "20",
-      "poseZ": "-5"
+      "poseY": "0",
+      "poseZ": "320"
     },
     {
-      "poseX": "30",
-      "poseY": "30",
-      "poseZ": "-5"
-    }
-  ],
-  "trampolines": [
-    {
-      "width": "40",
-      "height": "40",
-      "depth": "40",
-      "poseX": "140",
-      "poseY": "30",
-      "poseZ": "30"
-    },
-    {
-      "width": "50",
-      "height": "4",
-      "depth": "60",
-      "poseX": "180",
-      "poseY": "70",
-      "poseZ": "50"
-    }
-  ],
-  "bonfireFuelPoses": [
-    {
-      "poseX": "25",
-      "poseY": "25",
-      "poseZ": "-5"
-    },
-    {
+      "type": "spike",
       "poseX": "20",
-      "poseY": "20",
-      "poseZ": "-5"
-    },
-    {
-      "poseX": "30",
-      "poseY": "30",
-      "poseZ": "-5"
+      "poseY": "0",
+      "poseZ": "320"
     },
     {
       "type": "spike",
       "poseX": "50",
-      "poseY": "50",
-      "poseZ": "50"
+      "poseY": "10",
+      "poseZ": "320"
+    },
+    {
+      "type": "spike",
+      "poseX": "200",
+      "poseY": "8",
+      "poseZ": "320"
+    },
+    {
+      "type": "spike",
+      "poseX": "180",
+      "poseY": "-5",
+      "poseZ": "320"
+    },
+    {
+      "type": "spike",
+      "poseX": "220",
+      "poseY": "0",
+      "poseZ": "320"
+    },
+    {
+      "type": "spike",
+      "poseX": "350",
+      "poseY": "15",
+      "poseZ": "320"
+    },
+    {
+      "type": "spike",
+      "poseX": "515",
+      "poseY": "-20",
+      "poseZ": "320"
     },
     {
       "type": "lava",
-      "poseX": "80",
-      "poseY": "80",
-      "poseZ": "40",
-      "width": "5",
+      "width": "35",
       "height": "5",
-      "depth": "5"
+      "depth": "35",
+      "poseX": "300",
+      "poseY": "0",
+      "poseZ": "322.5"
+    }
+  ],
+  "platforms": [
+    {
+      "width": "50",
+      "height": "240",
+      "depth": "50",
+      "poseX": "0",
+      "poseY": "0",
+      "poseZ": "200"
+    },
+    {
+      "width": "60",
+      "height": "40",
+      "depth": "50",
+      "poseX": "55",
+      "poseY": "0",
+      "poseZ": "300"
+    },
+    {
+      "width": "50",
+      "height": "40",
+      "depth": "50",
+      "poseX": "110",
+      "poseY": "0",
+      "poseZ": "260"
+    },
+    {
+      "width": "60",
+      "height": "40",
+      "depth": "50",
+      "poseX": "55",
+      "poseY": "0",
+      "poseZ": "220"
+    },
+    {
+      "width": "50",
+      "height": "120",
+      "depth": "50",
+      "poseX": "110",
+      "poseY": "0",
+      "poseZ": "140"
+    },
+    {
+      "width": "50",
+      "height": "240",
+      "depth": "50",
+      "poseX": "200",
+      "poseY": "0",
+      "poseZ": "200"
+    },
+    {
+      "width": "50",
+      "height": "40",
+      "depth": "50",
+      "poseX": "250",
+      "poseY": "0",
+      "poseZ": "200"
+    },
+    {
+      "width": "50",
+      "height": "240",
+      "depth": "50",
+      "poseX": "300",
+      "poseY": "0",
+      "poseZ": "200"
+    },
+    {
+      "width": "50",
+      "height": "240",
+      "depth": "50",
+      "poseX": "400",
+      "poseY": "0",
+      "poseZ": "200"
+    },
+    {
+      "width": "150",
+      "height": "40",
+      "depth": "50",
+      "poseX": "550",
+      "poseY": "0",
+      "poseZ": "300"
+    },
+    {
+      "width": "50",
+      "height": "200",
+      "depth": "50",
+      "poseX": "550",
+      "poseY": "0",
+      "poseZ": "180"
+    }
+  ],
+  "grassBlocks": [
+    {
+      "width": "700",
+      "height": "40",
+      "depth": "50",
+      "poseX": "500",
+      "poseY": "-500",
+      "poseZ": "0"
+    }
+  ],
+  "bonfireFuelPoses": [
+  ],
+  "trampolines": [
+    {
+      "width": "50",
+      "height": "15",
+      "depth": "50",
+      "poseX": "700",
+      "poseY": "0",
+      "poseZ": "300"
+    },
+    {
+      "width": "50",
+      "height": "15",
+      "depth": "50",
+      "poseX": "775",
+      "poseY": "-150",
+      "poseZ": "250"
+    },
+    {
+      "width": "50",
+      "height": "15",
+      "depth": "50",
+      "poseX": "850",
+      "poseY": "-300",
+      "poseZ": "200"
+    },
+    {
+      "width": "50",
+      "height": "15",
+      "depth": "50",
+      "poseX": "925",
+      "poseY": "-450",
+      "poseZ": "150"
+    },
+    {
+      "width": "50",
+      "height": "15",
+      "depth": "50",
+      "poseX": "700",
+      "poseY": "0",
+      "poseZ": "300"
+    },
+    {
+      "width": "50",
+      "height": "15",
+      "depth": "50",
+      "poseX": "700",
+      "poseY": "0",
+      "poseZ": "300"
     }
   ],
   "bonfireX": "40",

@@ -1,6 +1,9 @@
 package org.csse220.game_engine.kinematics;
 
-import org.csse220.game_engine.*;
+import org.csse220.game_engine.ElapsedTime;
+import org.csse220.game_engine.GameKeyListener;
+import org.csse220.game_engine.GameObject;
+import org.csse220.game_engine.KillableThread;
 import org.csse220.game_engine.characters.GamePlayer;
 import org.csse220.game_engine.graphics.Camera;
 import org.csse220.game_engine.graphics.Drawable;
@@ -44,6 +47,7 @@ public class Kinematics extends KillableThread {
             MOVE_Z,
             MOVE_YAW,
     };
+    private boolean spectateMode;
 
     public Kinematics(GamePlayer player, GameKeyListener gameKeyListener) {
         collideables = ConcurrentHashMap.newKeySet();
@@ -126,6 +130,7 @@ public class Kinematics extends KillableThread {
     private void setPlayerVelocity(double dt) {
         Vector2d velocityVector = new Vector2d();
         double yawVel = 0;
+        double zVel = 0;
         Camera camera = Camera.getInstance();
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_UP)) {
             camera.setPitch(camera.getPose().pitch() + TURN_VEL * dt);
@@ -147,16 +152,19 @@ public class Kinematics extends KillableThread {
         } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_S)) {
             velocityVector = velocityVector.translate(0, -1);
         }
-        if (gameKeyListener.isKeyPressed(KeyEvent.VK_U)) {
-            Engine.getInstance().setLevel(0);
-        } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_I)) {
-            Engine.getInstance().setLevel(1);
-        }
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
             player.jump();
         }
         if (gameKeyListener.isKeyPressed(KeyEvent.VK_F)) {
             player.doPower();
+        }
+        if (spectateMode) {
+            if (gameKeyListener.isKeyPressed(KeyEvent.VK_Q)) {
+                zVel = -MOVE_VEL;
+            } else if (gameKeyListener.isKeyPressed(KeyEvent.VK_E)) {
+                zVel = MOVE_VEL;
+            }
+            player.setZVel(zVel);
         }
         velocityVector = velocityVector.normalize().multiply(MOVE_VEL).rotate(camera.getPose().yaw());
         player.setXVel(velocityVector.x);
@@ -207,5 +215,9 @@ public class Kinematics extends KillableThread {
 
     public void addEventManager(Runnable runnable) {
         eventManagers.add(runnable);
+    }
+
+    public void setSpectateMode(boolean on) {
+        spectateMode = on;
     }
 }

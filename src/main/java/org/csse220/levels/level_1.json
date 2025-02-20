@@ -1,9 +1,4 @@
 {
-  "numObjects": 10,
-  "name": "Level1",
-  "portalPoseX": "1",
-  "portalPoseY": "2",
-  "portalPoseZ": "3",
   "playerPoseX": "0",
   "playerPoseY": "-5",
   "playerPoseZ": "50",
@@ -143,52 +138,52 @@
   ],
   "bonfireFuelPoses": [
     {
-      "poseX": "-20",
-      "poseY": "20",
-      "poseZ": "25"
+      "poseX": "60",
+      "poseY": "80",
+      "poseZ": "55"
     },
     {
-      "poseX": "-15",
-      "poseY": "20",
-      "poseZ": "25"
+      "poseX": "65",
+      "poseY": "80",
+      "poseZ": "55"
     },
     {
-      "poseX": "-10",
-      "poseY": "20",
-      "poseZ": "25"
+      "poseX": "70",
+      "poseY": "80",
+      "poseZ": "55"
     },
     {
-      "poseX": "-5",
-      "poseY": "20",
-      "poseZ": "25"
+      "poseX": "75",
+      "poseY": "80",
+      "poseZ": "55"
     },
     {
-      "poseX": "0",
-      "poseY": "20",
-      "poseZ": "25"
+      "poseX": "80",
+      "poseY": "80",
+      "poseZ": "55"
     },
     {
-      "poseX": "5",
-      "poseY": "20",
-      "poseZ": "25"
+      "poseX": "85",
+      "poseY": "80",
+      "poseZ": "55"
     },
     {
-      "poseX": "10",
-      "poseY": "20",
-      "poseZ": "25"
+      "poseX": "90",
+      "poseY": "80",
+      "poseZ": "55"
     },
     {
-      "poseX": "15",
-      "poseY": "20",
-      "poseZ": "25"
+      "poseX": "95",
+      "poseY": "80",
+      "poseZ": "55"
     },
     {
-      "poseX": "20",
-      "poseY": "20",
-      "poseZ": "25"
+      "poseX": "100",
+      "poseY": "80",
+      "poseZ": "55"
     }
   ],
   "bonfireX": "-80",
   "bonfireY": "400",
-  "bonfireZ": "350"
+  "bonfireZ": "325"
 }

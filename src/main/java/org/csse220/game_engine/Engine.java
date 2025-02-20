@@ -43,7 +43,16 @@ public class Engine {
             player.reset();
             player.setPose(levels.get(levelNumber).getPlayerStartPose());
         }
+    }
 
+    public void upOneLevel() {
+        setLevel(levelNumber + 1);
+    }
+
+    public void downOneLevel() {
+        if (levelNumber > 0) {
+            setLevel(levelNumber - 1);
+        }
     }
 
     public void init(GamePlayer player, JFrame window) {
@@ -87,13 +96,6 @@ public class Engine {
     public void resetLevel() {
 
         setLevel(this.levelNumber);
-    }
-
-    public void incrementLevel() {
-        if (levelNumber != levels.size()) {
-            levelNumber++;
-            setLevel(levelNumber);
-        }
     }
 
     public void render() {
@@ -146,5 +148,9 @@ public class Engine {
 
     public void setBackground(Color color) {
         kinematics.setBackground(color);
+    }
+
+    public void setSpectateMode(boolean on) {
+        kinematics.setSpectateMode(on);
     }
 }

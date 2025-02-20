@@ -11,14 +11,14 @@ import org.csse220.game_engine.math.GamePose;
 
 public class Player extends GamePlayer {
     private int fuelCount;
-    private static final int MAX_HEALTH = 3;
+    private static final int MAX_HEALTH = 5;
     private int health = MAX_HEALTH;
     private static final double MIN_Z = -500.0;
     private static final double RANDOM_WATER = 0.3;
     private static final GamePose WATER_LAUNCH_VEL = new GamePose(0, 0.05, 0.25);
 
     public Player() {
-        super(new GamePose(), new Hitbox(new GamePose(), 4, 15, 4), new Elephant(new GamePose()));
+        super(new GamePose(), new Hitbox(new GamePose(0, 0, 5, 0), 4, 20, 4), new Elephant(new GamePose()));
         setGravity(0.0006);
         setPose(new GamePose(0, 0, 15, 0));
         getDrawable().show();
@@ -73,7 +73,6 @@ public class Player extends GamePlayer {
     @Override
     public void pickUpFuel() {
         fuelCount++;
-        System.out.println(fuelCount);
     }
 
     public int getHealth() {
@@ -99,14 +98,14 @@ public class Player extends GamePlayer {
     public void onHitByBonfire() {
 
         if (this.fuelCount == Engine.getInstance().getCurrentLevel().getNumBonfireFuels()) {
-            Engine.getInstance().incrementLevel();
+            Engine.getInstance().upOneLevel();
         }
     }
 
     @Override
     public void doPower() {
         if (Math.random() > RANDOM_WATER)
-            Engine.getInstance().addGameObject(new Water(getPose().translate(new GamePose(0, 5, 2).rotateYaw(pose.yaw())).setYaw(0), WATER_LAUNCH_VEL.rotateYaw(pose.yaw())));
+            Engine.getInstance().addGameObject(new Water(getPose().translate(new GamePose(0, 5, 2).rotateYaw(pose.yaw())).setYaw(0), WATER_LAUNCH_VEL.rotateYaw(pose.yaw()).addTo(velocity())));
     }
 
     @Override

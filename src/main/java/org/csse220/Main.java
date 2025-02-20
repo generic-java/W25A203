@@ -58,6 +58,27 @@ public class Main {
         });
         window.requestFocus();
 
+        window.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_U) {
+                    Engine.getInstance().downOneLevel();
+                } else if (e.getKeyCode() == KeyEvent.VK_I) {
+                    Engine.getInstance().upOneLevel();
+                }
+            }
+        });
+
         Player player = new Player();
         Engine engine = Engine.getInstance();
         engine.init(player, window);
