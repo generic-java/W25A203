@@ -1,0 +1,418 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "org.csse220.Main",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1070167022 { 
+   	label=csse220
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Main374993180[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Main</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+<TR><TD ALIGN="LEFT" >+ start()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+subgraph cluster_1094030033 { 
+   	label=game_engine
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Bonfire1930825200[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Bonfire</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onSolidCollision(other: GameObject, moveDirection: GamePose)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BonfireFuel1930825200[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BonfireFuel</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   isHidden: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ blocksMovement(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteSelf()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hitByPlayer()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ reset()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CuboidTerrain1930825200[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CuboidTerrain</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Enemy795216083[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Enemy</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Engine2106046683[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Engine</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   kinematics: Kinematics [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   levelNumber: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   levels: ArrayList&lt;Level&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   player: GamePlayer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   soundPlayer: SoundPlayer [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addEventManager(runnable: Runnable)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addGameObject(gameObject: GameObject)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addLevel(level: Level)</TD></TR>
+<TR><TD ALIGN="LEFT" >- addLevelData(level: Level)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ downOneLevel()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ init(player: GamePlayer, window: JFrame)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ keyPressed(keycode: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- kill()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeGameObject(gameObject: GameObject)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ render()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ resetLevel()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startKinematics()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ upOneLevel()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GameObject2106046683[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)GameObject</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   collideable: Collideable [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   drawable: Drawable [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   relativeCollideablePose: GamePose [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   relativeDrawablePose: GamePose [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   yaw: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ blocksMovement(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hitByDrone()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hitByLethalEnemy()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hitByPlayer()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hitByTrampoline()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ hitByWater()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ incrementYaw(increment: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ move(moveDirection: GamePose, dt: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onHitByBonfire()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onSoftCollision(other: GameObject, moveDirection: GamePose)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onSolidCollision(other: GameObject, moveDirection: GamePose)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ pickUpFuel()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ reset()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ yaw(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GamePlayer795216083[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)GamePlayer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ doPower()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GamePose1300584399[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)GamePose</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   yaw: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addTo(pose: GamePose): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ between(first: GamePose, second: GamePose): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ceil(precision: int): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dot(other: GamePose): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ floor(precision: int): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ normalize(): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ relativeTo(pose: GamePose): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ rotateYaw(yaw: double): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ round(precisionVector: GamePose): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ round(precision: int): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ scale(scalar: double): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setYaw(yaw: double): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ toPoint3d(): Point3d</TD></TR>
+<TR><TD ALIGN="LEFT" >+ translate(vector: Vector3d): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ translate(x: double, y: double, z: double): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ translateX(x: double): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ translateY(y: double): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ translateZ(z: double): GamePose</TD></TR>
+<TR><TD ALIGN="LEFT" >+ yaw(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GrassBlock1930825200[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)GrassBlock</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+KillableThread2106046683[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)KillableThread</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   active: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># activate()</TD></TR>
+<TR><TD ALIGN="LEFT" ># kill()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Kinematics286411639[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Kinematics</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   CAMERA_OFFSET: GamePose [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   backgroundColor: Color [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   collideables: Set&lt;GameObject&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   drawables: Set&lt;Drawable&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   elementMoveSteps: GamePose[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   eventManagers: Set&lt;Runnable&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fpsTimer: ElapsedTime [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   frames: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gameKeyListener: GameKeyListener [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gameObjects: Set&lt;GameObject&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   player: GamePlayer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   spectateMode: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   timer: ElapsedTime [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addEventManager(runnable: Runnable)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addGameObject(gameObject: GameObject)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ clearAllGameObjects()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ keyPressed(keycode: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeGameObject(gameObject: GameObject)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ render(dt: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ start()</TD></TR>
+<TR><TD ALIGN="LEFT" >- updateCameraPosition(dt: double)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SoundPlayer2106046683[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SoundPlayer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   backgroundSong: MiniPlayer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   boingSound: MiniPlayer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   deathSound: MiniPlayer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gainFuelSound: MiniPlayer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   loseHealthSound: AudioInputStream [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   winSound: AudioInputStream [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ deathSound()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ gainFuelSound()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startBackground()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ trampolineSound()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Trampoline1930825200[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Trampoline</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ blocksMovement(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onSoftCollision(other: GameObject, moveDirection: GamePose)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_369581935 { 
+   	label=levels
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Level604677049[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Level</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   bonfire: Bonfire [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   bonfireFuels: ArrayList&lt;BonfireFuel&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemies: ArrayList&lt;Enemy&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   grassBlocks: ArrayList&lt;GrassBlock&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   platforms: ArrayList&lt;CuboidTerrain&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   playerStartPose: GamePose [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   trampolines: ArrayList&lt;Trampoline&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- getFiles(dir: File): List&lt;File&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ loadAll(): ArrayList&lt;Level&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ loadLevel(file: File): Level</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+Engine2106046683 -> GameObject2106046683[label="addLevelData() -> reset()"];
+Engine2106046683 -> GamePlayer795216083[label="player
+[0..1]"];
+Engine2106046683 -> KillableThread2106046683[label="kill() -> kill()"];
+Engine2106046683 -> Kinematics286411639[label="kinematics
+[0..1]"];
+Engine2106046683 -> Level604677049[label="levels
+[0..*]"];
+Engine2106046683 -> SoundPlayer2106046683[label="soundPlayer
+[0..1]"];
+Level604677049 -> Bonfire1930825200[label="bonfire
+[0..1]"];
+Level604677049 -> BonfireFuel1930825200[label="bonfireFuels
+[0..*]"];
+Level604677049 -> CuboidTerrain1930825200[label="platforms
+[0..*]"];
+Level604677049 -> Enemy795216083[label="enemies
+[0..*]"];
+Level604677049 -> GamePose1300584399[label="playerStartPose
+[0..1]"];
+Level604677049 -> GrassBlock1930825200[label="grassBlocks
+[0..*]"];
+Level604677049 -> Trampoline1930825200[label="trampolines
+[0..*]"];
+Main374993180 -> Level604677049[label="start() -> loadAll()"];
+    
+}
+@enduml
