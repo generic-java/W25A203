@@ -17,7 +17,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * The Level class loads all the level data from a JSON file using a JSON parser and catches Missing data exceptions and IOExceptions
+ */
 public class Level {
 
     private final ArrayList<Enemy> enemies = new ArrayList<>();
@@ -38,6 +40,11 @@ public class Level {
         this.grassBlocks.addAll(grassBlocks);
     }
 
+    /**
+     * This method loads all the level files and data into an array
+     *
+     * @return
+     */
     public static ArrayList<Level> loadAll() {
         ArrayList<Level> levels = new ArrayList<>();
         File dir = new File(FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/main/java/org/csse220/levels/");
@@ -54,6 +61,12 @@ public class Level {
         return levels;
     }
 
+    /**
+     * gets the files from a directory
+     *
+     * @param dir
+     * @return
+     */
     private static List<File> getFiles(File dir) {
         List<File> files = new ArrayList<>(Arrays.asList(Objects.requireNonNull(dir.listFiles())));
         files.removeIf((file) -> !file.getName().contains(".json"));
@@ -74,6 +87,14 @@ public class Level {
         return files;
     }
 
+    /**
+     * this method loads all the data from a JSON file and constructs all of our objects i.e. enemies, grassblocks, etc.
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     * @throws MissingDataException
+     */
     public static Level loadLevel(File file) throws IOException, MissingDataException {
         try {
             Scanner sc = new Scanner(new FileReader(file));
