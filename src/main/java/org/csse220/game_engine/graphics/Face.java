@@ -174,8 +174,6 @@ public class Face extends Drawable {
         return vector1.cross(vector2);
     }
 
-    private static final double MIN_ANGLE = Math.toRadians(0.5);
-
     private double visibleAngle() {
         double firstAngle = currentNormalVector().angleBetween(new Vector3d(0, 0, 1));
         firstAngle = firstAngle > Math.PI / 2 ? Math.PI - firstAngle : firstAngle;
