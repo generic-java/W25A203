@@ -6,6 +6,9 @@ import org.csse220.game_engine.math.Vector3d;
 
 import java.awt.*;
 
+/**
+ * This class contains a CompoundDrawable so that the elephant shape can be easily re-used.
+ */
 public class Elephant extends Drawable {
     private final Drawable drawable;
 

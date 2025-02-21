@@ -7,6 +7,9 @@ import org.csse220.game_engine.math.GamePose;
 
 import java.awt.*;
 
+/**
+ * This describes a spike with the desired position.  If the player hits it, he dies.
+ */
 public class Spike extends LethalEnemy {
     public Spike(GamePose pose) {
         super(pose,

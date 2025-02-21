@@ -10,6 +10,9 @@ import org.csse220.game_engine.math.GamePose;
 
 import java.awt.*;
 
+/**
+ * This class describes bonfire fuel pieces that can get picked up by the player.
+ */
 public class BonfireFuel extends GameObject {
 
     private boolean isHidden = false;

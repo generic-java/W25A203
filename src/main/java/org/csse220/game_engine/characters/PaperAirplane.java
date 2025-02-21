@@ -11,6 +11,9 @@ import org.csse220.game_engine.math.GamePose;
 
 import java.awt.*;
 
+/**
+ * Whoosh.  This class describes the paper airplane that tracks the player.  It uses a proportional controller for tracking.
+ */
 public class PaperAirplane extends Enemy {
     private static final double MOVE_KP = 0.0055;
     private static final int MAX_TRACKING_TIME_MILLIS = 5000;

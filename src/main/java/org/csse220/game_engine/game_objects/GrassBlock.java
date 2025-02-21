@@ -11,6 +11,9 @@ import java.awt.*;
 public class GrassBlock extends GameObject {
     public static final double TOP_PERCENT = 0.2;
 
+    /**
+     * A simple class consisting of a drawable that looks like a grass block and a hitbox matching the dimensions of that drawable.
+     */
     public GrassBlock(GamePose pose, double width, double height, double depth) {
         super(
                 pose,

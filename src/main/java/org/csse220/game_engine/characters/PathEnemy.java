@@ -3,6 +3,9 @@ package org.csse220.game_engine.characters;
 import org.csse220.game_engine.kinematics.Hitbox;
 import org.csse220.game_engine.math.GamePose;
 
+/**
+ * This describes enemy elephants that move forever between two provided GamePoses at a set speed.  It kills the player upon contact.
+ */
 public class PathEnemy extends LethalEnemy {
     private static final double SPEED = 0.025;
     private final GamePose startPose;

@@ -5,6 +5,9 @@ import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.math.GamePose;
 
+/**
+ * Anything that extends this class will kill the player upon contact.
+ */
 public abstract class LethalEnemy extends Enemy {
     public LethalEnemy(GamePose pose, Collideable collideable, Drawable drawable) {
         super(pose, collideable, drawable);

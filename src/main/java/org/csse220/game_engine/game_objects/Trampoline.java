@@ -7,6 +7,9 @@ import org.csse220.game_engine.math.GamePose;
 
 import java.awt.*;
 
+/**
+ * A purple block that makes the player bounce upon contact.
+ */
 public class Trampoline extends GameObject {
     public Trampoline(GamePose pose, double width, double height, double depth) {
         super(

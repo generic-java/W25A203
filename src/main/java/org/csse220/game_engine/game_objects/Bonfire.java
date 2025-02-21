@@ -9,6 +9,9 @@ import org.csse220.game_engine.math.GamePose;
 
 import java.awt.*;
 
+/**
+ * This bonfire class manages both the drawing of the bonfire and what happens when the player comes in contact with it.
+ */
 public class Bonfire extends GameObject {
     public Bonfire(GamePose pose) {
 

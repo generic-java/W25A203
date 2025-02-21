@@ -8,6 +8,9 @@ import org.csse220.game_engine.math.GamePose;
 
 import java.awt.*;
 
+/**
+ * A particle of water that the player elephant shoots out of its trunk.
+ */
 public class Water extends GameObject {
     private static final double MIN_Z = -100;
 

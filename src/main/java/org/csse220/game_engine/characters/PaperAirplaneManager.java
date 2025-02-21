@@ -7,6 +7,9 @@ import org.csse220.game_engine.math.GamePose;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This class extends Runnable and is passed to the Engine singleton, which calls its run method every tick.  It manages the spawning of paper airplanes.
+ */
 public class PaperAirplaneManager implements Runnable {
     private static final int MAX_AIRPLANES = 3; // Maximum number of drones to spawn
     private final ArrayList<PaperAirplane> paperAirplanes = new ArrayList<>();

@@ -3,6 +3,9 @@ package org.csse220.game_engine.graphics;
 import org.csse220.game_engine.math.CameraPose;
 import org.csse220.game_engine.math.GamePose;
 
+/**
+ * A singleton that describes the rendering camera.
+ */
 public class Camera {
     private static Camera instance = null;
 
