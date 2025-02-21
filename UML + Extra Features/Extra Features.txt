@@ -1,0 +1,7 @@
+EXTRA FEATURES:
+
+1. The game is 3D
+
+2. Elephant shoots water vertically from trunk
+
+3. Used JSON files to load levels instead of txt files
