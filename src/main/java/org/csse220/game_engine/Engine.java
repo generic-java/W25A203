@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * A singleton that manages all game objects, sound, and drawables.  It handles the main game loop.
+ */
 public class Engine {
     private static Engine instance = null;
 
@@ -22,6 +25,7 @@ public class Engine {
 
     private Engine() {
         soundPlayer = new SoundPlayer();
+        soundPlayer.startBackground();
         levels = new ArrayList<>();
     }
 

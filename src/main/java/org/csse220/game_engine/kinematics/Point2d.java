@@ -1,5 +1,11 @@
 package org.csse220.game_engine.kinematics;
 
+/**
+ * A utility class.
+ *
+ * @param x
+ * @param y
+ */
 public record Point2d(double x, double y) {
 
     public Point2d rotateAbout(Point2d center, double theta) {

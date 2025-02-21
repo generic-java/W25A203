@@ -19,6 +19,9 @@ import java.awt.event.KeyEvent;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * This class handles the movement and collisions of all GameObjects.  It also renders everything after each tick.
+ */
 public class Kinematics extends KillableThread {
     private final static double MOVE_VEL = 0.075;
     private final static double TURN_VEL = 0.003;

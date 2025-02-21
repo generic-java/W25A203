@@ -4,6 +4,9 @@ import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.math.GamePose;
 
+/**
+ * The biggest bestest class of them all.  Every object that is drawn or can collide with something else is a GameObject.  GameObjects have position, velocity, one optional hitbox and one optional drawable.
+ */
 public class GameObject extends MovingObject {
     private final Collideable collideable;
     private final Drawable drawable;

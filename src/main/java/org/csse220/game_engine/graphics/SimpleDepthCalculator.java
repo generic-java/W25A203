@@ -1,5 +1,8 @@
 package org.csse220.game_engine.graphics;
 
+/**
+ * Uses basic depth interpolation math to find the depth of a pixel that has been projected onto the screen.
+ */
 public class SimpleDepthCalculator implements DepthCalculator {
     private final double c1;
     private final double c2;

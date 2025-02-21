@@ -6,7 +6,7 @@ import org.csse220.game_engine.math.Vector3d;
 import java.awt.*;
 
 /**
- * Something that is 3D and can be drawn.
+ * Something that is 3D and can be drawn when the camera position is provided.
  */
 public abstract class Drawable extends PlaceableObject {
     protected final Color color;

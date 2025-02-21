@@ -2,6 +2,9 @@ package org.csse220.game_engine.math;
 
 import org.csse220.game_engine.graphics.Point3d;
 
+/**
+ * An immutable class that describes a 3D vector.
+ */
 public class Vector3d extends Vector2d {
     private static double cosPitch;
     private static double sinPitch;

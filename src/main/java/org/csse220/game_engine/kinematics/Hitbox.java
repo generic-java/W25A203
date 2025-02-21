@@ -5,6 +5,9 @@ import org.csse220.game_engine.math.GamePose;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A cube.  One might even say it's a box.  It hits other boxes.  Maybe call it a hitbox?
+ */
 public class Hitbox extends Collideable {
     private final double width;
     private final double height;

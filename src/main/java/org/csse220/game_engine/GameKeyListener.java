@@ -4,6 +4,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashSet;
 
+/**
+ * A key listener that listens.  Sometimes key presses are very quiet and hard to hear.
+ */
 public class GameKeyListener implements KeyListener {
     private final HashSet<Integer> keysPressed = new HashSet<>();
 

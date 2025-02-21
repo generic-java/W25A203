@@ -1,5 +1,8 @@
 package org.csse220.game_engine;
 
+/**
+ * A thread that is alive, until it is dead.
+ */
 public abstract class KillableThread extends Thread {
     private boolean active;
 

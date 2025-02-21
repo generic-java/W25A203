@@ -1,5 +1,8 @@
 package org.csse220.game_engine;
 
+/**
+ * A simple class that tracks how much time has passed.
+ */
 public class ElapsedTime {
     private double timestamp;
 

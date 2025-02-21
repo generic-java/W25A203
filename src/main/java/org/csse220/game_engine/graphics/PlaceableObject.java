@@ -2,6 +2,9 @@ package org.csse220.game_engine.graphics;
 
 import org.csse220.game_engine.math.GamePose;
 
+/**
+ * Every GameObject extends this.  Placeable objects have a position.
+ */
 public class PlaceableObject {
     protected GamePose pose;
 

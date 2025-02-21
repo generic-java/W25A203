@@ -4,6 +4,9 @@ import org.csse220.game_engine.math.CameraPose;
 import org.csse220.game_engine.math.GamePose;
 import org.csse220.game_engine.math.Vector3d;
 
+/**
+ * A Vector3d that can be projected from 3D to 2D.
+ */
 public class Point3d extends Vector3d {
     private static double FOV;
     private static double FOV_CONSTANT;

@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A Drawable that contains multiple sub-drawables.  You can use this class to combine shapes.
+ */
 public class CompositeDrawable extends Drawable {
     private final Map<Drawable, GamePose> drawables = new HashMap<>();
 

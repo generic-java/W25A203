@@ -6,6 +6,9 @@ import org.csse220.game_engine.math.Vector3d;
 
 import java.awt.*;
 
+/**
+ * I hope this is self-explanatory.  It draws cuboids: https://en.wikipedia.org/wiki/Cuboid
+ */
 public class Cuboid extends Drawable {
     private final GamePose center;
     private final double width;

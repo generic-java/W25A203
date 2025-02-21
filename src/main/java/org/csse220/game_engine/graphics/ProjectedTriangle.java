@@ -4,6 +4,9 @@ import org.csse220.game_engine.math.Vector2d;
 
 import java.awt.*;
 
+/**
+ * The result when a face (made up of 3 Point3d instances) is projected to 2D.  Every projected triangle can be filled with the desired color.
+ */
 public class ProjectedTriangle {
     private static final double MAX_DISTANCE = 750;
     private static final double MAX_DISPLAY_CUTOFF_ANGLE = 0.0000000000015;

@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 
+/**
+ * A singleton wrapper class for drawing pixels using java graphics.  It uses a double buffer to ensure that multi-threading works as expected.
+ */
 public class Screen extends JComponent {
     private static Screen instance = null;
     private final int PIXEL_SIZE = 4; // How pixelated the screen should appear.  Shouldn't be less than 1

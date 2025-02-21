@@ -4,6 +4,9 @@ import org.csse220.game_engine.graphics.Drawable;
 import org.csse220.game_engine.kinematics.Collideable;
 import org.csse220.game_engine.math.GamePose;
 
+/**
+ * A GameObject that collides with terrain and stops upon hitting it.
+ */
 public class SolidGameObject extends GameObject {
     private boolean touchingGround = false;
     private static final double JUMP_VEL = 0.3;

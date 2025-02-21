@@ -5,6 +5,9 @@ import org.csse220.game_engine.math.Vector3d;
 
 import java.awt.*;
 
+/**
+ * Two faces slapped together to make a rectangle.  I hope you know what rectangle is.
+ */
 public class Rectangle extends Drawable {
 
     private final Face top;

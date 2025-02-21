@@ -5,6 +5,9 @@ import org.csse220.game_engine.math.GamePose;
 
 import java.util.Set;
 
+/**
+ * Every collideable is made up of at least one hitbox and has a method for determining whether it intersects another collideable.
+ */
 public abstract class Collideable extends PlaceableObject {
 
     public Collideable(GamePose pose) {

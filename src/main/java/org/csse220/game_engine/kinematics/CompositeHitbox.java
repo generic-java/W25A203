@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * A class that combines hitboxes to allow for more advanced collision geometry.
+ */
 public class CompositeHitbox extends Collideable {
     private final Map<Hitbox, GamePose> hitboxes = new HashMap<>();
 

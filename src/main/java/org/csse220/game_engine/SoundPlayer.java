@@ -5,12 +5,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 
+/**
+ * This class manages the playing of game sounds.
+ */
 public class SoundPlayer {
     private static final String PATH_PREFIX = FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/main/java/org/csse220/sounds/";
-    private MiniPlayer deathSound;
-    private MiniPlayer gainFuelSound;
-    private MiniPlayer boingSound;
-    private MiniPlayer backgroundSong;
+    private final MiniPlayer deathSound;
+    private final MiniPlayer gainFuelSound;
+    private final MiniPlayer boingSound;
+    private final MiniPlayer backgroundSong;
 
 
     public SoundPlayer() {

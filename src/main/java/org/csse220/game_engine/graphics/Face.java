@@ -6,7 +6,9 @@ import org.csse220.game_engine.math.Vector3d;
 
 import java.awt.*;
 
-
+/**
+ * The simplest possible drawable.  It has 3 Point3Ds and draws them.  Every other drawable is made up of faces.
+ */
 public class Face extends Drawable {
 
     public static final Vector3d LIGHT_SOURCE = new Vector3d(0.3, 0, 1);
@@ -53,6 +55,14 @@ public class Face extends Drawable {
         return new SimpleDepthCalculator(c1, c2, c3, c4);
     }
 
+    /**
+     * Projects and draws a 3D face.
+     *
+     * @param camPos The vector position of the camera (x, y, z)
+     * @param pitch  The camera pitch
+     * @param yaw    The camera yaw
+     * @param shade  Whether to shade the face or not.
+     */
     public void draw(Vector3d camPos, double pitch, double yaw, boolean shade) {
         if (hidden) {
             return;
@@ -89,7 +99,7 @@ public class Face extends Drawable {
         if (!CLIP_Y && behindCamera > 0) {
             return;
         }
-        switch (behindCamera) {
+        switch (behindCamera) { // this switch statement handles y-clipping (whether a face is partially behind the camera or not)
             case 0:
                 firstTriangle = new ProjectedTriangle(
                         visibleAngle,

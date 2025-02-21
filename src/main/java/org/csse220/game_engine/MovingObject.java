@@ -3,6 +3,9 @@ package org.csse220.game_engine;
 import org.csse220.game_engine.graphics.PlaceableObject;
 import org.csse220.game_engine.math.GamePose;
 
+/**
+ * A PlaceableObject that has a velocity and therefore can have a changing position.  Every GameObject is a PlaceableObject.
+ */
 public abstract class MovingObject extends PlaceableObject {
 
     private GamePose lastPose;

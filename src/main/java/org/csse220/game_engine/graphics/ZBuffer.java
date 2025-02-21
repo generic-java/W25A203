@@ -1,5 +1,8 @@
 package org.csse220.game_engine.graphics;
 
+/**
+ * This is one of the most important classes in the entire graphics package.  It stores the depths of pixels on the screen so that pixels that are "behind" an object aren't drawn.
+ */
 public class ZBuffer {
     private static ZBuffer instance = null;
     private final double[][] buffer;

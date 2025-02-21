@@ -2,6 +2,9 @@ package org.csse220.game_engine.graphics;
 
 import java.awt.*;
 
+/**
+ * A 2D point that has been projected.
+ */
 public class ProjectedPoint {
     private final int screenX;
     private final int screenY;

@@ -1,5 +1,8 @@
 package org.csse220.game_engine.math;
 
+/**
+ * Describes a camera position.  Has x, y, z, pitch, and yaw.
+ */
 public class CameraPose extends GamePose {
     private final double pitch;
 

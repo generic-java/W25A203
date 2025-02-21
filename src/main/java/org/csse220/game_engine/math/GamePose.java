@@ -2,6 +2,9 @@ package org.csse220.game_engine.math;
 
 import org.csse220.game_engine.graphics.Point3d;
 
+/**
+ * Describes positions of GameObjects.  Has x, y, z, and yaw.
+ */
 public class GamePose extends Vector3d {
     private final double yaw;
 

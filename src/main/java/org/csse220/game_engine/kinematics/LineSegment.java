@@ -1,5 +1,8 @@
 package org.csse220.game_engine.kinematics;
 
+/**
+ * A utility class used by Hitbox.
+ */
 public class LineSegment {
     private final Point2d point1;
     private final Point2d point2;

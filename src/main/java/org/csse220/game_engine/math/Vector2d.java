@@ -4,7 +4,7 @@ import java.util.Objects;
 
 
 /**
- * This class is pretty self-explanatory.  Just remember that it's immutable.
+ * An immutable class describing a vector in 2d space.
  */
 public class Vector2d {
     public final double x;
