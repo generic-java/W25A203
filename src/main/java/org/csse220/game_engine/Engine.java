@@ -22,7 +22,6 @@ public class Engine {
 
     private Engine() {
         soundPlayer = new SoundPlayer();
-        //soundPlayer.startBackground();
         levels = new ArrayList<>();
     }
 

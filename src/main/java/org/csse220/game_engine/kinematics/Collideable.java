@@ -32,5 +32,4 @@ public abstract class Collideable extends PlaceableObject {
      * This method runs at least once when a Collideable collides with another Collideable.
      * If true is returned, the method will run until the Collideable is no longer intersecting with another Collideable.
      */
-    //public abstract boolean onCollide(GamePose collisionDirection);
 }

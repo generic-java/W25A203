@@ -14,6 +14,5 @@ public class Enemy extends GameObject {
     @Override
     public void onSolidCollision(GameObject other, GamePose moveDirection) {
         super.onSolidCollision(other, moveDirection);
-        // TODO: enemy specific code here
     }
 }

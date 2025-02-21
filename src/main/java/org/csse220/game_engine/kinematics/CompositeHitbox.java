@@ -28,9 +28,4 @@ public class CompositeHitbox extends Collideable {
     public Set<Hitbox> getHitboxes() {
         return hitboxes.keySet();
     }
-
-//    @Override
-//    public boolean onCollide(GamePose collisionDirection) {
-//        return false;
-//    }
 }

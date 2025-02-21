@@ -20,16 +20,6 @@ public class Elephant extends Drawable {
                         new Point3d(-2.5, 0, 4.75),
                         new Point3d(-2.5, -1, 4),
                         new Point3d(-2.5, 3, 3), Color.GRAY),
-//                new Face(
-//                        new GamePose(),
-//                        new Point3d(-3.5, 0, 4.75),
-//                        new Point3d(-3.5, -1, 4),
-//                        new Point3d(-3.5, 3, 3), Color.RED),
-//                new Face(
-//                        new GamePose(),
-//                        new Point3d(-3.5, 1, 4.75),
-//                        new Point3d(-3.5, 0, 4.75),
-//                        new Point3d(-3.5, 3, 3), Color.YELLOW),
                 new Cuboid(new GamePose(0, 0, 8.75, 0), 4, 1, 2, Color.GRAY),
                 new Cuboid(new GamePose(0, 0, 11.25, 0), 5.5, 6.5, 5.5, Color.GRAY), // head
                 new Face(

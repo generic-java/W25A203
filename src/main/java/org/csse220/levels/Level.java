@@ -112,8 +112,7 @@ public class Level {
                 double poseX = Double.parseDouble(currentJsonObj.getString("poseX"));
                 double poseY = Double.parseDouble(currentJsonObj.getString("poseY"));
                 double poseZ = Double.parseDouble(currentJsonObj.getString("poseZ"));
-
-                //REPLACE WITH CONSTRUCTOR
+                
                 tempEnemies[i] = new PaperAirplane(new GamePose(poseX, poseY, poseZ, 0));
             }
             if (type.equals("pathEnemy")) {
@@ -126,7 +125,6 @@ public class Level {
                 double endY = Double.parseDouble(currentJsonObj.getString("endY"));
                 double endZ = Double.parseDouble(currentJsonObj.getString("endZ"));
 
-                //REPLACE WITH CONSTRUCTOR
                 tempEnemies[i] = new PathEnemy(new GamePose(startX, startY, startZ, 0), new GamePose(endX, endY, endZ, 0));
             }
             if (type.equals("lava")) {

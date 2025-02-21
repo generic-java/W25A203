@@ -8,10 +8,8 @@ import java.nio.file.FileSystems;
 public class SoundPlayer {
     private static final String PATH_PREFIX = FileSystems.getDefault().getPath("").toAbsolutePath() + "/src/main/java/org/csse220/sounds/";
     private MiniPlayer deathSound;
-    private AudioInputStream loseHealthSound;
     private MiniPlayer gainFuelSound;
     private MiniPlayer boingSound;
-    private AudioInputStream winSound;
     private MiniPlayer backgroundSong;
 
 
@@ -19,9 +17,7 @@ public class SoundPlayer {
 
         deathSound = new MiniPlayer(PATH_PREFIX + "death_sound.wav");
         boingSound = new MiniPlayer(PATH_PREFIX + "boing.wav");
-        //            loseHealthSound = AudioSystem.getAudioInputStream(new File(PATH_PREFIX + "lose_health.wav"));
         gainFuelSound = new MiniPlayer(PATH_PREFIX + "gain_fuel.wav");
-//            winSound = AudioSystem.getAudioInputStream(new File(PATH_PREFIX + "win_sound.wav"));
         backgroundSong = new MiniPlayer(PATH_PREFIX + "background.wav");
 
     }
